@@ -35,7 +35,8 @@ describe("Keep 최근 완료 화면", () => {
     vi.setSystemTime(FIXTURE_NOW);
     const recent = Array.from({ length: 6 }, (_, index) => ({
       id: 101 + index, title: `${FIXTURE_TITLE} ${101 + index}`,
-      lifecycle: { lifecycleKey: "RESOLVED", resolvedAt: new Date(FIXTURE_NOW.getTime() - index * 1000).toISOString() }
+      lifecycle: { lifecycleKey: "RESOLVED", resolvedAt: new Date(FIXTURE_NOW.getTime() - index * 1000).toISOString() },
+      ...(index === 0 ? { state: { list: [{ stateKey: "IMPRTC" }, { stateKey: "DEMANDED" }] } } : {})
     }));
     vi.mocked(axios.get).mockImplementation(async (url) => ({ data: {
       rslt: true, rsltList: url === "/api/prospective/keeps" ? [
@@ -67,6 +68,17 @@ describe("Keep 최근 완료 화면", () => {
     await settle();
     expect(container.textContent).toContain(`${FIXTURE_TITLE} 106`);
     expect(vi.mocked(reinitMetronicAfterDom).mock.calls.length).toBeGreaterThan(before);
+  });
+
+  it("종결 행도 진행 행처럼 중요 별·굵은 제목·요구 배지를 표시한다", () => {
+    const row = Array.from(container.querySelectorAll("[title]")).find((el) => el.getAttribute("title") === `${FIXTURE_TITLE} 101`);
+    expect(row).toBeDefined();
+    expect(row!.classList.contains("fw-bold")).toBe(true);
+    expect(row!.querySelector(".bi-star-fill.text-warning")).not.toBeNull();
+    expect(row!.querySelector(".badge-light-danger")?.textContent).toBe("state.demanded");
+    const plain = Array.from(container.querySelectorAll("[title]")).find((el) => el.getAttribute("title") === `${FIXTURE_TITLE} 102`);
+    expect(plain!.querySelector(".badge-light-danger")).toBeNull();
+    expect(plain!.classList.contains("fw-bold")).toBe(false);
   });
 
   it("1시간 경계에서 API 호출 없이 일반 종결로 이동하고 타이머를 정리한다", async () => {

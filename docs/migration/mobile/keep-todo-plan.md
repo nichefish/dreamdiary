@@ -264,8 +264,8 @@ ProspectiveProject (prospective_project, soft delete)
 - **보기 전환** (같은 R1 데이터의 클라이언트 투영)
   - `진행` (기본): OPEN·PENDING, 웹과 같은 정렬(기한 오름차순, 기한 없음은 아래에 서버 순서).
   - `기한`: 진행 항목 중 기한 있는 것만 `지남` / `오늘` / `7일 이내` / `이후`로 묶음. 일반 할일 앱의 "오늘"에 해당. 이름을 `오늘`이 아닌 `기한`으로 하는 이유: 진행 32건 중 22건은 기한이 없어 "오늘"만으로는 할 일이 안 보인다.
-  - `종결`: 종결 4종, 최근 종결 순(2026-10-11, §4.14), 끝난 이유 배지/아이콘(웹 색 그대로).
-- **Project 칩**: `전체` · `미지정` · OPEN Project(정렬 순). 권장 기본 `전체`(§7 질문 3). `전체`에서는 행에 Project 이름을 작게 표시.
+  - `종결`: 종결 4종, 최근 종결 순(2026-10-11, §4.14), 끝난 이유 배지/아이콘(웹 색 그대로). 기본은 최근 7일 종결만, 이전 종결은 `이전 종결 N개 더 보기`로 펼침(2026-10-12 구현·실기기 미검증, `splitTerminalByWindow`).
+- **Project 칩**: `미지정` · `전체` · OPEN Project(정렬 순; 2026-10-12 순서 변경 — `미지정` 맨 앞). 기본 선택은 웹과 같은 `미지정`(2026-10-12 변경; 고른 Project가 OPEN 목록에서 빠지면 `미지정`으로 복귀). `전체`에서는 행에 Project 이름을 작게 표시.
 - **필터 시트**(`⚲`): 말머리(R7), 태그(R6), `중요`, `기한 지남`. 웹과 같은 AND. 켜진 필터는 칩 줄 아래 요약 칩으로 보이고 탭으로 해제.
 - **검색**(`🔍`): 헤더 검색창, 제목·본문 부분 일치, 입력하는 동안 거름(클라이언트 투영이라 서버 호출 없음).
 - **행 조작**
@@ -346,9 +346,9 @@ ProspectiveProject (prospective_project, soft delete)
 
 - 진입: 드로어 `Keep 전수관리`(`/keep`) → `KeepHomeScreen`(루트 스택, `준비 중` 대체). `appMenu.ts` `MENU_URL.KEEP` + `resolveMenuTarget`. 하단 탭은 그대로(`오늘 · 검색 · 나`).
 - 조회: R1(`scope=all`) + R3 + R6 + R7을 병렬로 받는다. R1만 실패하면 오류 + `다시 시도`, 보조 목록(R3·R6·R7) 실패는 목록 표시를 막지 않는다(Project 칩 안내 문구, 태그·말머리 선택지는 목록에서 모은 값). 읽기 응답이 HTTP 200 + `rslt=false`면 `message`로 오류 처리(`assertReadOk`, 쓰기용 래퍼는 2-1). 화면 복귀 시 조용히 갱신, 당겨서 새로고침.
-- 투영(`src/utils/keepProjection.ts`): Project 범위(기본 `전체` · `미지정` · OPEN Project) → 말머리·태그·기한 지남·중요·검색어 AND(웹 `filtered`와 같은 규칙) → 보기 `진행`(웹 정렬: 기한 오름차순, 기한 없음은 아래에 서버 순서) / `기한`(진행 중 기한 있는 것만 `지남 / 오늘 / 7일 이내 / 그 이후`) / `종결`(최근 종결 순, `keepTerminalSort.ts`). 보기 탭에 필터 적용 후 건수.
+- 투영(`src/utils/keepProjection.ts`): Project 범위(칩 순서 `미지정` · `전체`(기본) · OPEN Project — 2026-10-12 순서 변경) → 말머리·태그·기한 지남·중요·검색어 AND(웹 `filtered`와 같은 규칙) → 보기 `진행`(웹 정렬: 기한 오름차순, 기한 없음은 아래에 서버 순서) / `기한`(진행 중 기한 있는 것만 `지남 / 오늘 / 7일 이내 / 그 이후`) / `종결`(최근 종결 순, `keepTerminalSort.ts`). 보기 탭에 필터 적용 후 건수.
 - 검색: 제목·본문 부분 일치, `검색` 버튼·키보드 검색 키로만 적용(검색 탭과 같은 원칙). 필터는 하단 시트(`KeepFilterSheet`: 기한 지남 · 중요 · 말머리 · 태그, 같은 칩을 다시 누르면 해제). 걸린 조건은 목록 위 칩(눌러서 해제) + `초기화`. 행의 태그 칩을 누르면 태그 필터 토글.
-- 행: 중요 `★` + 굵은 제목, `[말머리]`(웹과 같은 `#287D94`), 보류·종결 배지(완료 초록 · 실패 빨강 · 만료 노랑 · 내려놓음 회색 + 아이콘), 요구 배지, `기한 ~10/24 · D-3`(진행 중 지난 기한은 경고색 `N일 지남`, 종결은 날짜만), `일시 …`, `📁 Project`(전체 범위에서만), 등록 년월, 태그 칩. 레거시 `COLLAPSED` 상태는 무시.
+- 행: 중요 `★` + 굵은 제목, `[말머리]`(웹과 같은 `#287D94`), 보류·종결 배지(완료 초록 · 실패 빨강 · 만료 노랑 · 내려놓음 회색 + 아이콘), 요구 배지, `기한 ~10/24 · D-3`(진행 중 지난 기한은 경고색 `N일 지남`, 종결은 날짜만), `일시 …`, `📁 Project`(전체 범위에서만), 등록 년월, 태그 칩. 중요 별·요구 배지는 진행 행과 같게 최근 완료·종결 행에도 표시(웹 종결 행도 2026-10-12 동일화). 레거시 `COLLAPSED` 상태는 무시.
 - 상세 `KeepDetailScreen`: R2로 다시 읽고(로드 전에는 목록 항목을 임시 표시), 라이프사이클은 R2 응답 값(백엔드 수정 후). Project 이름은 목록에서 넘겨받고, 목록 항목 없이 열거나 당겨서 새로고침하면 R3을 다시 받아 찾는다. 배지(라이프사이클·중요·요구), 제목, 기한(D-day)·일시·위치·Project·말머리·태그·등록·수정, 본문(마크다운 → 평문, `src/utils/markdownText.ts`, 새 의존성 없음).
 - 복사·공유: 상세 헤더 `복사`·`공유`(1건 텍스트), 목록 위 `JournalCopyShareBar`(현재 보기·필터 결과, 기한 보기는 묶음 머리 포함). 웹에 Keep 복사가 없어 1단계 저널 복사와 같은 CRLF·빈 줄 규칙으로 새로 정했다(`src/utils/keepCopy.ts`, `screen-spec.md` §4.8).
 - 파일: `src/types/prospectiveKeep.ts`, `src/utils/keepExpire.ts`(웹 `formatExpireDt`·`daysUntilExpire` 포트), `src/utils/keepProjection.ts`, `src/utils/keepCopy.ts`, `src/utils/markdownText.ts`, `src/components/keep/KeepBadges.tsx`, `src/components/keep/KeepFilterSheet.tsx`, `src/screens/KeepHomeScreen.tsx`, `src/screens/KeepDetailScreen.tsx`, 수정 `src/api/dreamDiaryApi.ts`(읽기 함수 5개), `src/types/auth.ts`(`AjaxResponse`에 `rsltList`·`rsltMap`), `src/navigation/AppNavigator.tsx`, `src/navigation/appMenu.ts`.

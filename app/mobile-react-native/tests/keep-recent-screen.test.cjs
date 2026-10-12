@@ -118,8 +118,17 @@ test("앱 종결: 최근 완료가 먼저이며 미확인 완료는 나머지 �
   const terminalTab = [...walk(list.ListHeaderComponent)].find((node) => node.props?.accessibilityRole === "tab" && JSON.stringify(node.props.children).includes("종결"));
   terminalTab.props.onPress();
   list = flatList(screen.render());
-  assert.equal(list.data.filter((row) => row.kind === "section").map((row) => row.label).join(","), "최근 완료,종결");
+  // 7일보다 오래된 종결(301)은 기본으로 접혀 맨 아래 `이전 종결 1개 더 보기` 뒤에 있다
+  assert.equal(list.data.filter((row) => row.kind === "section").map((row) => row.label).join(","), "최근 완료");
+  assert.equal(list.data.filter((row) => row.kind === "item").map((row) => row.item.id).join(","), "101,102,103,104,105");
+  assert.deepEqual(JSON.parse(JSON.stringify(list.data.at(-1))), { kind: "olderMore", key: "older-more", count: 1 });
+  assert.equal(copyBar(list).buildText().includes(`${FIXTURE_TITLE} 301`), false);
+  const more = [...walk(list.renderItem({ item: list.data.at(-1) }))].find((node) => node.props?.accessibilityLabel === "이전 종결 1개 더 보기");
+  more.props.onPress();
+  list = flatList(screen.render());
+  assert.equal(list.data.filter((row) => row.kind === "section").map((row) => row.label).join(","), "최근 완료,이전 종결");
   assert.equal(list.data.filter((row) => row.kind === "item").map((row) => row.item.id).join(","), "101,102,103,104,105,301");
+  assert.equal(list.data.at(-1).kind, "olderMore");
   assert.equal(copyBar(list).buildText().includes(`${FIXTURE_TITLE} 301`), true);
   assert.equal(copyBar(list).buildText().includes(`${FIXTURE_TITLE} 201`), false);
 });

@@ -62,4 +62,6 @@ Project 말머리: 편집 폼에서 말머리를 고르고 저장하면 `prefixI
 
 ✓ 모바일 Keep 수정(2-3)은 상세 재조회(동시 수정 확인, `updatedAt` 비교) → `POST /api/prospective/keep/{id}` 한 번(웹 수정 모달과 같은 필드, 위치·본문·순번은 상세 응답에서 보존, 보존할 수 없으면 요청 전 차단) → 중요가 바뀌었으면 `IMPRTC` 토글 → 상세 GET·태그 후보 GET 순서다. 자동 재전송하지 않는다. 서버 실패는 시트 유지, 응답 없음은 시트를 닫고 상세 재조회 후 안내. 목록 ⋯ `수정`도 같은 흐름이며 먼저 상세 GET을 받아 기준으로 삼고, 성공하면 Keep 목록 GET. 상세는 [모바일 화면 스펙](../mobile/screen-spec.md) §4.15.
 
+✓ 모바일 종결 보기는 API 호출 없이 클라이언트에서 최근 7일 종결과 이전 종결을 나눈다(`이전 종결 N개 더 보기` / `접기`, Project·필터·검색 변경 시 접힘). 웹 종결 그룹은 바뀌지 않는다. 상세는 [모바일 화면 스펙](../mobile/screen-spec.md) §4.14.
+
 ✓ 모바일 Project 이동(2-4)은 웹 `moveKeepProject`와 같은 `PATCH /api/prospective/keep/{id}/project` JSON `{ projectId }`(미지정 null) 한 번 → Keep 목록(또는 상세) GET. 현재 소속·OPEN이 아닌 Project는 보내지 않는다. 모바일 삭제는 상세에서만, 제목을 밝힌 파괴적 확인 뒤 웹 `deleteKeep`과 같은 `DELETE /api/prospective/keep/{id}` 한 번 → 상세를 떠나고 목록은 포커스 갱신. 둘 다 요청 잠금, 자동 재전송 없음, `rslt=false`는 서버 메시지. 상세 계약은 [모바일 화면 스펙](../mobile/screen-spec.md) §4.14를 따른다.

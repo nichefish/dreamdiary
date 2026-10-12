@@ -248,7 +248,7 @@
         <h4 class="fw-bold fs-5 text-gray-500 mb-3">
           {{ group.label }} <span class="text-muted fs-7 ms-1">{{ group.count }}</span>
         </h4>
-        <div v-if="group.items.length === 0" class="text-muted fs-7">{{ t("prospective.keep.group.terminal.empty") }}</div>
+        <div v-if="group.count === 0" class="text-muted fs-7">{{ t("prospective.keep.group.terminal.empty") }}</div>
         <div v-else>
           <div
             v-for="item in group.items"
@@ -258,10 +258,13 @@
             <i class="bi fs-4 me-3" :class="terminalIconClass(item)"></i>
             <div
               class="flex-grow-1 text-truncate cursor-pointer text-decoration-line-through"
+              :class="{ 'fw-bold': hasState(item, 'IMPRTC') }"
               :title="item.title"
               @click.prevent="openKeepEdit(item.id)"
             >
-              <i v-if="hasState(item, 'IMPRTC')" class="bi bi-star-fill text-muted fs-7 me-1" :title="t('state.important')"></i>
+              <!-- 상태 표시는 진행 행과 같다: 중요 별(경고색)·굵은 제목, 요구 배지 -->
+              <i v-if="hasState(item, 'IMPRTC')" class="bi bi-star-fill text-warning fs-7 me-1" :title="t('state.important')"></i>
+              <span v-if="hasState(item, 'DEMANDED')" class="badge badge-light-danger fs-9 me-1">{{ t("state.demanded") }}</span>
               <span
                 v-if="item.prefix"
                 class="fw-bold me-1"
@@ -393,6 +396,14 @@
           :aria-expanded="showAllRecent"
           @click="showAllRecent = !showAllRecent"
         >{{ t(showAllRecent ? "prospective.keep.recent.less" : "prospective.keep.recent.more") }}</button>
+        <!-- 7일보다 오래전에 끝난 종결은 접어 두고 요청 시에만 펼친다. -->
+        <button
+          v-if="group.key === 'terminal' && terminalSplit.older.length > 0"
+          type="button"
+          class="btn btn-sm btn-light mb-5 mt-2"
+          :aria-expanded="showOlderTerminal"
+          @click="showOlderTerminal = !showOlderTerminal"
+        >{{ showOlderTerminal ? t("common.collapse") : olderTerminalMoreLabel }}</button>
         </template>
         </template>
         <!--end::종결-->
@@ -436,6 +447,7 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import axios from "axios";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "./utils/recentCompletion";
+import { byTerminalRecentDesc, splitTerminalByWindow } from "./utils/terminalWindow";
 import { swalAlert, swalConfirm, swalRequestError } from "@/shared/utils/swal";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
@@ -471,7 +483,9 @@ interface KeepItem {
   /** 부착된 상태(다중). 진행 단계(lifecycle)와 별개 축이다. */
   state?: { list?: Array<{ stateKey?: string }> } | null;
   /** 라이프사이클 현재값(백엔드 enrich). 부재 시 OPEN. */
-  lifecycle?: { lifecycleKey?: string | null; resolvedAt?: string | null } | null;
+  lifecycle?: { lifecycleKey?: string | null; resolvedAt?: string | null; changedAt?: string | null } | null;
+  /** 수정 일시 (서버 로컬 `yyyy-MM-dd HH:mm:ss`). 종결 시각 fallback 에 쓴다. */
+  updatedAt?: string | null;
   /** 유효 기한 (ISO `yyyy-MM-dd`). 일시 원문에서 파생한 값이며 없을 수 있다. */
   expireDt?: string | null;
   /** 선택한 Project ID. null이면 Project 미지정이다. */
@@ -591,16 +605,37 @@ const completionNow = ref(Date.now());
 const showAllRecent = ref(false);
 const recentItems = computed(() => recentKeeps(filtered.value, completionNow.value));
 const visibleRecentItems = computed(() => showAllRecent.value ? recentItems.value : recentItems.value.slice(0, KEEP_RECENT_PREVIEW_SIZE));
-/** 종결 투영 = RESOLVED·FAILED·EXPIRED·DROPPED. 끝난 이유는 행 배지로 구분한다. */
+/** 종결 투영 = RESOLVED·FAILED·EXPIRED·DROPPED. 끝난 이유는 행 배지로 구분하고 최근 종결 순으로 정렬한다. */
 const resolvedItems = computed<KeepItem[]>(() =>
-  filtered.value.filter((it) => TERMINAL_KEYS.includes(lifecycleKeyOf(it)) && !isRecentKeep(it, completionNow.value))
+  filtered.value
+    .filter((it) => TERMINAL_KEYS.includes(lifecycleKeyOf(it)) && !isRecentKeep(it, completionNow.value))
+    .sort(byTerminalRecentDesc)
 );
+/** 종결을 최근 7일(7×24시간)과 그 이전으로 나눈다. 검색·필터는 filtered 에서 이미 적용됐다. */
+const terminalSplit = computed(() => splitTerminalByWindow(resolvedItems.value, completionNow.value));
+/** 이전 종결 펼침 여부. Project·필터·검색이 바뀌면 접는다. */
+const showOlderTerminal = ref(false);
+const visibleTerminalItems = computed(() => showOlderTerminal.value
+  ? [...terminalSplit.value.recent, ...terminalSplit.value.older]
+  : terminalSplit.value.recent);
+/** `이전 종결 N개 더 보기` 문구. 서버 catalog 에 키가 아직 없으면 한국어 기본 문구를 쓴다. */
+const olderTerminalMoreLabel = computed(() => {
+  const key = "prospective.keep.terminal.older.more";
+  const count = String(terminalSplit.value.older.length);
+  const message = t(key);
+  return message === key ? `이전 종결 ${count}개 더 보기` : message.replace("{0}", count);
+});
 
 /** 종결 행 렌더를 공유하는 최근 완료·나머지 종결 그룹. */
 const terminalGroups = computed(() => [
   ...(recentItems.value.length ? [{ key: "recent", label: t("prospective.keep.group.recent"), count: recentItems.value.length, items: visibleRecentItems.value }] : []),
-  { key: "terminal", label: t("prospective.keep.group.terminal"), count: resolvedItems.value.length, items: resolvedItems.value },
+  { key: "terminal", label: t("prospective.keep.group.terminal"), count: resolvedItems.value.length, items: visibleTerminalItems.value },
 ]);
+
+watch(
+  [selectedProjectScope, keyword, filterPrefixId, filterTagId, filterOverdue, filterImportant],
+  () => { showOlderTerminal.value = false; },
+);
 
 /** API 재호출 없이 첫 만료 경계에서 그룹을 갱신한다. */
 let completionTimer: ReturnType<typeof setTimeout> | undefined;

@@ -33,7 +33,8 @@ export interface KeepFilters {
 }
 
 export const EMPTY_KEEP_FILTERS: KeepFilters = {
-  scope: "ALL",
+  // 기본 Project 칩은 웹 KeepPage(selectedProjectScope 초기값)와 같은 미지정 (2026-10-12)
+  scope: "UNASSIGNED",
   keyword: "",
   prefixId: null,
   tagId: null,

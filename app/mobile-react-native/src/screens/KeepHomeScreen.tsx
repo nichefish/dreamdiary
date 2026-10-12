@@ -61,6 +61,7 @@ import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
 import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
 import { KeepProjectMoveSheet } from "../components/keep/KeepProjectMoveSheet";
 import { useKeepEditSheet } from "../components/keep/useKeepEditSheet";
+import { splitTerminalByWindow } from "../utils/keepTerminalSort";
 import { keepManageFailureMessage, keepMoveNotice, keepMoveOptions, keepMoveTarget, type KeepMoveOption } from "../utils/keepManage";
 import { KeepQuickAddSheet } from "../components/keep/KeepQuickAddSheet";
 import { colorFromTextClass } from "../components/journal/journalTagStyle";
@@ -94,6 +95,7 @@ type Row =
   | { kind: "header"; key: string; label: string; count: number; bucket: KeepDueBucket }
   | { kind: "section"; key: string; label: string; count: number }
   | { kind: "recentMore"; key: string }
+  | { kind: "olderMore"; key: string; count: number }
   | { kind: "item"; key: string; item: KeepItem };
 
 function errorMessage(e: unknown, fallback: string): string {
@@ -212,6 +214,8 @@ export function KeepHomeScreen() {
   const [completionNow, setCompletionNow] = useState(Date.now);
   const [recentOpen, setRecentOpen] = useState(false);
   const [showAllRecent, setShowAllRecent] = useState(false);
+  /** 종결 보기: 7일보다 오래된 종결을 펼쳤는지. 화면(세션) 동안 유지하고 Project·필터·검색이 바뀌면 접는다 */
+  const [showOlderTerminal, setShowOlderTerminal] = useState(false);
   const [view, setView] = useState<KeepView>("OPEN");
   const [filters, setFilters] = useState<KeepFilters>(EMPTY_KEEP_FILTERS);
   const [keyword, setKeyword] = useState("");
@@ -555,7 +559,7 @@ export function KeepHomeScreen() {
   useEffect(() => {
     const scope = filters.scope;
     if (typeof scope !== "number" || projectError || !loadedRef.current) return;
-    if (!openProjects.some((p) => p.id === scope)) setFilters((prev) => ({ ...prev, scope: "ALL" }));
+    if (!openProjects.some((p) => p.id === scope)) setFilters((prev) => ({ ...prev, scope: "UNASSIGNED" }));
   }, [filters.scope, openProjects, projectError]);
 
   const filtered = useMemo(() => filterKeeps(list, filters, today), [list, filters, today]);
@@ -563,6 +567,9 @@ export function KeepHomeScreen() {
   const recentItems = useMemo(() => recentKeeps(filtered, completionNow), [filtered, completionNow]);
   const visibleRecentItems = useMemo(() => showAllRecent ? recentItems : recentItems.slice(0, KEEP_RECENT_PREVIEW_SIZE), [recentItems, showAllRecent]);
   const otherTerminalItems = useMemo(() => terminalKeeps(filtered).filter((item) => !isRecentKeep(item, completionNow)), [filtered, completionNow]);
+  /** 종결(최근 완료 제외)을 최근 7일과 그 이전으로 — 필터·검색 결과(filtered)에 적용된 뒤 나눈다 */
+  const terminalWindow = useMemo(() => splitTerminalByWindow(otherTerminalItems, completionNow), [otherTerminalItems, completionNow]);
+  useEffect(() => { setShowOlderTerminal(false); }, [filters]);
 
   /** 완료 경계와 앱 복귀에서 표시 시각만 갱신한다. */
   useEffect(() => { setCompletionNow(Date.now()); }, [list]);
@@ -586,24 +593,30 @@ export function KeepHomeScreen() {
   const sections = useMemo((): KeepCopySection[] => {
     if (view === "TERMINAL") return [
       ...(recentItems.length ? [{ label: "최근 완료", items: visibleRecentItems }] : []),
-      ...(otherTerminalItems.length ? [{ label: "종결", items: otherTerminalItems }] : [])
+      ...(terminalWindow.recent.length ? [{ label: "종결", items: terminalWindow.recent }] : []),
+      ...(showOlderTerminal && terminalWindow.older.length ? [{ label: "이전 종결", items: terminalWindow.older }] : [])
     ];
     const main = view === "OPEN" ? [{ items: openKeeps(filtered) }]
       : dueKeepGroups(filtered, today).map((g) => ({ label: g.label, items: g.items }));
     return recentOpen && recentItems.length ? [...main, { label: "최근 완료", items: visibleRecentItems }] : main;
-  }, [filtered, today, view, recentOpen, recentItems, visibleRecentItems, otherTerminalItems]);
+  }, [filtered, today, view, recentOpen, recentItems, visibleRecentItems, terminalWindow, showOlderTerminal]);
   const rows = useMemo((): Row[] => {
     if (view === "OPEN") return openKeeps(filtered).map((item) => ({ kind: "item", key: `k${item.id}`, item }));
-    if (view === "TERMINAL") return sections.flatMap((section): Row[] => [
-      { kind: "section", key: `h${section.label}`, label: section.label ?? "", count: section.label === "최근 완료" ? recentItems.length : section.items.length },
-      ...section.items.map((item): Row => ({ kind: "item", key: `k${item.id}`, item })),
-      ...(section.label === "최근 완료" && recentItems.length > KEEP_RECENT_PREVIEW_SIZE ? [{ kind: "recentMore", key: "recent-more" } as Row] : [])
-    ]);
+    if (view === "TERMINAL") {
+      const olderCount = terminalWindow.older.length;
+      const terminalRows = sections.flatMap((section): Row[] => [
+        { kind: "section", key: `h${section.label}`, label: section.label ?? "", count: section.label === "최근 완료" ? recentItems.length : section.items.length },
+        ...section.items.map((item): Row => ({ kind: "item", key: `k${item.id}`, item })),
+        ...(section.label === "최근 완료" && recentItems.length > KEEP_RECENT_PREVIEW_SIZE ? [{ kind: "recentMore", key: "recent-more" } as Row] : [])
+      ]);
+      // 접혀 있으면 맨 아래에 `이전 종결 N개 더 보기`, 펼쳤으면 이전 종결 묶음 뒤에 `접기`
+      return olderCount ? [...terminalRows, { kind: "olderMore", key: "older-more", count: olderCount }] : terminalRows;
+    }
     return dueKeepGroups(filtered, today).flatMap((g): Row[] => [
       { kind: "header", key: `h${g.bucket}`, label: g.label, count: g.items.length, bucket: g.bucket },
       ...g.items.map((item): Row => ({ kind: "item", key: `k${item.id}`, item }))
     ]);
-  }, [filtered, sections, today, view, recentItems]);
+  }, [filtered, sections, today, view, recentItems, terminalWindow]);
   const itemCount = useMemo(() => sections.reduce((sum, s) => sum + s.items.length, 0), [sections]);
 
   const tagOptions = useMemo(() => mergeKeepTagOptions(serverTags, list), [serverTags, list]);
@@ -672,6 +685,14 @@ export function KeepHomeScreen() {
   }
 
   /** 최근 완료의 첫 5건과 전체 목록을 전환한다. */
+  function renderOlderMore(count: number) {
+    return <Pressable accessibilityRole="button" accessibilityState={{ expanded: showOlderTerminal }}
+      accessibilityLabel={showOlderTerminal ? "이전 종결 접기" : `이전 종결 ${count}개 더 보기`}
+      onPress={() => setShowOlderTerminal((value) => !value)} style={styles.retryButton}>
+      <Text style={styles.retryText}>{showOlderTerminal ? "접기" : `이전 종결 ${count}개 더 보기`}</Text>
+    </Pressable>;
+  }
+
   function renderRecentMore() {
     return <Pressable accessibilityRole="button" accessibilityState={{ expanded: showAllRecent }}
       onPress={() => setShowAllRecent((value) => !value)} style={styles.retryButton}>
@@ -694,8 +715,9 @@ export function KeepHomeScreen() {
 
   // Project 칩은 [말머리]이름. 말머리 부분만 서버 textClass 색으로 칠한다(모르는 클래스면 칩 글자색).
   const scopeChips: { key: string; label: string; prefix?: string; prefixColor?: string | null; scope: KeepProjectScope }[] = [
-    { key: "all", label: "전체", scope: "ALL" },
+    // 칩 순서: 미지정 → 전체 → OPEN Project. 기본 선택은 웹과 같은 미지정(EMPTY_KEEP_FILTERS.scope = "UNASSIGNED")
     { key: "none", label: "미지정", scope: "UNASSIGNED" },
+    { key: "all", label: "전체", scope: "ALL" },
     ...openProjects.map((p) => ({
       key: `p${p.id}`,
       label: keepProjectTitle(p),
@@ -889,6 +911,7 @@ export function KeepHomeScreen() {
             </Text>
           ) : row.kind === "section" ? (
             <Text style={styles.groupHeader} accessibilityRole="header">{row.label} <Text style={styles.groupCount}>{row.count}</Text></Text>
+          ) : row.kind === "recentMore" ? renderRecentMore() : row.kind === "olderMore" ? renderOlderMore(row.count) : renderKeepRow(row.item)
         }
       />
       <KeepLifecycleMenu item={lifecycleItem} saving={savingId != null}

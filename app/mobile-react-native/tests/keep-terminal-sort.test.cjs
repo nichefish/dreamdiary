@@ -16,7 +16,7 @@ function load(relativePath) {
   return module.exports;
 }
 
-const { byTerminalRecentDesc, keepTerminalSortTime } = load("../src/utils/keepTerminalSort.ts");
+const { byTerminalRecentDesc, keepTerminalSortTime, splitTerminalByWindow, KEEP_TERMINAL_WINDOW_DAYS } = load("../src/utils/keepTerminalSort.ts");
 const ids = (items) => items.slice().sort(byTerminalRecentDesc).map((it) => it.id);
 
 test("종결 Keep 은 최근 종결이 위로 온다 (2025.03 처럼 오래된 항목이 맨 위가 아니다)", () => {
@@ -63,4 +63,30 @@ test("같은 시각은 id 내림차순, 시각이 없는 항목은 맨 아래", 
     { id: 8 }
   ];
   assert.deepEqual(ids(items), [9, 7, 8, 5]);
+});
+
+test("종결 7일 창: 종결 시각(changedAt → resolvedAt → updatedAt → createdAt)이 7×24시간 이내면 최근, 아니면 이전 — 순서 유지", () => {
+  assert.equal(KEEP_TERMINAL_WINDOW_DAYS, 7);
+  const now = Date.parse("2026-10-12T12:00:00Z");
+  const day = 24 * 60 * 60 * 1000;
+  const iso = (ms) => new Date(ms).toISOString();
+  const items = [
+    { id: 1, lifecycle: { changedAt: iso(now - day) } },
+    { id: 2, lifecycle: { changedAt: iso(now - 8 * day), resolvedAt: iso(now - day) } }, // changedAt 우선 → 이전
+    { id: 3, lifecycle: { resolvedAt: iso(now - 6 * day) } },
+    { id: 4, lifecycle: { changedAt: iso(now - 7 * day) } }, // 경계 포함
+    { id: 5, lifecycle: { changedAt: iso(now - 7 * day - 1) } },
+    { id: 6 }, // 시각 없음 → 이전
+    { id: 7, lifecycle: { changedAt: iso(now + 60000) } }, // 미래(시계 차이) → 최근
+    { id: 8, updatedAt: "2001-01-01 00:00:00" }
+  ];
+  const { recent, older } = splitTerminalByWindow(items, now);
+  assert.deepEqual(recent.map((i) => i.id).join(), [1, 3, 4, 7].join());
+  assert.deepEqual(older.map((i) => i.id).join(), [2, 5, 6, 8].join());
+  // 서버 로컬 형식(updatedAt)은 기기 로컬 시각으로 해석한다
+  const local = new Date(2026, 9, 10, 9, 0, 0).getTime();
+  const fmt = "2026-10-10 09:00:00";
+  assert.deepEqual(splitTerminalByWindow([{ id: 9, updatedAt: fmt }], local + 7 * day).recent.map((i) => i.id).join(), [9].join());
+  assert.deepEqual(splitTerminalByWindow([{ id: 9, updatedAt: fmt }], local + 7 * day + 1).older.map((i) => i.id).join(), [9].join());
+  assert.deepEqual(JSON.parse(JSON.stringify(splitTerminalByWindow([], now))), { recent: [], older: [] });
 });
