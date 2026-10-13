@@ -5,7 +5,7 @@ import {
   logout as apiLogout,
   refreshAccessToken
 } from "../api/dreamDiaryApi";
-import { ApiError, setUnauthorizedHandler } from "../api/client";
+import { ApiError, ApiConnectionError, setUnauthorizedHandler } from "../api/client";
 import {
   clearAccessToken,
   hydrateAccessTokenFromSecureStore
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       const status = e instanceof ApiError ? e.status : undefined;
       setAuthError(
-        status === 403
+        e instanceof ApiConnectionError ? e.message : status === 403
           ? "현재 계정으로는 인증 상태를 확인할 권한이 없습니다."
           : "인증 상태를 확인하는 중 오류가 발생했습니다."
       );

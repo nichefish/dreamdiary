@@ -334,3 +334,7 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 ## Lifecycle 조합 DTO
 
 ✓ `LifecycleCmpstn`은 `lifecycleKey`·`lifecycleDesc`와 nullable `resolvedAt`·`changedAt`(현재 상태로 바뀐 UTC 시각, 같은 형식, 현재 Keep 일괄 조회에서만 채움)을 제공한다. Keep의 현재 완료 전이 시각은 UTC ISO-8601 문자열(`yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'`)로 표시한다. 완료 시각을 제공하지 않는 콘텐츠의 값은 null이다. Keep의 저장·조회 계약은 [Prospective 인터랙션 스펙](../prospective/interaction-spec.md)의 Keep 완료 시각 항목이 소유한다.
+
+## 모바일 공통 HTTP 연결 오류
+
+✓ `api/client.ts`의 `request`는 응답 본문까지 15초 제한을 적용하고 시간 초과 시 AbortController로 요청을 중단한다. 연결 실패·시간 초과는 `ApiConnectionError`(status 0, reason network/timeout)로 구분하며 네트워크와 휴대폰·PC Tailscale 확인 문구를 전달한다. 쓰기 요청은 서버 처리 여부가 미확정일 수 있음을 알리고 자동 재전송을 금지한다. 시간 초과 뒤 늦게 온 응답은 토큰 저장·401 로그아웃을 수행하지 않는다. 완료·오류 시 타이머와 호출자 취소 구독을 해제하며 HTTP 오류 메시지·401 처리·multipart boundary 계약을 유지한다.
