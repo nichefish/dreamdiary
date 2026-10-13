@@ -60,6 +60,10 @@ Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단
 
 ✓ `utils/keepQuickAdd.ts`는 모바일 빠른 추가 규칙을 소유한다. 기본 Project(현재 Project 칩, `전체`·`미지정`은 미지정), 일시 → 기한 추출, 기한 입력 해석과 안내 문구, 저장 전 입력 검사(`toKeepFormData`와 같은 길이·날짜 규칙, 말머리 ID 전달), 등록 실패 메시지 분류(서버 응답 실패 / 응답 없는 전송 오류)가 여기에 있다. `components/keep/KeepQuickAddSheet.tsx`는 입력 상태, 기한의 자동/직접 수정 구분, 말머리 칩(`prefixes` prop: 활성 PROSPECTIVE_KEEP 선택지, 비면 숨김, `textClass` 색), 저장 중 잠금을 관리하고 저장 자체는 `onSubmit`으로 `KeepHomeScreen`에 위임한다. 등록 성공(후속 단계 실패 포함)·응답 없는 오류 뒤 시트 닫기와 목록 안내(`notifyBrief`)는 `KeepHomeScreen`이 맡는다(연속 입력 없음). 빠른 추가 시트는 신규 등록 입력을 소유하며 `tagMap` prop(웹 자동완성 맵)으로 기존 태그 선택 칩을 그린다. `utils/keepTags.ts`는 태그 후보 펼치기·검색·토글·Tagify 직렬화·상세 태그 해석을, `utils/keepEdit.ts`는 수정 초기값·선택지(비활성 말머리·종결 Project 유지)·동시 수정 판정·실패 메시지를, `keepFormData.toKeepEditFormData`는 웹 수정 모달과 같은 전체 재전송(보존 필드 복사, 불가 시 `KeepEditPreserveError`)을 소유한다. `utils/keepTerminalSort.ts`는 종결 정렬과 함께 `splitTerminalByWindow`(`KEEP_TERMINAL_WINDOW_DAYS`=7, 종결 시각 기준 최근/이전 분리, 순서 유지)를 소유하고 `KeepHomeScreen`이 펼침 상태(`showOlderTerminal`)와 `이전 종결 N개 더 보기`/`접기` 줄을 맡는다. 수정 흐름(초기화·임시 값·보존·동시 수정·저장 뒤 콜백)은 `components/keep/useKeepEdit.ts`가 소유하고 `KeepDetailScreen`이 읽기·편집 통합 화면으로 사용한다. `KeepInlineEditor`는 항목 아래 편집 영역 하나, 기한 달력, 기존 태그 선택과 임시 값 표시를 소유한다. 목록 ⋯ `수정`은 같은 화면의 제목 편집을 연다. `utils/keepManage.ts`는 삭제 확인 문구·파괴적 확인(`confirmKeepDelete`, Alert 주입)·Project 대상 판정·안내·실패 메시지를 소유한다. `KeepLifecycleMenu`는 `onEdit`를 받아 메뉴 아래 `✎ 수정`을 그린다. Project 변경은 통합 화면의 임시 값과 전체 저장에 포함하고 삭제는 같은 화면의 확인 대화상자를 거친다. Keep 말머리 색은 `types/prospectiveKeep.keepPrefixColor`(textClass → 색, 없으면 `#287D94`) 하나를 목록·상세·시트·필터가 공유한다.
 
+## 모바일 Keep 서버 알림 (2-5)
+
+✓ `KeepPushRegistration`은 인증 세대·직렬 등록/해제·로그아웃 잠금을 소유한다. `keepPush.ts`는 expo-notifications 채널·권한·Expo 토큰 조회와 expo-crypto 설치 UUID의 SecureStore 저장을 담당한다. 원본 토큰·개인 제목·본문은 로그와 수신 상태에 포함하지 않는다. `keepPushTap.ts`는 날짜·슬롯 검증과 인증 준비 후 새 KeepHome 진입을 담당한다. `KeepReminderRestController`는 현재 인증 소유자의 최신 알림 대상 DTO 조회를 제공하고 동일 `KeepReminderPolicy`를 사용한다.
+
 ## 모바일 Keep 읽기·편집 통합 기반
 
 ✓ `KeepEditDraft`는 제목·일시·확정 기한·Project·말머리·중요·태그·위치·본문 원문을 임시 값으로 소유한다. `keepEditDraft`는 상세의 위치·본문과 태그를 확인한 뒤 초기화하며 확인할 수 없는 원문·태그는 시작을 차단한다. `copyKeepEditDraft`는 태그 객체까지 복사해 편집 기준값을 보존한다. `keepEditDraftChanged`는 모든 편집 필드와 태그 집합을 비교하고 태그 표시 순서만 달라진 경우는 변경으로 판정하지 않는다. 이 함수들은 API 요청을 수행하지 않는다. `useKeepEdit.patch`는 일시의 유효 날짜를 기한에 자동 반영하고 이번 편집에서 직접 지정한 기한·빈 값은 보존한다. 해석 실패는 기존 기한을 유지하며 초기화·취소는 직접 지정 구분을 초기화한다.
@@ -69,3 +73,15 @@ Keep 행의 컨텍스트 메뉴에서 Project 미지정과 Project 목록을 단
 ## 모바일 Keep 본문 리치 텍스트 편집
 
 ✓ 본문 편집은 WebView 기반 리치 텍스트 에디터로 HTML 원문을 표시·편집한다. 굵게·기울임·목록·링크의 서식을 제공하고 기존 이미지·표를 HTML에 보존한다. 본문을 편집하지 않은 저장은 원문 그대로 전송한다. 편집 영역 접기·다른 필드 전환·저장은 최신 본문을 확인한 뒤 수행하며 에디터 오류는 본문 입력값을 유지하고 안내한다. HTML을 평문으로 변환해 저장하지 않는다. `KeepRichEditor`는 `react-native-pell-rich-editor`·`react-native-webview`를 사용하고 초기 DOM 직렬화 결과와 비교해 미편집 원문을 보존한다. reader는 중복 읽기를 잠그고 최신 HTML을 확인하는 동안 입력을 잠근다. 편집 문서는 앱에 포함되며 CSP는 에디터 스크립트만 허용하고 저장된 본문의 실행 태그·이벤트 코드는 실행하지 않는다.
+## Keep 서버 리마인드 기반
+
+✓ `KeepReminderPolicy`는 일반·중요 고정 규칙과 IANA 시간대 슬롯·개수 요약을 소유한다. `KeepReminderRepository`는 인증 기기 등록·해제, 캐시 없는 Keep/상태 조회, 슬롯 유일키 확보와 전달 기록을 담당한다. 기기 등록은 주 원본 DataSource의 JDBC 트랜잭션을 사용한다. 토큰 테이블 SQL은 P6Spy 로거에서 메시지 포맷 전에 제외하며 토큰 포함 예외·직접 로그도 원문을 출력하지 않는다.
+
+✓ `keep_reminder_device`는 설치 UUID·소유 계정·Expo 토큰·시간대·활성 여부를 보유한다. `keep_reminder_delivery`는 사용자·기기·로컬 날짜·슬롯별 한 번의 발송 시도와 토큰 SHA-256·ticket·결과를 보유한다. 토큰은 기기에 저장하고 전달 기록에는 지문을 저장한다. UTC DATETIME(6)을 사용하고 migration 및 마스터 Prospective 스키마가 같은 테이블·유일키·상태 제약을 기술한다.
+
+✓ `KeepReminderDispatcher`는 후보 조회 → DB 슬롯 확보 → 최신 기기/계정·Keep/상태·시각 재확인 → 요약 전송 → 결과 기록을 수행한다. `KeepPushGateway`와 `ExpoKeepPushClient`는 HTTPS ticket·receipt 전달 경계다. `KeepReminderScheduler`는 15초 간격 발송 판정과 60초 간격 receipt 확인을 실행한다. DB 미적용·조회·전달 오류는 로그로 드러나며 Keep 데이터나 lifecycle을 수정하지 않는다.
+
+
+## 모바일 Keep 본문 읽기 간격
+
+✓ Keep 통합 화면의 본문 읽기는 16 글자 크기·24 줄 높이를 사용한다. HTML 구조 문단 경계는 한 개행으로 표시하고 명시적 br·빈 문단은 보존한다. 블록 태그 사이의 HTML 정렬용 공백은 추가 빈 줄로 표시하지 않는다. 이 표시 옵션은 Keep 읽기에 적용하며 저장·리치 텍스트 편집 원문·복사 변환의 기본 규칙을 유지한다.

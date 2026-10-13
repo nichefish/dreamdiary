@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import {
   getAuthInfo,
   login as apiLogin,
@@ -11,6 +11,10 @@ import {
   hydrateAccessTokenFromSecureStore
 } from "../auth/accessToken";
 import type { AuthUser } from "../types/auth";
+import { AppState } from "react-native";
+import * as Notifications from "expo-notifications";
+import { keepPushRegistration } from "../notifications/keepPush";
+import { IDLE_KEEP_PUSH, type KeepPushStatus } from "../notifications/keepPushRegistration";
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -21,6 +25,9 @@ interface AuthContextValue {
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   retryAuth: () => Promise<void>;
+  /** 푸시 준비 실패는 인증·Keep 사용과 별도로 표시한다. */
+  pushStatus: KeepPushStatus;
+  retryPush: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -29,6 +36,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [pushStatus, setPushStatus] = useState<KeepPushStatus>(IDLE_KEEP_PUSH);
+  const logoutBusy = useRef(false);
+  const retryPush = useCallback(() => keepPushRegistration.sync(), []);
+
+  /** 인증 소유자와 수신 상태를 연결하고 전경 복귀·네이티브 토큰 변경을 다시 반영한다. */
+  useEffect(() => keepPushRegistration.subscribe(setPushStatus), []);
+  useEffect(() => {
+    keepPushRegistration.setOwner(user?.username ?? null);
+    if (!user) return;
+    void keepPushRegistration.sync();
+    const foreground = AppState.addEventListener("change", (state) => {
+      if (state === "active") void keepPushRegistration.sync();
+    });
+    let lastToken: string | null = null;
+    const token = Notifications.addPushTokenListener((next) => {
+      if ((next.type !== "android" && next.type !== "ios") || typeof next.data !== "string" || next.data === lastToken) return;
+      lastToken = next.data;
+      // 전달받은 네이티브 토큰으로 Expo 토큰을 조회해 토큰 리스너의 재귀 호출을 방지한다.
+      void keepPushRegistration.sync({ type: next.type, data: next.data });
+    });
+    return () => { foreground.remove(); token.remove(); };
+  }, [user?.username]);
 
   /**
    * 기존 세션(쿠키) 유효 여부 확인 — 앱 시작 시 1회 호출.
@@ -86,6 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // 401 응답 시 client.ts 가 이 핸들러를 호출 → 자동 로그아웃
   useEffect(() => {
     return setUnauthorizedHandler(() => {
+      keepPushRegistration.setOwner(null);
       void clearAccessToken();
       setUser(null);
       setAuthError(null);
@@ -107,18 +137,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [loadAuth]
   );
 
+  /** 푸시 해제 확인 전에는 인증을 보존한다. 확인 후 서버 로그아웃과 로컬 인증 정리를 수행한다. */
   const logout = useCallback(async () => {
+    if (logoutBusy.current) return;
+    logoutBusy.current = true;
     try {
-      await apiLogout();
+      await keepPushRegistration.detachForLogout();
+      try {
+        await apiLogout();
+      } finally {
+        await clearAccessToken();
+        keepPushRegistration.setOwner(null);
+        setUser(null);
+      }
     } finally {
-      await clearAccessToken();
-      setUser(null);
+      logoutBusy.current = false;
     }
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: user !== null, isLoading, authError, login, logout, retryAuth: checkAuth }}
+      value={{ user, isAuthenticated: user !== null, isLoading, authError, login, logout, retryAuth: checkAuth, pushStatus, retryPush }}
     >
       {children}
     </AuthContext.Provider>

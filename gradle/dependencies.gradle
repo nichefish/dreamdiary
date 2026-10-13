@@ -202,6 +202,8 @@ dependencies {
 dependencies {
     /* ↓ Spring Boot 테스트 지원 */
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    /* Keep 리마인드 JDBC 소유·상태·발송 유일키를 독립적인 메모리 DB에서 검증한다. */
+    testRuntimeOnly 'com.h2database:h2'
     /* ↓ Spring Security 테스트 지원 */
     testImplementation 'org.springframework.security:spring-security-test'
     /* ↓ Spring Data JPA 테스트 지원 */

@@ -338,3 +338,11 @@ Vue SPA는 빌드가 성공했더라도 라우팅, 동적 import, 렌더링, 전
 ## 모바일 공통 HTTP 연결 오류
 
 ✓ `api/client.ts`의 `request`는 응답 본문까지 15초 제한을 적용하고 시간 초과 시 AbortController로 요청을 중단한다. 연결 실패·시간 초과는 `ApiConnectionError`(status 0, reason network/timeout)로 구분하며 네트워크와 휴대폰·PC Tailscale 확인 문구를 전달한다. 쓰기 요청은 서버 처리 여부가 미확정일 수 있음을 알리고 자동 재전송을 금지한다. 시간 초과 뒤 늦게 온 응답은 토큰 저장·401 로그아웃을 수행하지 않는다. 완료·오류 시 타이머와 호출자 취소 구독을 해제하며 HTTP 오류 메시지·401 처리·multipart boundary 계약을 유지한다.
+
+## P6Spy 푸시 자격정보 로그 제외
+
+✓ `P6SpySlf4JLogger`는 `keep_reminder_device` SQL을 메시지 포맷 전에 제외한다. ExpoPushToken·ExponentPushToken이 포함된 SQL·직접 로그·예외 원문은 출력하지 않는다. 다른 SQL의 INFO·quiet DEBUG와 ERROR/WARN 계약은 유지한다.
+
+## 모바일 인증과 Keep 푸시 연결
+
+✓ `AuthProvider`는 인증 소유자에 맞춰 Keep 푸시 등록을 연결하고 수신 상태를 인증 오류와 분리해 제공한다. 로그아웃은 실행 중 등록의 종료·기기 해제를 확인한 후 기존 서버 로그아웃과 로컬 토큰 정리를 수행한다. 해제 실패는 인증을 보존한다. 전역 401은 등록 인증 세대를 즉시 무효화한다. `NavigationContainer`의 ready·state change는 인증 후 대기 알림 진입을 재개한다.

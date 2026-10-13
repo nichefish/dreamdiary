@@ -202,6 +202,9 @@ npm run type-check
   - 공유는 React Native 내장 `Share` API라 추가 패키지가 없습니다.
 - Expo CLI가 `expo` `57.0.19` → `57.0.26` 업데이트를 제안하지만 이번에는 보류했습니다. 후속 작업에서 `npx expo install --fix`로 SDK 57 기대 버전에 맞춥니다([`sdk-upgrade.md`](./sdk-upgrade.md) 후속 기록).
 
+- **네이티브 푸시 의존성**: `expo-notifications`(`~57.0.22`)와 `expo-crypto`(`~57.0.4`)는 Expo SDK 57 호환 버전을 사용한다. `app.json`의 notifications 플러그인은 알림 색을 제공하며 네이티브 매니페스트의 Android 알림 권한을 병합한다. 앱이 실행 중 `keep-reminder` 채널을 만든다. 플러그인·Firebase 클라이언트 구성 변경은 `build-android-apk.ps1 -CleanPrebuild`로 네이티브 구성을 반영한다. 실제 수신 구성은 아래 Keep 서버 푸시 설정과 검증 절을 따른다.
+- **Expo Go(SDK 57)**: 로컬 알림 예약·표시는 Expo Go에서도 동작한다(Expo Go에서 빠진 것은 Android 원격 푸시뿐). 다만 시작 시 `expo-notifications functionality is not fully supported in Expo Go` 경고가 콘솔에 한 번 뜨고, 알림 채널 이름·아이콘 색은 Expo Go 앱 기준이다. 확인은 APK(§5.5)를 권장한다.
+
 ### 4.1 Gradle 태스크 (`gradle/mobile.gradle`)
 
 IntelliJ Gradle 창의 `mobile` 그룹에서 실행하거나 루트에서 `.\gradlew.bat <태스크>`로 실행합니다.
@@ -524,3 +527,18 @@ npm.cmd run android
 ### Keep 본문 리치 텍스트 편집 의존성
 
 모바일 본문 편집은 `react-native-pell-rich-editor`와 Expo SDK 57 호환 `react-native-webview`(13.16.1)를 사용한다. 에디터 HTML·JavaScript는 앱 번들에 포함된다. WebView 네이티브 모듈 추가를 반영한 APK를 다시 빌드·설치해야 한다. 기존 Android 프로젝트의 자동 연결은 Gradle 빌드에서 갱신되며 app.json 플러그인 변경은 필요하지 않다.
+
+### Keep 서버 푸시 설정과 검증
+
+앱은 서버 고정 리마인드와 Expo 푸시를 사용한다. 서버에 `V0.30.17__create_keep_reminder_push.sql`을 수동 적용하고 새 서버 코드를 실행해야 기기 API가 동작한다. 실제 전달에는 Expo 프로젝트 UUID, Android Firebase 클라이언트 `google-services.json`, 같은 Firebase 프로젝트의 FCM v1 발송 자격 증명을 Expo/EAS 프로젝트에 등록한 구성이 필요하다. FCM 서비스 계정 개인 키는 APK와 저장소에 포함하지 않는다.
+
+로컬 APK 빌드에서 `-ExpoProjectId <UUID> -GoogleServicesJsonPath <로컬 google-services.json 경로> -CleanPrebuild`를 전달한다. `EXPO_PUBLIC_EXPO_PROJECT_ID`는 앱 번들과 Expo 설정에 들어가고 `GOOGLE_SERVICES_JSON_PATH`는 네이티브 prebuild에서 Android 클라이언트 설정을 지정한다. API 주소는 기존 `-ApiBaseUrl`로 지정한다. 설정을 준비하지 않은 앱은 ‘나’ 화면에서 푸시 준비 오류를 표시하며 Keep 기능은 사용할 수 있다.
+
+검증은 실기기 로그인 → ‘나’의 수신 준비 확인 → 서버 등록 확인 → 앱을 닫은 상태에서 고정 슬롯 알림 수신 → 선택 후 최신 대상 목록 → 권한 변경 후 전경 복귀 → 로그아웃 해제 순서로 수행한다. Expo 접수·FCM 인계·실기기 표시는 각각 확인한다. 코드·단위 테스트·APK 빌드는 실제 전달 확인을 대신하지 않는다. 연결 오류는 서버 주소 접근부터 확인한다.
+
+
+### APK 공개 다운로드 배포
+
+`build-android-apk.ps1 -Publish`는 빌드·번들 주소 검증 후 공개 저장소 `nichefish/dreamdiary-app`의 `mobile-preview` 사전 릴리스에 APK를 게시한다. 현재 파일을 게시할 때는 `publish-android-apk.ps1 -ApkPath ./dist/dreamdiary-0.1.0-release.apk`를 실행한다. 인증은 Git Credential Manager의 github.com 자격을 사용한다. 토큰·서명 키·환경 파일은 게시 대상에 포함하지 않는다.
+
+파일명은 앱 버전·APK 파일 시각(UTC)·SHA-256 접두사를 포함한다. 기존 파일을 덮어쓰지 않으며 같은 파일이 있으면 다운로드 검증으로 완료한다. 성공은 인증 없이 실제 APK를 내려받아 크기·SHA-256을 확인한 뒤 출력하는 HTTPS 주소로 판정한다. 사용자는 이 주소를 휴대폰 브라우저에서 열어 다운로드·업데이트 설치한다. APK는 공개되며 앱의 서버 주소·권한·접속 조건은 APK에 포함된 설정을 따른다. 릴리스는 로컬 작업트리 개발 APK의 배포 공간이다.

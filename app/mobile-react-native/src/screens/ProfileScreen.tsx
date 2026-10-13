@@ -58,7 +58,7 @@ function calcMonthStats(monthDays: JournalDay[]): MonthStats {
 // ─── 메인 화면 ──────────────────────────────────────────────
 
 export function ProfileScreen() {
-  const { user, logout } = useAuth();
+  const { user, logout, pushStatus, retryPush } = useAuth();
   const [loggingOut, setLoggingOut]     = useState(false);
   const [statsLoading, setStatsLoading] = useState(true);
   const [stats, setStats]               = useState<MonthStats>({ days: 0, dreams: 0, diaries: 0 });
@@ -96,6 +96,8 @@ export function ProfileScreen() {
           setLoggingOut(true);
           try {
             await logout();
+          } catch (error) {
+            Alert.alert("로그아웃 확인", error instanceof Error ? error.message : "로그아웃을 완료하지 못했습니다.");
           } finally {
             setLoggingOut(false);
           }
@@ -171,6 +173,18 @@ export function ProfileScreen() {
               </View>
             </View>
           )}
+        </View>
+
+        {/* 푸시 준비 상태: 알림 규칙은 서버의 고정 정책을 따른다. */}
+        <View style={styles.statsCard}>
+          <Text style={styles.statsTitle}>Keep 리마인드</Text>
+          <Text style={styles.statLabel}>{pushStatus.message}</Text>
+          {pushStatus.state === "syncing" ? <ActivityIndicator color={colors.accent} /> : null}
+          {pushStatus.state === "error" || pushStatus.state === "denied" ? (
+            <Pressable accessibilityRole="button" onPress={() => { void retryPush(); }} style={styles.statsRetryButton}>
+              <Text style={styles.statsRetryButtonText}>수신 상태 다시 확인</Text>
+            </Pressable>
+          ) : null}
         </View>
 
         {/* 로그아웃 버튼 */}

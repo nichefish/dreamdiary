@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { createKeep, getKeepList, getKeepTagCategoryMap, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
+import { createKeep, getKeepList, getKeepReminderList, getKeepTagCategoryMap, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { MENU_URL } from "../navigation/appMenu";
@@ -61,6 +61,7 @@ import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
 import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
 import { splitTerminalByWindow } from "../utils/keepTerminalSort";
 import { KeepQuickAddSheet } from "../components/keep/KeepQuickAddSheet";
+import type { KeepReminderWindow } from "../notifications/keepPushTap";
 import { colorFromTextClass } from "../components/journal/journalTagStyle";
 import { quickAddDefaultProjectId, quickAddFailureMessage, type KeepQuickAddResult, type KeepQuickAddSubmit } from "../utils/keepQuickAdd";
 import { isRecentKeep, recentKeeps, nextKeepCompletionExpiry, KEEP_RECENT_PREVIEW_SIZE } from "../utils/keepRecent";
@@ -190,15 +191,19 @@ function KeepRow({ item, today, projectTitle, selectedTagId, onPress, onPressTag
 
 /**
  * Keep 전수관리 (햄버거 메뉴 `Keep > Keep 전수관리`) — 웹 /keep(KeepPage.vue)의 조회·라이프사이클 조작을 제공한다.
- * - GET /api/prospective/keeps?scope=all 한 번으로 전 범위를 받고, Project 범위·보기·검색·필터는 화면에서 투영한다(웹과 같음).
+ * - 기본 진입은 GET /api/prospective/keeps?scope=all 한 번으로 전 범위를 받고, Project 범위·보기·검색·필터는 화면에서 투영한다(웹과 같음). 알림 진입은 서버가 확정한 최신 대상 목록을 같은 UI로 표시한다.
  * - Project 칩(전체 · 미지정 · OPEN Project), 보기(진행 · 기한 · 종결), 검색(제목·본문, 제출 시에만), 필터 시트(기한 지남 · 중요 · 말머리 · 태그)
- * - 행을 누르면 Keep 상세(읽기 전용). 행의 태그 칩은 태그 필터 토글.
+ * - 행을 누르면 Keep 읽기·편집 통합 화면. 행의 태그 칩은 태그 필터 토글.
  * - 중요·요구 토글은 성공·오류 모두 Keep 목록으로 서버 현재 값을 확인한다. 요청 중 다른 쓰기를 잠근다.
  * - 완료·라이프사이클은 서버 저장 후 Keep 목록만 재조회한다. 쓰기 범위는 docs/migration/mobile/keep-todo-plan.md의 2-1 완료·라이프사이클 계약을 따른다.
  * - 오른쪽 아래 `+`는 빠른 추가 시트(2-2B)를 연다. 등록 POST 한 번 → (중요면) IMPRTC 토글 한 번 → Keep 목록 재조회, 자동 재전송 없음.
  */
-export function KeepHomeScreen() {
+export function KeepHomeScreen({ route }: { route?: { params?: { reminder?: KeepReminderWindow } } } = {}) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const reminder = route?.params?.reminder;
+  /** 알림 진입도 같은 목록 UI를 사용하며 대상 판정은 서버가 소유한다. */
+  const fetchList = useCallback(() => reminder
+    ? getKeepReminderList(reminder.localDate, reminder.slot) : getKeepList(), [reminder?.localDate, reminder?.slot]);
   const [list, setList] = useState<KeepItem[]>([]);
   const [projects, setProjects] = useState<KeepProject[]>([]);
   const [projectError, setProjectError] = useState(false);
@@ -214,7 +219,7 @@ export function KeepHomeScreen() {
   /** 종결 보기: 7일보다 오래된 종결을 펼쳤는지. 화면(세션) 동안 유지하고 Project·필터·검색이 바뀌면 접는다 */
   const [showOlderTerminal, setShowOlderTerminal] = useState(false);
   const [view, setView] = useState<KeepView>("OPEN");
-  const [filters, setFilters] = useState<KeepFilters>(EMPTY_KEEP_FILTERS);
+  const [filters, setFilters] = useState<KeepFilters>(() => reminder ? { ...EMPTY_KEEP_FILTERS, scope: "ALL" } : EMPTY_KEEP_FILTERS);
   const [keyword, setKeyword] = useState("");
   const [sheetOpen, setSheetOpen] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
@@ -256,7 +261,7 @@ export function KeepHomeScreen() {
       setError(null);
     }
     const [listRes, projectRes, tagRes, prefixRes] = await Promise.allSettled([
-      getKeepList(),
+      fetchList(),
       getKeepProjects(),
       getKeepTags(),
       getKeepPrefixOptions()
@@ -265,6 +270,7 @@ export function KeepHomeScreen() {
 
     if (listRes.status === "fulfilled") {
       setList(listRes.value);
+      /** 목록은 현재 서버 응답을 표시한다. 알림 권한·예약 정합은 인증 연결에서 처리한다. */
       awaitingListRef.current = false;
       setActionError(null);
       setError(null);
@@ -295,7 +301,7 @@ export function KeepHomeScreen() {
 
     setLoading(false);
     setRefreshing(false);
-  }, []);
+  }, [fetchList]);
 
   // 처음 들어올 때 전체 로딩, 상세에서 돌아오는 등 다시 포커스되면 조용히 갱신 (웹에서 바뀐 내용 반영)
   useFocusEffect(
@@ -307,7 +313,7 @@ export function KeepHomeScreen() {
   /** Keep만 재조회해 서버 상태·완료 시각을 표시하고 이전 목록 응답을 무효화한다. */
   async function reloadKeepListOnly(): Promise<void> {
     ++seqRef.current;
-    const fresh = await getKeepList();
+    const fresh = await fetchList();
     if (!mountedRef.current) return;
     awaitingListRef.current = false;
     setActionError(null);
@@ -683,6 +689,12 @@ export function KeepHomeScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
           <View style={styles.listHeader}>
+            {reminder ? <View style={styles.stateBox}>
+              <Text style={styles.noteText}>{reminder.localDate} {reminder.slot === "MORNING" ? "아침" : "저녁"} 알림 대상 · 현재 상태 기준</Text>
+              <Pressable accessibilityRole="button" onPress={() => navigation.replace("KeepHome")} style={styles.retryButton}>
+                <Text style={styles.retryText}>기본 목록으로</Text>
+              </Pressable>
+            </View> : null}
             {actionError ? <View style={styles.stateBox}>
               <Text style={styles.errorText}>{actionError.message}</Text>
               {actionError.saved ? <Pressable accessibilityRole="button" disabled={savingId != null}
@@ -823,7 +835,7 @@ export function KeepHomeScreen() {
             </View>
           ) : (
             <View style={styles.stateBox}>
-              <Text style={styles.emptyText}>{hasConditions || filters.scope !== "ALL" ? "조건에 맞는 Keep이 없습니다." : EMPTY_TEXT[view]}</Text>
+              <Text style={styles.emptyText}>{hasConditions || filters.scope !== "ALL" ? "조건에 맞는 Keep이 없습니다." : reminder ? "현재 남아있는 알림 대상이 없습니다." : EMPTY_TEXT[view]}</Text>
               {filters.overdue && view === "TERMINAL" ? (
                 <Text style={styles.noteText}>기한 지남 필터는 종결되지 않은 항목만 남깁니다.</Text>
               ) : null}

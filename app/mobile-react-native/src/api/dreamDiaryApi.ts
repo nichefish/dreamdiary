@@ -663,3 +663,24 @@ export function searchEntries(params: EntrySearchParams) {
     }
   });
 }
+/** 현재 인증 계정의 설치 UUID·Expo 토큰·시간대를 등록한다. 토큰은 로그와 응답에 노출하지 않는다. */
+export async function registerKeepReminderDevice(deviceId: string, expoToken: string, timeZone: string): Promise<void> {
+  const response = await request<AjaxResponse>("/api/prospective/keep/reminder-devices", {
+    method: "POST", body: JSON.stringify({ deviceId, expoToken, timeZone })
+  });
+  if (response.rslt !== true) throw new ApiError(response.message || "알림 기기를 등록하지 못했습니다.", 200);
+}
+
+/** 로그아웃 전에 인증 소유자의 등록 해제를 확인한다. HTTP·업무 실패는 호출자에게 전달한다. */
+export async function unregisterKeepReminderDevice(deviceId: string): Promise<void> {
+  const response = await request<AjaxResponse>(`/api/prospective/keep/reminder-devices/${encodeURIComponent(deviceId)}`, { method: "DELETE" });
+  if (response.rslt !== true) throw new ApiError(response.message || "알림 기기를 해제하지 못했습니다.", 200);
+}
+
+/** 알림의 날짜·슬롯에 해당하는 현재 인증 소유자의 최신 Keep 목록을 서버에서 판정한다. */
+export async function getKeepReminderList(localDate: string, slot: "MORNING" | "EVENING"): Promise<KeepItem[]> {
+  const response = await request<AjaxResponse<unknown, KeepItem>>("/api/prospective/keep/reminder-targets", { query: { localDate, slot } });
+  if (response.rslt !== true) throw new ApiError(response.message || "알림 대상 목록을 조회하지 못했습니다.", 200);
+  if (!Array.isArray(response.rsltList)) throw new ApiError("알림 대상 목록 응답을 확인하지 못했습니다.", 200);
+  return response.rsltList;
+}

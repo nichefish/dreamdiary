@@ -7,6 +7,8 @@ const path = require("node:path");
 
 const FIXTURE_PATH = "/api/sample";
 const FIXTURE_MESSAGE = "샘플 서버 오류";
+const FIXTURE_OWNER = "Alice";
+const FIXTURE_DETACH_ERROR = "샘플 해제 실패";
 
 /** 실제 공통 요청을 가상 fetch·수동 시계로 실행한다. */
 function client(fetch) {
@@ -128,7 +130,7 @@ test("본문 JSON 형식 오류를 연결 실패로 오인하지 않음", async 
 });
 
 /** 실제 인증 Provider의 로딩 종료·오류·사용자 재시도를 가상 훅으로 관측한다. */
-function auth(c, getAuthInfo) {
+function auth(c, getAuthInfo, overrides = {}) {
   const slots = [];
   let cursor = 0;
   const module = { exports: {} };
@@ -138,15 +140,21 @@ function auth(c, getAuthInfo) {
   }).outputText, {
     module, exports: module.exports, Error, console: { warn() {} },
     require(name) {
+      if (name in overrides) return overrides[name];
       if (name === "react") return {
         createContext: () => ({ Provider: "Provider" }),
         useState(initial) { const i = cursor++; if (!(i in slots)) slots[i] = initial; return [slots[i], (value) => { slots[i] = value; }]; },
-        useCallback: (fn) => fn, useEffect() {}
+        useCallback: (fn) => fn, useEffect() {},
+        useRef(initial) { const i = cursor++; if (!(i in slots)) slots[i] = { current: initial }; return slots[i]; }
       };
       if (name === "react/jsx-runtime") return { jsx, jsxs: jsx };
       if (name === "../api/client") return c.api;
       if (name === "../api/dreamDiaryApi") return { getAuthInfo, refreshAccessToken: async () => {}, login() {}, logout() {} };
       if (name === "../auth/accessToken") return { hydrateAccessTokenFromSecureStore: async () => {}, clearAccessToken: async () => {} };
+      if (name === "react-native") return { AppState: {} };
+      if (name === "expo-notifications") return {};
+      if (name === "../notifications/keepPush") return { keepPushRegistration: { sync: async () => {}, detachForLogout: async () => {}, setOwner() {} } };
+      if (name === "../notifications/keepPushRegistration") return { IDLE_KEEP_PUSH: { state: "idle", message: "샘플 상태" } };
       throw new Error("Unexpected auth dependency: " + name);
     }
   });
@@ -181,4 +189,38 @@ test("시간 초과 뒤 늦게 온 401은 인증을 지우거나 화면 상태�
   for (let i = 0; i < 8; i++) await Promise.resolve();
   assert.equal(c.unauthorized(), 0);
   assert.equal(c.clearedTokens(), 0);
+});
+
+/** 가상 푸시 해제 결과로 인증 정리의 순서와 실패 시 보존을 관측한다. */
+test("푸시 해제 실패는 서버 로그아웃·로컬 토큰 정리 없이 인증 보존", async () => {
+  const calls = [];
+  const fixtureUser = { username: FIXTURE_OWNER };
+  const a = auth(client(async () => response()), async () => ({ rslt: true, rsltObj: fixtureUser }), {
+    "../notifications/keepPush": { keepPushRegistration: {
+      sync: async () => {}, setOwner() {}, detachForLogout: async () => { calls.push("detach"); throw new Error(FIXTURE_DETACH_ERROR); }
+    } },
+    "../api/dreamDiaryApi": { getAuthInfo: async () => ({ rslt: true, rsltObj: fixtureUser }), refreshAccessToken: async () => {},
+      logout: async () => calls.push("logout") },
+    "../auth/accessToken": { hydrateAccessTokenFromSecureStore: async () => {}, clearAccessToken: async () => calls.push("clear") }
+  });
+  await a.render().retryAuth();
+  await assert.rejects(a.render().logout(), /샘플 해제 실패/);
+  assert.deepEqual(calls, ["detach"]);
+  assert.equal(a.render().user.username, fixtureUser.username);
+});
+
+test("푸시 해제 확인 후 서버 로그아웃과 로컬 토큰 정리 순서", async () => {
+  const calls = [];
+  const a = auth(client(async () => response()), async () => ({ rslt: true, rsltObj: { username: FIXTURE_OWNER } }), {
+    "../notifications/keepPush": { keepPushRegistration: {
+      sync: async () => {}, detachForLogout: async () => calls.push("detach"), setOwner() {}
+    } },
+    "../api/dreamDiaryApi": { getAuthInfo: async () => ({ rslt: true, rsltObj: { username: FIXTURE_OWNER } }), refreshAccessToken: async () => {},
+      logout: async () => calls.push("logout") },
+    "../auth/accessToken": { hydrateAccessTokenFromSecureStore: async () => {}, clearAccessToken: async () => calls.push("clear") }
+  });
+  await a.render().retryAuth();
+  await a.render().logout();
+  assert.deepEqual(calls, ["detach", "logout", "clear"]);
+  assert.equal(a.render().user, null);
 });

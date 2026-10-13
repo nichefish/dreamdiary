@@ -45,8 +45,8 @@ export type RootStackParamList = {
   AnnualList: undefined;
   /** 결산 상세 (요약·리뷰). title 은 상세 로드 전 임시 표시 */
   AnnualDetail: { yy: number; title?: string };
-  /** 햄버거 메뉴 `Keep > Keep 전수관리` — Keep 목록 (읽기 전용, 모바일 2-0) */
-  KeepHome: undefined;
+  /** 햄버거 메뉴 `Keep > Keep 전수관리` — Keep 조회·빠른 추가·상태 조작과 서버 알림 대상 목록 */
+  KeepHome: { reminder?: import("../notifications/keepPushTap").KeepReminderWindow } | undefined;
   /**
    * Keep 읽기·편집 통합 화면. id 로 GET /api/prospective/keep/{id} 를 다시 읽는다.
    * item = 목록 항목(상세 응답이 오기 전 임시 표시), projectTitle = 목록에서 해석한 Project 이름

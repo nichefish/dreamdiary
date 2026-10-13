@@ -74,7 +74,7 @@ const nativeSurface = {
 };
 
 /** 실제 KeepHomeScreen을 가상 API로 렌더한다. 빠른 추가 시트는 표지 요소로 두고 props를 검사한다. */
-function screenHarness(apiOverrides = {}) {
+function screenHarness(apiOverrides = {}, screenProps = {}) {
   const h = hooks();
   const briefs = [];
   const load = loader({
@@ -94,13 +94,14 @@ function screenHarness(apiOverrides = {}) {
     "../components/keep/KeepSwipeRow": { KeepSwipeRow: "SwipeRow" },
     "../components/keep/KeepLifecycleMenu": { KeepLifecycleMenu: "LifecycleMenu" },
     "../components/keep/KeepProjectMoveSheet": { KeepProjectMoveSheet: "MoveSheet" },
+
     "../components/keep/useKeepEditSheet": { useKeepEditSheet: () => ({ openEdit: async () => {}, loading: false, savingRef: { current: false }, sheetProps: { visible: false, projects: [], prefixes: [], defaultProjectId: null, initial: null, tagMap: {}, onSubmit: async () => ({ ok: false, message: null }), onClose() {} } }) },
     "../components/keep/KeepQuickAddSheet": { KeepQuickAddSheet: "QuickAddSheet" }
   });
   const { KeepHomeScreen } = load(path.resolve(__dirname, "../src/screens/KeepHomeScreen.tsx"));
   return {
     briefs,
-    render() { h.reset(); return KeepHomeScreen(); },
+    render() { h.reset(); return KeepHomeScreen(screenProps); },
     focus() { for (const callback of [...h.focused]) callback(); }
   };
 }
@@ -415,4 +416,31 @@ describe("keepQuickAdd 규칙", () => {
     assert.equal(quick.quickAddFailureMessage(Object.assign(new Error(FIXTURE_ERROR), { status: 400 })), FIXTURE_ERROR);
     assert.match(quick.quickAddFailureMessage(new Error(FIXTURE_ERROR)), /목록에서 확인/);
   });
+});
+
+/** 가상 알림 진입은 전 Project 최신 대상 조회를 사용하고 완료 후 같은 범위를 재평가한다. */
+test("알림 대상 목록은 서버 판정 결과를 조회하고 완료 후 사라진 대상을 반영", async () => {
+  const calls = [];
+  let ended = false;
+  const target = { ...FIXTURE_LIST[0], projectId: FIXTURE_PROJECT.id };
+  const screen = screenHarness({
+    getKeepList: async () => { throw new Error("Unexpected whole-list read"); },
+    getKeepReminderList: async (date, slot) => { calls.push([date, slot]); return ended ? [] : [target]; },
+    setKeepLifecycle: async () => { ended = true; }
+  }, { route: { params: { reminder: { localDate: "2001-10-24", slot: "MORNING" } } } });
+  screen.render();
+  screen.focus();
+  await settle();
+  let tree = screen.render();
+  const listOf = (value) => [...walk(value)].find((node) => node.type === "FlatList").props;
+  const row = listOf(tree).data.find((entry) => entry.kind === "item");
+  assert.equal(row.item.id, target.id);
+  const rendered = listOf(tree).renderItem({ item: row });
+  const swipe = rendered.type === "SwipeRow" ? rendered : [...walk(rendered)].find((node) => node.type === "SwipeRow");
+  swipe.props.onComplete();
+  await settle();
+  tree = screen.render();
+  assert.equal(listOf(tree).data.filter((entry) => entry.kind === "item").length, 0);
+  assert.match(JSON.stringify(listOf(tree).ListEmptyComponent), /현재 남아있는 알림 대상/);
+  sameValue(calls, [["2001-10-24", "MORNING"], ["2001-10-24", "MORNING"]]);
 });

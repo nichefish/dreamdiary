@@ -47,6 +47,7 @@ function harness(apiOverrides = {}) {
     "../components/keep/KeepSwipeRow": { KeepSwipeRow: "SwipeRow" },
     "../components/keep/KeepLifecycleMenu": { KeepLifecycleMenu: "LifecycleMenu" },
     "../components/keep/KeepProjectMoveSheet": { KeepProjectMoveSheet: "MoveSheet" },
+
     "../components/keep/useKeepEditSheet": { useKeepEditSheet: () => ({ openEdit: async () => {}, loading: false, savingRef: { current: false }, sheetProps: { visible: false, projects: [], prefixes: [], defaultProjectId: null, initial: null, tagMap: {}, onSubmit: async () => ({ ok: false, message: null }), onClose() {} } }) },
     "../components/keep/KeepQuickAddSheet": { KeepQuickAddSheet: "QuickAddSheet" }
   };

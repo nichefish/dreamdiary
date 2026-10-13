@@ -1,4 +1,4 @@
-﻿# DreamDiary Mobile — 실기기용 Android 릴리스 APK 로컬 빌드 (EAS 계정 없이)
+# DreamDiary Mobile — 실기기용 Android 릴리스 APK 로컬 빌드 (EAS 계정 없이)
 # IntelliJ: Gradle > mobile > mobileApk (설치까지: mobileApkInstall)
 # 또는: powershell -NoProfile -ExecutionPolicy Bypass -File build-android-apk.ps1 [-Install]
 #
@@ -13,6 +13,11 @@
 param(
     # 예: http://100.70.88.5:18081  (생략 시 tailscale ip -4 로 자동)
     [string]$ApiBaseUrl,
+    # 공개 GitHub mobile-preview 릴리스에 APK를 게시하고 실제 다운로드 해시를 검증한다.
+    [switch]$Publish,
+    # Expo 프로젝트 UUID와 Firebase 클라이언트 설정 파일. FCM 서비스 계정 키는 APK에 포함하지 않는다.
+    [string]$ExpoProjectId,
+    [string]$GoogleServicesJsonPath,
     # 빌드 후 USB 로 연결된 실기기(에뮬레이터 제외)에 adb install -r
     [switch]$Install,
     # 설치 대상 adb 시리얼(여러 대 연결 시, 또는 에뮬레이터에 설치할 때)
@@ -87,6 +92,20 @@ if ($ApiBaseUrl -match '10\.0\.2\.2|localhost|127\.0\.0\.1') {
 # 이 프로세스와 자식(Gradle → expo export:embed)에만 적용. .env 파일은 건드리지 않는다.
 $env:EXPO_PUBLIC_API_BASE_URL = $ApiBaseUrl
 Write-Step "API base URL: $ApiBaseUrl"
+if ($ExpoProjectId) {
+    if ($ExpoProjectId -cnotmatch '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$') {
+        throw "ExpoProjectId 는 정규 UUID 형식이어야 합니다."
+    }
+    $env:EXPO_PUBLIC_EXPO_PROJECT_ID = $ExpoProjectId
+}
+if ($GoogleServicesJsonPath) {
+    $resolvedGoogleServices = (Resolve-Path -LiteralPath $GoogleServicesJsonPath).Path
+    if (-not (Test-Path -LiteralPath $resolvedGoogleServices -PathType Leaf)) { throw "GoogleServicesJsonPath 파일이 없습니다." }
+    if ((Test-Path -LiteralPath (Join-Path $mobileDir 'android')) -and -not $CleanPrebuild) {
+        throw "Firebase 네이티브 설정을 반영하려면 -CleanPrebuild 를 지정하세요."
+    }
+    $env:GOOGLE_SERVICES_JSON_PATH = $resolvedGoogleServices
+}
 
 # ─── 2. JDK 17+ / Android SDK ─────────────────────────────
 function Get-JdkMajor([string]$javaHome) {
@@ -254,6 +273,12 @@ if ($bundleText.Contains("10.0.2.2:18081")) {
 }
 $sizeMb = [Math]::Round((Get-Item $apk).Length / 1MB, 1)
 Write-Step "OK: $apk ($sizeMb MB), 번들 API 주소 확인: $ApiBaseUrl"
+
+if ($Publish) {
+    $published = & (Join-Path $mobileDir 'publish-android-apk.ps1') -ApkPath $apk
+    Write-Step ("다운로드: " + $published.DownloadUrl)
+    Write-Step ("SHA-256: " + $published.Sha256)
+}
 
 # ─── 6. (선택) USB 설치 ──────────────────────────────────
 if ($Install) {
