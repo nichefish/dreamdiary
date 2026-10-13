@@ -10,6 +10,7 @@ const deq = (a, b) => assert.deepEqual(plain(a), plain(b));
 const FIXTURE_ID = 301;
 const FIXTURE_CONTENT = "샘플 본문\n- 항목";
 const FIXTURE_LOCATION = "샘플 장소";
+const FIXTURE_EDITED_CONTENT = ["# 가상 본문", "", "- 항목", ""].join(String.fromCharCode(10));
 const FIXTURE_TAGS_RAW = '[{"value":"샘플태그","data":{"ctgr":"분류"}},{"value":"둘째","data":{"ctgr":null}}]';
 const EDIT = { title: " 고친 제목 ", dateText: "10/24", expireDt: "2001-10-24", projectId: 5, prefixId: 7 };
 
@@ -143,7 +144,80 @@ test("말머리 색은 목록·상세·시트·필터가 같은 keepPrefixColor 
   const src = (f) => fs.readFileSync(path.resolve(__dirname, "../src", f), "utf8");
   assert.match(src("components/keep/KeepBadges.tsx"), /keepPrefixColor\(textClass\)/);
   assert.match(src("screens/KeepHomeScreen.tsx"), /KeepPrefixText name=\{item\.prefix\.name\} textClass=\{item\.prefix\.textClass\}/);
-  assert.equal((src("screens/KeepDetailScreen.tsx").match(/textClass=\{item\.prefix\.textClass\}/g) ?? []).length, 2);
+  assert.match(src("screens/KeepDetailScreen.tsx"), /KeepInlineEditor/);
+  assert.equal((src("components/keep/KeepInlineEditor.tsx").match(/textClass=\{prefixClass\}/g) ?? []).length, 2);
   assert.match(src("components/keep/KeepFilterSheet.tsx"), /keepPrefixColor\(p\.textClass\)/);
   assert.match(src("components/keep/KeepQuickAddSheet.tsx"), /keepPrefixColor\(option\.textClass\)/);
+});
+
+test("상세형 임시 값은 위치·마크다운 원문·태그를 읽고 서버 응답과 분리", () => {
+  const { keepEditDraft } = load("utils/keepEdit.ts");
+  const source = detail();
+  const draft = keepEditDraft(source);
+  assert.equal(draft.content, FIXTURE_CONTENT);
+  assert.equal(draft.location, FIXTURE_LOCATION);
+  assert.equal(draft.important, true);
+  deq(draft.tags, [{ name: "샘플태그", ctgr: "분류" }, { name: "둘째", ctgr: null }]);
+  draft.tags[0].name = "가상 변경";
+  assert.equal(source.tag.tagListStrWithCtgr, FIXTURE_TAGS_RAW);
+  assert.equal(source.content, FIXTURE_CONTENT);
+});
+
+test("위치·본문의 편집 원문과 명시적 빈 문자열을 저장하고 생략·undefined는 보존", () => {
+  const edited = toKeepEditFormData(detail(), { ...EDIT, location: " 가상 장소 ", content: FIXTURE_EDITED_CONTENT });
+  assert.equal(edited.get("location"), " 가상 장소 ");
+  assert.equal(edited.get("content"), FIXTURE_EDITED_CONTENT);
+  assert.equal(edited.get("sortOrder"), "12");
+  assert.equal(edited.get("tag.tagListStr"), toKeepEditFormData(detail(), EDIT).get("tag.tagListStr"));
+  const empty = toKeepEditFormData(detail(), { ...EDIT, location: "", content: "" });
+  assert.equal(empty.get("location"), "");
+  assert.equal(empty.get("content"), "");
+  const omitted = toKeepEditFormData(detail(), { ...EDIT, location: undefined, content: undefined });
+  assert.equal(omitted.get("location"), FIXTURE_LOCATION);
+  assert.equal(omitted.get("content"), FIXTURE_CONTENT);
+});
+
+test("위치 길이 200자 경계는 저장하고 초과·원문 아닌 본문은 저장 전 차단", () => {
+  assert.equal(toKeepEditFormData(detail(), { ...EDIT, location: "가".repeat(200) }).get("location").length, 200);
+  for (const patch of [{ location: "가".repeat(201) }, { location: null }, { content: null }, { content: {} }]) {
+    assert.throws(() => toKeepEditFormData(detail(), { ...EDIT, ...patch }), (e) => e.name === "KeepEditPreserveError");
+  }
+  assert.equal(toKeepEditFormData(detail(), { ...EDIT, content: FIXTURE_CONTENT }).has("state"), false);
+});
+
+test("확인 불가능한 원문·태그는 임시 편집 시작도 차단하며 빈 원문은 빈 값으로 시작", () => {
+  const { keepEditDraft } = load("utils/keepEdit.ts");
+  for (const field of ["content", "location", "tag"]) {
+    const source = detail(); delete source[field];
+    assert.throws(() => keepEditDraft(source), (e) => e.name === "KeepEditPreserveError" && e.field === field);
+  }
+  assert.throws(() => keepEditDraft(detail({ content: null })), (e) => e.field === "content");
+  const empty = keepEditDraft(detail({ content: null, markdownContent: "-", location: null,
+    tag: { list: [], tagListStrWithCtgr: null } }));
+  assert.equal(empty.content, "");
+  assert.equal(empty.location, "");
+  deq(empty.tags, []);
+});
+
+test("임시 값 복사는 태그 객체까지 분리하고 취소 기준값을 보존", () => {
+  const { keepEditDraft, copyKeepEditDraft, keepEditDraftChanged } = load("utils/keepEdit.ts");
+  const initial = keepEditDraft(detail());
+  const draft = copyKeepEditDraft(initial);
+  assert.equal(keepEditDraftChanged(initial, draft), false);
+  draft.tags[0].name = "가상 변경";
+  assert.equal(initial.tags[0].name, "샘플태그");
+  assert.equal(keepEditDraftChanged(initial, draft), true);
+  assert.equal(keepEditDraftChanged(initial, copyKeepEditDraft(initial)), false);
+});
+
+test("버림 확인은 모든 편집 필드와 태그 집합 변화를 검사하고 표시 순서는 무시", () => {
+  const { keepEditDraft, copyKeepEditDraft, keepEditDraftChanged } = load("utils/keepEdit.ts");
+  const initial = keepEditDraft(detail());
+  const patches = [
+    { title: "가상 변경" }, { dateText: "" }, { expireDt: "" }, { projectId: 201 },
+    { prefixId: null }, { important: false }, { location: "" }, { content: "" }, { tags: [] }
+  ];
+  for (const patch of patches) assert.equal(keepEditDraftChanged(initial, { ...copyKeepEditDraft(initial), ...patch }), true);
+  const reordered = copyKeepEditDraft(initial); reordered.tags.reverse();
+  assert.equal(keepEditDraftChanged(initial, reordered), false);
 });

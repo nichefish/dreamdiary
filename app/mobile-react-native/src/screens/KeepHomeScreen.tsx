@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { createKeep, getKeepList, moveKeepProject, getKeepTagCategoryMap, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
+import { createKeep, getKeepList, getKeepTagCategoryMap, getKeepPrefixOptions, getKeepProjects, getKeepTags, setKeepLifecycle, toggleKeepState } from "../api/dreamDiaryApi";
 import { isUnauthorizedError } from "../api/client";
 import type { RootStackParamList } from "../navigation/AppNavigator";
 import { MENU_URL } from "../navigation/appMenu";
@@ -59,10 +59,7 @@ import { KeepLifecycleBadge, KeepPrefixText, KeepStateBadge, KeepTagChips } from
 import { KeepFilterSheet } from "../components/keep/KeepFilterSheet";
 import { KeepSwipeRow } from "../components/keep/KeepSwipeRow";
 import { KeepLifecycleMenu } from "../components/keep/KeepLifecycleMenu";
-import { KeepProjectMoveSheet } from "../components/keep/KeepProjectMoveSheet";
-import { useKeepEditSheet } from "../components/keep/useKeepEditSheet";
 import { splitTerminalByWindow } from "../utils/keepTerminalSort";
-import { keepManageFailureMessage, keepMoveNotice, keepMoveOptions, keepMoveTarget, type KeepMoveOption } from "../utils/keepManage";
 import { KeepQuickAddSheet } from "../components/keep/KeepQuickAddSheet";
 import { colorFromTextClass } from "../components/journal/journalTagStyle";
 import { quickAddDefaultProjectId, quickAddFailureMessage, type KeepQuickAddResult, type KeepQuickAddSubmit } from "../utils/keepQuickAdd";
@@ -232,21 +229,8 @@ export function KeepHomeScreen() {
   const loadedRef = useRef(false);
   const [lifecycleItem, setLifecycleItem] = useState<KeepItem | null>(null);
   const [savingId, setSavingId] = useState<number | null>(null);
-  /** Project 이동 시트 대상 (2-4) */
-  const [moveItem, setMoveItem] = useState<KeepItem | null>(null);
-  const [moveError, setMoveError] = useState<string | null>(null);
-  /** 목록 ⋯ `수정` — 상세를 먼저 받아 상세 화면과 같은 보존·동시 수정 규칙으로 저장하고 Keep 목록을 다시 받는다 */
-  const edit = useKeepEditSheet({
-    onSaved: (id) => {
-      reloadKeepListOnly().catch((e: unknown) => {
-        if (!mountedRef.current || isUnauthorizedError(e)) return;
-        console.error("[KeepHomeScreen] edit list refresh failed", { id }, e);
-        setActionError({ id, saved: true, message: "수정됐지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
-      });
-    },
-    isBusy: () => savingRef.current || awaitingListRef.current,
-    logTag: "KeepHomeScreen"
-  });
+
+  /** 목록 ⋯ 수정은 같은 Keep 통합 화면을 연다. 상세를 기준으로 수정하고 목록은 복귀 시 다시 받는다. */
   const [actionError, setActionError] = useState<{ id: number; message: string; saved: boolean } | null>(null);
   const savingRef = useRef(false);
   const awaitingListRef = useRef(false);
@@ -408,47 +392,6 @@ export function KeepHomeScreen() {
       if (mountedRef.current) setSavingId(null);
     }
   }
-  /** Project 이동 (2-4): PATCH 한 번(요청 잠금) → 시트 닫고 Keep 목록 재조회 → 안내. 실패는 시트에 서버 메시지. */
-  async function moveToProject(item: KeepItem, option: KeepMoveOption): Promise<void> {
-    const target = keepMoveTarget(option);
-    if (target === undefined) return;
-    if (savingRef.current || awaitingListRef.current) {
-      console.info("[KeepHomeScreen] move skipped while busy", { id: item.id });
-      return;
-    }
-    savingRef.current = true;
-    ++seqRef.current;
-    setSavingId(item.id);
-    setRefreshing(false);
-    setActionError(null);
-    setMoveError(null);
-    try {
-      try {
-        await moveKeepProject(item.id, target);
-      } catch (e) {
-        if (!mountedRef.current || isUnauthorizedError(e)) return;
-        console.error("[KeepHomeScreen] move failed", { id: item.id, projectId: target }, e);
-        setMoveError(keepManageFailureMessage(e, "Project를 옮기지 못했습니다."));
-        return;
-      }
-      if (!mountedRef.current) return;
-      setMoveItem(null);
-      notifyBrief(keepMoveNotice(option));
-      awaitingListRef.current = true;
-      try {
-        await reloadKeepListOnly();
-      } catch (e) {
-        if (mountedRef.current && !isUnauthorizedError(e)) {
-          console.error("[KeepHomeScreen] move list refresh failed", { id: item.id }, e);
-          setActionError({ id: item.id, saved: true, message: "옮겼지만 목록을 새로 받지 못했습니다. 목록을 다시 조회하세요." });
-        }
-      }
-    } finally {
-      savingRef.current = false;
-      if (mountedRef.current) setSavingId(null);
-    }
-  }
-
   /**
    * 저장 성공 뒤 조회만 실패한 경우 쓰기를 재전송하지 않고 목록만 다시 받는다.
    * 비멱등 토글의 결과가 미확인인 경우에도 같은 조회 전용 재시도를 사용한다.
@@ -919,17 +862,10 @@ export function KeepHomeScreen() {
         onClose={() => { if (!savingRef.current) setLifecycleItem(null); }}
         onSelect={(key) => { if (lifecycleItem) void changeLifecycle(lifecycleItem, key); }}
           onToggleState={(key) => { if (lifecycleItem) void changeState(lifecycleItem, key); }}
-        onEdit={() => { if (lifecycleItem && !savingRef.current) { const id = lifecycleItem.id; setLifecycleItem(null); void edit.openEdit(id); } }}
-        onMove={() => { if (lifecycleItem && !savingRef.current) { setMoveError(null); setMoveItem(lifecycleItem); setLifecycleItem(null); } }} />
-      <KeepQuickAddSheet {...edit.sheetProps} />
-      <KeepProjectMoveSheet
-        visible={moveItem != null}
-        title={moveItem?.title?.trim() || "(제목 없음)"}
-        options={keepMoveOptions(projects, moveItem?.projectId)}
-        saving={savingId != null}
-        error={moveError}
-        onClose={() => { if (!savingRef.current) setMoveItem(null); }}
-        onSelect={(option) => { if (moveItem) void moveToProject(moveItem, option); }} />
+        onEdit={() => { if (lifecycleItem && !savingRef.current) { const id = lifecycleItem.id; setLifecycleItem(null); navigation.navigate("KeepDetail", { id, editField: "title" }); } }} />
+
+
+
       <KeepFilterSheet
         visible={sheetOpen}
         onClose={() => setSheetOpen(false)}

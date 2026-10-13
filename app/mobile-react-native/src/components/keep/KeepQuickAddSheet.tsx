@@ -50,23 +50,10 @@ export type KeepQuickAddSheetProps = {
   /** 저장. 등록·중요 표시·목록 조회는 화면이 맡고 결과만 돌려준다. */
   onSubmit: (input: KeepQuickAddSubmit) => Promise<KeepQuickAddResult>;
   onClose: () => void;
-  /** 수정 모드 초기값(상세 응답). 없으면 신규 빠른 추가. 저장 시 위치·본문·태그 보존은 화면(`toKeepEditFormData`)이 맡는다 */
-  initial?: KeepSheetInitial | null;
   /** 기존 태그 후보 맵 (`GET /api/prospective/keep/tag/categories`, 웹 자동완성과 같음). 여기 있는 태그만 고른다 */
   tagMap?: Record<string, string[]>;
 };
 
-/** 수정 시트 초기값 — 앱에서 고칠 수 있는 필드만 */
-export type KeepSheetInitial = {
-  title: string;
-  dateText: string;
-  expireDt: string;
-  projectId: number | null;
-  prefixId: number | null;
-  important: boolean;
-  /** 현재 태그 (상세 tagListStrWithCtgr) */
-  tags: KeepTagPick[];
-};
 
 /**
  * Keep 빠른 추가 하단 시트 (keep-todo-plan §5.5, 2-2B).
@@ -76,8 +63,7 @@ export type KeepSheetInitial = {
  * - 저장 중에는 버튼·닫기를 잠그고 자동 재전송하지 않는다. 연속 입력은 없다: 등록되면 화면(KeepHomeScreen)이 시트를 닫고
  *   목록에서 짧게 알린다. 서버가 응답한 실패만 시트에 남아 입력을 보존하고 메시지를 보인다.
  */
-export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectId, onSubmit, onClose, initial = null, tagMap }: KeepQuickAddSheetProps) {
-  const editing = initial != null;
+export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectId, onSubmit, onClose, tagMap }: KeepQuickAddSheetProps) {
   const insets = useSafeAreaInsets();
   const [title, setTitle] = useState("");
   const [dateText, setDateText] = useState("");
@@ -97,15 +83,14 @@ export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectI
   // 열 때마다 새 입력으로 시작하고 Project는 현재 칩을 따른다.
   useEffect(() => {
     if (!visible) return;
-    setTitle(initial?.title ?? "");
-    setDateText(initial?.dateText ?? "");
-    setExpireInput(initial?.expireDt ?? "");
-    // 수정: 저장된 기한은 사용자가 확정한 값이므로 일시를 고쳐도 덮어쓰지 않는다(웹 "기한이 비었을 때만 자동").
-    setExpireSource(initial?.expireDt ? "manual" : "auto");
-    setProjectId(initial ? initial.projectId : defaultProjectId);
-    setPrefixId(initial?.prefixId ?? null);
-    setImportant(initial?.important ?? false);
-    setTags(initial?.tags ?? []);
+    setTitle("");
+    setDateText("");
+    setExpireInput("");
+    setExpireSource("auto");
+    setProjectId(defaultProjectId);
+    setPrefixId(null);
+    setImportant(false);
+    setTags([]);
     setTagQuery("");
     setError(null);
     // defaultProjectId는 연 순간의 값만 쓴다(열린 동안 칩이 바뀌어도 입력을 지우지 않는다).
@@ -188,7 +173,7 @@ export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectI
         <Pressable accessibilityRole="button" accessibilityLabel="빠른 추가 닫기" onPress={requestClose} style={styles.backdrop} />
         <View style={[styles.panel, { paddingBottom: insets.bottom + 12 }]} accessibilityViewIsModal>
           <View style={styles.panelHeader}>
-            <Text style={styles.panelTitle} accessibilityRole="header">{editing ? "Keep 수정" : "새 Keep"}</Text>
+            <Text style={styles.panelTitle} accessibilityRole="header">새 Keep</Text>
             <Pressable accessibilityRole="button" accessibilityLabel="빠른 추가 닫기" disabled={saving} onPress={requestClose}
               hitSlop={8} style={({ pressed }) => [styles.closeButton, (pressed || saving) && styles.pressed]}>
               <Text style={styles.closeText}>닫기</Text>
@@ -198,7 +183,7 @@ export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectI
             <TextInput
               ref={titleRef}
               accessibilityLabel="제목"
-              autoFocus={!editing}
+              autoFocus
               editable={!saving}
               maxLength={KEEP_QUICK_TITLE_MAX}
               onChangeText={(value) => { setTitle(value); if (error) setError(null); }}
@@ -340,7 +325,7 @@ export function KeepQuickAddSheet({ visible, projects, prefixes, defaultProjectI
               style={({ pressed }) => [styles.saveButton, (pressed || saving) && styles.pressed]}>
               {saving ? <ActivityIndicator color={colors.onAccent} /> : <Text style={styles.saveText}>저장</Text>}
             </Pressable>
-            <Text style={styles.footerNote}>{editing ? "위치·본문은 그대로 저장됩니다. 고치려면 웹에서 편집하세요. 새 태그도 웹에서 만듭니다." : "위치·본문·새 태그는 웹 편집에서 입력합니다."}</Text>
+            <Text style={styles.footerNote}>위치·본문은 등록 후 항목에서 편집합니다. 새 태그는 웹에서 만듭니다.</Text>
           </ScrollView>
         </View>
       </KeyboardAvoidingView>

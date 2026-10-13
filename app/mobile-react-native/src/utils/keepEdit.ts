@@ -1,5 +1,47 @@
 import { keepHasState, openKeepProjects, type KeepItem, type KeepPrefixOption, type KeepProject } from "../types/prospectiveKeep";
 import { normalizeExpireDt } from "./keepExpire";
+import { keepEditSourceText, KeepEditPreserveError, type KeepEditInput } from "./keepFormData";
+import { keepDetailTags, keepTagKey, type KeepTagPick } from "./keepTags";
+
+/** 수정 저장 입력. 중요는 수정 POST에 포함하지 않고 기존 저장 흐름의 별도 토글로 처리한다. */
+export type KeepEditSubmit = KeepEditInput & { important: boolean };
+
+/** 상세형 편집의 임시 값. 위치·본문은 원문이고 태그 선택 배열은 서버 응답과 분리한다. */
+export interface KeepEditDraft {
+  title: string;
+  dateText: string;
+  expireDt: string;
+  projectId: number | null;
+  prefixId: number | null;
+  important: boolean;
+  tags: KeepTagPick[];
+  location: string;
+  content: string;
+}
+
+/** 상세 응답의 원문과 태그를 확인한 뒤 편집 초깃값을 만든다. API 호출과 저장은 수행하지 않는다. */
+export function keepEditDraft(detail: KeepItem): KeepEditDraft {
+  const source = keepEditSourceText(detail);
+  const tags = keepDetailTags(detail);
+  if (tags == null) {
+    console.warn("[KeepEdit] draft blocked: tags not readable", { id: detail.id });
+    throw new KeepEditPreserveError("태그를 확인하지 못해 수정할 수 없습니다. 상세를 새로 고친 뒤 다시 시도하세요.", "tag");
+  }
+  return { ...keepEditInitial(detail), ...source, tags: tags.map((tag) => ({ ...tag })) };
+}
+
+/** 취소·재시작용 임시 값 복사. 태그 객체까지 복사해 기준값이 편집 중 변경되지 않게 한다. */
+export function copyKeepEditDraft(draft: KeepEditDraft): KeepEditDraft {
+  return { ...draft, tags: draft.tags.map((tag) => ({ ...tag })) };
+}
+
+/** 저장 전 버림 확인 여부. 모든 편집 필드의 값과 태그 집합을 비교하고 태그 표시 순서는 무시한다. */
+export function keepEditDraftChanged(initial: KeepEditDraft, draft: KeepEditDraft): boolean {
+  const fields = ["title", "dateText", "expireDt", "projectId", "prefixId", "important", "location", "content"] as const;
+  if (fields.some((field) => initial[field] !== draft[field])) return true;
+  const tags = (value: KeepEditDraft) => JSON.stringify(value.tags.map(keepTagKey).sort());
+  return tags(initial) !== tags(draft);
+}
 
 /**
  * 모바일 Keep 수정 규칙. 직렬화(보존 필드 복사)는 `toKeepEditFormData`가 맡고, 여기는 시트 초기값·선택지·실패 메시지를 만든다.

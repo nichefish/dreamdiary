@@ -8,12 +8,18 @@ import { htmlToPlainText } from "./journalCopy";
  * - 코드 블록 울타리(```)는 줄째 지우고 안의 내용은 그대로 둔다.
  * - HTML 태그가 섞여 있으면 먼저 웹 복사 규칙(htmlToPlainText)으로 평문화한다.
  * 줄바꿈은 LF 로 돌려준다.
+ * compactParagraphs는 Keep 읽기 표시의 문단 경계만 줄이고 HTML의 명시적 빈 줄을 보존한다. 화면·복사의 기본 호출은 같은 규칙을 유지한다.
  */
-export function markdownToPlainText(markdown: string | null | undefined): string {
+export function markdownToPlainText(markdown: string | null | undefined, options: { compactParagraphs?: boolean } = {}): string {
   let text = (markdown ?? "").replace(/\r\n|\r/g, "\n");
   if (!text.trim()) return "";
+  let preserveDisplayBreaks = false;
   if (/<\/?(?:p|br|div|li|ul|ol|span|strong|em|b|i|a|h[1-6])\b[^>]*>/i.test(text)) {
-    text = htmlToPlainText(text.replace(/\n/g, "<br>"));
+    preserveDisplayBreaks = options.compactParagraphs === true;
+    if (preserveDisplayBreaks) {
+      text = text.replace(/(<\/?(?:p|div|li|ul|ol|h[1-6])\b[^>]*>)\s+(?=<\/?(?:p|div|li|ul|ol|h[1-6])\b)/gi, "$1");
+    }
+    text = htmlToPlainText(text.replace(/\n/g, "<br>"), options);
   }
   let inFence = false;
   const lines = text.split("\n").flatMap((line) => {
@@ -39,5 +45,6 @@ export function markdownToPlainText(markdown: string | null | undefined): string
       .replace(/\\([\\`*_{}[\]()#+\-.!>~|])/g, "$1");
     return [out.replace(/\s+$/, "")];
   });
-  return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  const result = lines.join("\n");
+  return (preserveDisplayBreaks ? result : result.replace(/\n{3,}/g, "\n\n")).trim();
 }

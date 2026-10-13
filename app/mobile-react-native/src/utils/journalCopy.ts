@@ -66,8 +66,9 @@ function decodeEntities(text: string): string {
  * TinyMCE HTML → 클립보드용 소스 텍스트 (웹 htmlToPlainText 와 같은 규칙).
  * 구조 태그(p·br·div·li·hr)만 개행으로 환원하고, 엔티티를 한 번 디코딩하며, 문단 사이 빈 줄 1개를 유지한다.
  * 빈 문단(<p>&nbsp;</p>, <p><br></p>)은 사용자가 만든 개행으로 보존한다.
+ * compactParagraphs는 Keep 읽기 표시 전용이며 구조 문단 경계를 한 개행으로 표시한다. 기본 복사 규칙은 유지한다.
  */
-export function htmlToPlainText(html: string | null | undefined): string {
+export function htmlToPlainText(html: string | null | undefined, options: { compactParagraphs?: boolean } = {}): string {
   if (!html) return "";
   let emptyParagraphToken = "\uE000";
   while (html.includes(emptyParagraphToken)) emptyParagraphToken += "\uE001";
@@ -75,8 +76,32 @@ export function htmlToPlainText(html: string | null | undefined): string {
   const withTokens = html.replace(/<p\b[^>]*>([\s\S]*?)<\/p\s*>/gi, (match, inner: string) => {
     if (/<\s*(?:img|table|hr|iframe|video|audio|object|embed)\b/i.test(inner)) return match;
     const plain = decodeEntities(inner.replace(/<[^>]*>/g, "")).replace(/\u00a0/g, " ").trim();
-    return plain ? match : emptyParagraphToken;
+    if (plain) return match;
+    const blankLines = options.compactParagraphs ? Math.max(1, (inner.match(/<\s*br\b[^>]*>/gi) ?? []).length) : 1;
+    return emptyParagraphToken.repeat(blankLines);
   });
+
+  if (options.compactParagraphs) {
+    let boundary = "\uE002";
+    while (html.includes(boundary)) boundary += "\uE003";
+    /** 구조 경계와 명시적 br·빈 문단을 분리해 사용자 개행을 줄이지 않는다. */
+    const displayTokens = withTokens.replace(/<div\b[^>]*>((?:(?!<\/?div\b)[\s\S])*?)<\/div\s*>/gi, (match, inner: string) => {
+      if (/<\s*(?:img|table|hr|iframe|video|audio|object|embed|p|li|ul|ol|h[1-6])\b/i.test(inner)) return match;
+      const plain = decodeEntities(inner.replace(/<[^>]*>/g, "")).replace(/\u00a0/g, " ").trim();
+      return plain ? match : emptyParagraphToken.repeat(Math.max(1, (inner.match(/<\s*br\b[^>]*>/gi) ?? []).length));
+    });
+    const structured = decodeEntities(displayTokens
+      .replace(/<\s*hr\b[^>]*\/?>/gi, boundary + "------" + boundary)
+      .replace(/<\s*br\s*\/?>/gi, "\n")
+      .replace(/<\s*\/?(?:p|div|li|ul|ol|h[1-6])\b[^>]*>/gi, boundary)
+      .replace(/<[^>]*>/g, ""));
+    return structured
+      .replace(new RegExp("(?:" + boundary + ")+", "g"), boundary)
+      .replace(new RegExp(emptyParagraphToken + boundary, "g"), emptyParagraphToken)
+      .split(boundary).join("\n")
+      .split(emptyParagraphToken).join("\n")
+      .split("\n").map((line) => line.trim()).join("\n").trim();
+  }
 
   const normalizedHtml = withTokens
     .replace(/<\s*hr\b[^>]*\/?>/gi, "\n------\n")

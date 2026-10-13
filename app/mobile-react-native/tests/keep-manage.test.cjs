@@ -114,23 +114,25 @@ test("실패 메시지: 서버 응답은 그대로, 응답 없음은 목록 확�
   assert.match(m.keepManageFailureMessage(new Error("Network request failed"), "x"), /결과를 목록에서 확인하세요/);
 });
 
-test("삭제는 상세에만, 수정·이동은 목록 ⋯ 메뉴와 상세 둘 다", () => {
+test("수정은 목록·상세, Project 이동·삭제는 상세에서 제공", () => {
   const src = (f) => fs.readFileSync(path.resolve(__dirname, "../src", f), "utf8");
   const home = src("screens/KeepHomeScreen.tsx");
   assert.doesNotMatch(home, /deleteKeep|onDelete|confirmKeepDelete/);
   assert.match(home, /onEdit=\{/);
-  assert.match(home, /onMove=\{/);
-  assert.match(home, /useKeepEditSheet/);
+  assert.doesNotMatch(home, /onMove=\{|moveToProject|moveKeepProject/);
+  assert.match(home, /navigation.navigate\("KeepDetail", \{ id, editField: "title"/);
   const menu = src("components/keep/KeepLifecycleMenu.tsx");
   assert.doesNotMatch(menu, /onDelete|Keep 삭제/);
   assert.match(menu, /accessibilityLabel="Keep 수정"/);
-  assert.match(home, /<KeepProjectMoveSheet/);
+  assert.doesNotMatch(menu, /onMove|accessibilityLabel="Project 이동"/);
+  assert.doesNotMatch(home, /<KeepProjectMoveSheet/);
   const detail = src("screens/KeepDetailScreen.tsx");
   assert.match(detail, /accessibilityLabel="Keep 삭제"/);
-  assert.match(detail, /accessibilityLabel="Project 이동"/);
+  assert.match(detail, /KeepInlineEditor/);
+  assert.doesNotMatch(detail, /moveKeepProject|KeepProjectMoveSheet/);
   assert.match(detail, /navigation\.goBack\(\)/);
   assert.match(detail, /manageBusyRef\.current/);
-  assert.match(detail, /useKeepEditSheet/);
+  assert.match(detail, /useKeepEdit/);
 });
 
 test("종결·최근 완료 행도 진행 행과 같은 중요 별·요구 배지를 표시한다", () => {

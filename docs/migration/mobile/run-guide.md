@@ -520,3 +520,7 @@ npm.cmd run android
 | `docs/migration/mobile/screen-spec.md` | 모바일 v0.1 제품·화면 계약과 구현 현황 |
 | `docs/migration/mobile/sdk-upgrade.md` | Expo SDK 업그레이드 분석과 실행 기록 |
 | `docs/migration/mobile/tagcloud-thread-port-plan.md` | 태그 클라우드·스레드 포팅 계획과 진행 현황 |
+
+### Keep 본문 리치 텍스트 편집 의존성
+
+모바일 본문 편집은 `react-native-pell-rich-editor`와 Expo SDK 57 호환 `react-native-webview`(13.16.1)를 사용한다. 에디터 HTML·JavaScript는 앱 번들에 포함된다. WebView 네이티브 모듈 추가를 반영한 APK를 다시 빌드·설치해야 한다. 기존 Android 프로젝트의 자동 연결은 Gradle 빌드에서 갱신되며 app.json 플러그인 변경은 필요하지 않다.
