@@ -35,8 +35,8 @@ public class UserPwChgParam {
 
     /** 변경할 패스워드 */
     @NotEmpty
-    @Size(min = 9, max = 15, message = "{msg.user.pw.size}")
-    @Pattern(regexp = Regex.PW_REGEX, message = "{msg.user.pw.pattern}")
+    @Size(min = 9, max = 15, message = "{user.pw.size}")
+    @Pattern(regexp = Regex.PW_REGEX, message = "{user.pw.pattern}")
     private String newPw;
 
 }

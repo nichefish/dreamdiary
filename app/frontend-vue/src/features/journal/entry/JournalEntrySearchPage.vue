@@ -485,8 +485,8 @@
     <CommentListModal />
     <HistoryModal @success="onHistorySuccess" />
     <RelatedContentAddModal />
-    <JournalTagContextMenu />
-    <JournalTagProfileModal @success="onTagProfileSuccess" />
+    <TagContextMenu />
+    <TagProfileModal @success="onTagProfileSuccess" />
     <!--end::모달 컨테이너-->
   </div>
 </template>
@@ -526,8 +526,8 @@ import CommentRegistModal from "../shared/modals/CommentRegistModal.vue";
 import CommentListModal from "@/features/attachable/CommentListModal.vue";
 import HistoryModal from "@/features/attachable/HistoryModal.vue";
 import RelatedContentAddModal from "../shared/modals/RelatedContentAddModal.vue";
-import JournalTagContextMenu from "../shared/components/JournalTagContextMenu.vue";
-import JournalTagProfileModal from "../shared/modals/JournalTagProfileModal.vue";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { useEntryBulkTag } from "./composables/useEntryBulkTag";
 import { useSearchTagCatalog } from "./composables/useSearchTagCatalog";

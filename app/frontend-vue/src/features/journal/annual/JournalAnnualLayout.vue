@@ -34,8 +34,8 @@
          (저널 일자 레이아웃과 동일 구성: DayMeta + TagProfile + TagContextMenu) -->
     <JournalDayMetaModal />
     <HistoryModal @success="onHistorySuccess" />
-    <JournalTagProfileModal />
-    <JournalTagContextMenu />
+    <TagProfileModal @success="refreshAfterTagProfileChange" />
+    <TagContextMenu />
     <!--end::결산 모달 컨테이너-->
   </div>
   <!--end::결산 레이아웃-->
@@ -48,11 +48,14 @@ import JournalAnnualRegistModal from "./modals/JournalAnnualRegistModal.vue";
 import JournalAnnualReviewRegistModal from "./modals/JournalAnnualReviewRegistModal.vue";
 import JournalDayMetaModal from "@/features/journal/day/modals/JournalDayMetaModal.vue";
 import HistoryModal from "@/features/attachable/HistoryModal.vue";
-import JournalTagProfileModal from "@/features/journal/shared/modals/JournalTagProfileModal.vue";
-import JournalTagContextMenu from "@/features/journal/shared/components/JournalTagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useJournalTagProfileRefresh } from "@/features/journal/shared/composables/useJournalTagProfileRefresh";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
 import { useJournalAnnualAsideStore } from "@/features/journal/stores/journalAnnualAside";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+
+const { refreshAfterTagProfileChange } = useJournalTagProfileRefresh();
 
 const { t } = useLocaleStore();
 const asideStore = useJournalAnnualAsideStore();

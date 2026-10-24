@@ -7,7 +7,7 @@ import io.nicheblog.dreamdiary.feature.file.service.BaseMultipartWritableService
 import io.nicheblog.dreamdiary.feature.journal._shared.handler.JournalCacheEvictWorker;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalReflectionLifecycleCascade;
 import io.nicheblog.dreamdiary.feature.journal._shared.model.JournalCacheEvictParam;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.entity.JournalDayEntity;
 import io.nicheblog.dreamdiary.feature.journal.day.repository.jpa.JournalDayRepository;
 import io.nicheblog.dreamdiary.feature.journal.entry.model.JournalEntryDto;
@@ -51,7 +51,7 @@ public class JournalReflectionService
     private final JournalCacheEvictWorker journalCacheEvictWorker;
     private final JournalReflectionLifecycleCascade journalReflectionLifecycleCascade;
     private final JournalDayRepository journalDayRepository;
-    private final JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private final AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     private final io.nicheblog.dreamdiary.feature.attachable.lifecycle.service.LifecycleService lifecycleService;
     private final JournalReflectionOrderService journalReflectionOrderService;
 
@@ -73,9 +73,9 @@ public class JournalReflectionService
     public JournalEntryDto getDtlDtoByUser(final Integer id) throws Exception {
         final JournalReflectionEntity entity = this.findDtlEntity(id);
         if (entity == null) return null;
-        journalContentOwnershipGuard.assertOwned(id, ContentType.JOURNAL_REFLECTION);
+        attachableContentOwnershipGuard.assertOwned(id, ContentType.JOURNAL_REFLECTION);
         final JournalEntryDto dto = mapstruct.toDto(entity);
-        journalContentOwnershipGuard.applyReflectionViewerOwnership(List.of(dto));
+        attachableContentOwnershipGuard.applyReflectionViewerOwnership(List.of(dto));
         return dto;
     }
 
@@ -133,7 +133,7 @@ public class JournalReflectionService
      */
     @Override
     public void preModify(final JournalReflectionPostDto postDto, final JournalReflectionEntity modifyEntity) {
-        journalContentOwnershipGuard.assertOwned(modifyEntity.getId(), ContentType.JOURNAL_REFLECTION);
+        attachableContentOwnershipGuard.assertOwned(modifyEntity.getId(), ContentType.JOURNAL_REFLECTION);
         postDto.setIsSortOrderChanged(isSortOrderChanged(postDto, modifyEntity));
     }
 
@@ -166,7 +166,7 @@ public class JournalReflectionService
      */
     @Override
     public void preDelete(final JournalEntryDto deletedDto) {
-        journalContentOwnershipGuard.assertOwned(deletedDto.getId(), ContentType.JOURNAL_REFLECTION);
+        attachableContentOwnershipGuard.assertOwned(deletedDto.getId(), ContentType.JOURNAL_REFLECTION);
         if (repository.existsByRefIdAndRefContentType(deletedDto.getId(), ContentType.JOURNAL_REFLECTION)) {
             log.warn("[JournalReflection] 삭제 Block — 하위 Reflection 존재. id={}", deletedDto.getId());
             throw new BusinessException("journal.reflection.delete.blocked-by-child");
@@ -208,7 +208,7 @@ public class JournalReflectionService
     private JournalDayEntity resolveTargetDay(final Integer refId, final ContentType refContentType) {
         if (refId == null || refContentType == null) return null;
 
-        final Integer dayId = journalContentOwnershipGuard.resolveTargetJournalDayId(refId, refContentType);
+        final Integer dayId = attachableContentOwnershipGuard.resolveTargetJournalDayId(refId, refContentType);
         if (dayId == null) return null;
         return journalDayRepository.findById(dayId).orElse(null);
     }
@@ -251,7 +251,7 @@ public class JournalReflectionService
             final Integer fromHistoryId
     ) throws Exception {
         final JournalReflectionEntity entity = this.getDtlEntity(key);
-        journalContentOwnershipGuard.assertOwned(key, ContentType.JOURNAL_REFLECTION);
+        attachableContentOwnershipGuard.assertOwned(key, ContentType.JOURNAL_REFLECTION);
         final JournalReflectionEntity historySnapshot = entity.toBuilder().build();
 
         entity.setContent(content);
@@ -263,7 +263,7 @@ public class JournalReflectionService
         );
 
         final JournalEntryDto updatedDto = mapstruct.toDto(updatedEntity);
-        journalContentOwnershipGuard.applyReflectionViewerOwnership(List.of(updatedDto));
+        attachableContentOwnershipGuard.applyReflectionViewerOwnership(List.of(updatedDto));
         final JournalDayEntity targetDay = resolveTargetDay(updatedDto.getRefId(), updatedDto.getRefContentType());
         journalCacheEvictWorker.evictAfterCommit(buildEvictParam(updatedDto, targetDay), ContentType.JOURNAL_REFLECTION);
         return updatedDto;

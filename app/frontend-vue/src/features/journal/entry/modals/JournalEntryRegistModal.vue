@@ -383,14 +383,14 @@ watch(
   }
 );
 
-function resolvePreviewPrefix(): { prefixName?: string; prefixColor?: string } {
+function resolvePreviewPrefix(): { prefixName?: string; prefixTextClass?: string } {
   const current = model.value;
   if (!current?.prefixId) return {};
   if (current.prefix && current.prefix.id === current.prefixId) {
-    return { prefixName: current.prefix.name, prefixColor: current.prefix.color ?? undefined };
+    return { prefixName: current.prefix.name, prefixTextClass: current.prefix.textClass ?? undefined };
   }
   const option = entryPrefixOptions.value.find((p) => p.id === current.prefixId) ?? currentInactivePrefix.value;
-  return { prefixName: option?.name, prefixColor: option?.color ?? undefined };
+  return { prefixName: option?.name, prefixTextClass: option?.textClass ?? undefined };
 }
 
 function previewContentType(): JournalEntryPreviewContentType {

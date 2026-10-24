@@ -50,7 +50,7 @@
 
 ### 라우팅·메뉴
 
-- `router/index.ts` + `beforeEach` 인증 (`useAuthStore.verifyAuth`). 정상 서버 인증 결과는 메모리에서 15초간 재사용하며, 신선도 만료·새로고침·강제 검증 시 `/api/auth/get-auth-account`를 다시 호출한다. 동시 검증은 진행 중 Promise를 공유한다.
+- `router/index.ts` + `beforeEach` 인증 (`useAuthStore.verifyAuth`). 정상 서버 인증 결과는 메모리에서 15초간 재사용하며, 신선도 만료·새로고침·강제 검증 시 `/api/auth/get-auth-info`를 다시 호출한다. 동시 검증은 진행 중 Promise를 공유한다.
 - 사이드바: `toVuePath(menu.url)` (`utils/urlMapping.ts`).
 - 메뉴 DB와 외부 링크의 `/app/**`는 프론트엔드 종류와 독립적인 제품 화면 URL이다. `.do` 경로는 서버 MVC 화면 계약이며, 신규 제품 화면 URL은 `.do` 없이 정의할 수 있다. `toVuePath`는 제품 화면 URL을 현재 Vue 내부 route로 연결한다. 데이터 조회·저장 엔드포인트는 `/api/**`에서 분리한다.
 
@@ -97,7 +97,7 @@
 
 Spring Security 필터·인증 진입점의 Ajax 오류도 `SecurityErrorResponseWriter`를 통해 같은 `AjaxResponse` JSON 계약을 사용한다. 401은 `msg.auth.login-required`, 403은 권한 오류, 필터 내부의 예상 밖 오류는 `msg.rslt.exception`을 사용하며 HTTP 상태와 본문 `status`를 일치시킨다. `AjaxSessionTimeoutFilter`가 비Ajax 요청에서 포착한 인증·권한 예외는 빈 응답으로 삼키지 않고 다시 throw하여 정상 보안 오류 흐름으로 전달한다.
 
-API 인증 경계는 `PublicApiRequestMatcher`를 SSOT로 사용하며 Spring Security와 JWT 필터가 같은 경로·HTTP 메서드 목록을 공유한다. 로그인·토큰 갱신·로그아웃 JSON·세션 만료·로그인 비밀번호 변경·인증 메일 검증·아이디/이메일 중복 확인·신규 계정 신청 POST만 공개하고, 그 외 `/api/**`는 인증을 요구한다. `/api/user/signup-requests`는 POST만 공개하며 목록 GET과 승인/거절은 보호한다. `/api/auth/get-auth-account`와 `/api/session/ping`도 보호 API로서 미인증 요청에 공통 JSON 401을 반환한다.
+API 인증 경계는 `PublicApiRequestMatcher`를 SSOT로 사용하며 Spring Security와 JWT 필터가 같은 경로·HTTP 메서드 목록을 공유한다. 로그인·토큰 갱신·로그아웃 JSON·세션 만료·로그인 비밀번호 변경·인증 메일 검증·아이디/이메일 중복 확인·신규 계정 신청 POST만 공개하고, 그 외 `/api/**`는 인증을 요구한다. `/api/user/signup-requests`는 POST만 공개하며 목록 GET과 승인/거절은 보호한다. `/api/auth/get-auth-info`와 `/api/session/ping`도 보호 API로서 미인증 요청에 공통 JSON 401을 반환한다.
 
 채팅 경로는 `WebSocketHandshakeRequestMatcher`가 식별하는 `GET /chat` 핸드셰이크만 Spring Security URL 인가에서 공개한다. 핸드셰이크 인증은 `WebSocketAuthInterceptor`가 JWT 또는 기존 Principal로 수행하며, `/chat/settings`, `/chat/sessions`를 포함한 등록된 `/chat/**` REST 요청은 인증을 요구하고 미인증 요청에 공통 JSON 401을 반환한다.
 
@@ -270,14 +270,16 @@ categoryMap URL 매핑:
 - 일자 메타: `/api/journal/day/meta/categories`
 - 엔트리 DIARY 태그: `/api/journal/entry/tag/categories?type=DIARY`
 - 엔트리 DREAM 태그: `/api/journal/entry/tag/categories?type=DREAM`
+- 할일 태그: `/api/prospective/keep/tag/categories` (`PROSPECTIVE_KEEP` 단일 맵. 저널 사이드바 TODO 카드와 Keep 이 공유한다. 저장 응답에 맵이 없으므로 등록·수정 성공 직후 `prospectiveKeepCategoryMap.refresh()`로 캐시를 무시하고 다시 조회한다.)
 
 `TagifyEditor` Props:
-- `ctgrMap?: Record<string, string[]> | null` — null이면 ctgr 없는 단순 태그 모드
+- `categoryMap?: Record<string, string[]> | null` — null이면 ctgr 없는 단순 태그 모드
 - `metaMode?: boolean` — true이면 카테고리 + 값 2단계 입력 모드
 
 ### 적용 대상 화면
 
 - 엔트리 등록 모달의 DIARY·DREAM 타입에서 Tagify를 사용하고, NOTE 타입은 태그가 없다.
+- 할일 등록/수정 모달(`ProspectiveKeepRegistModal`)에서 Tagify를 사용한다. 저널 사이드바와 Keep 이 같은 모달·같은 categoryMap 을 쓴다.
 
 ---
 
@@ -461,7 +463,7 @@ editor.on('PostRender', function() {
 - 내 정보 편집의 오른쪽 주 액션 자리는 조회 상태의 「편집」에서 편집 상태의 「저장」으로 전환하고, 「취소」는 저장 왼쪽의 보조 액션으로 표시한다. 저장은 「내 정보를 저장하시겠습니까?」 확인을 거쳐야 하며 확인을 취소하면 API를 호출하지 않고 편집 상태를 유지한다. 편집 취소는 저장하지 않고 서버에서 조회한 값으로 복원한다.
 - 내 정보 저장 성공 후 `GET /api/user/my`와 인증 정보 조회를 다시 수행해 닉네임·프로필 표시를 서버 확정 상태로 동기화한다.
 - `/my/journal`은 `GET /api/journal/settings/me`로 서버 확정 `defaultEntryView`를 표시하고, 사용자가 선택한 `DAILY | WEEKLY | MONTHLY`를 `PUT /api/journal/settings/me`로 저장한다. 선택값과 서버 확정값이 같으면 저장 버튼을 비활성화하며, 성공 응답의 값을 다시 화면 상태로 사용한다. 조회·저장 실패와 지원하지 않는 응답값은 오류로 표시하고 임의 기본값으로 보정하지 않는다.
-- `/my/prefixes` 진입 시 Scope 존재 여부와 무관하게 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행을 표시한다. 각 행은 `JOURNAL_CHAPTER_DIARY`, `JOURNAL_CHAPTER_NOTE`, `JOURNAL_DIARY`, `JOURNAL_DREAM`, `JOURNAL_NOTE`, `JOURNAL_THREAD` 실제 `contentType`에 대응하며 사용자가 대상을 추가·삭제하지 않는다. 이후 다른 도메인은 같은 화면 카탈로그의 별도 그룹으로 추가한다.
+- `/my/prefixes` 진입 시 Scope 존재 여부와 무관하게 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트` 고정 대상 5행을 표시한다. 각 행은 `JOURNAL_CHAPTER_DIARY`, `JOURNAL_CHAPTER_NOTE`, `JOURNAL_DIARY`, `JOURNAL_DREAM`, `JOURNAL_NOTE` 실제 `contentType`에 대응하며 사용자가 대상을 추가·삭제하지 않는다. 이후 다른 도메인은 같은 화면 카탈로그의 별도 그룹으로 추가한다. `JOURNAL_THREAD` 말머리는 저널 스레드 목록 말머리 탭 행의 `말머리 관리` 버튼에서 같은 관리 모달로 관리한다.
 - 초기 대상 목록에서는 Prefix API를 호출하거나 각 행에 말머리 미리보기를 표시하지 않는다. 행을 누르면 해당 목록만 서버에서 조회해 관리 모달을 열고, Prefix가 없으면 빈 상태와 추가 액션을 표시한다. 최초 등록 시 서버가 해당 `(user, content_type)` Scope를 lazy 생성한다.
 - 관리 모달을 닫으면 표시 목록을 비우고 진행 중인 조회를 무효화해 다른 content_type 항목을 임시로 재사용하지 않는다. 늦게 끝난 이전 응답은 요청 순번으로 폐기한다.
 - 말머리 편집 중 관리 모달을 닫으면 미저장 변경 폐기 확인을 먼저 표시한다. 확인하면 폼·오류를 초기화하고 닫으며, 취소하면 현재 모달과 편집 상태를 유지한다.

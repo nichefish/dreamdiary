@@ -58,7 +58,7 @@
             <span
               v-if="entry.prefix"
               class="badge me-2 fs-8"
-              :style="{ borderColor: entry.prefix.color || '', color: entry.prefix.color || '' }"
+              :class="entry.prefix.textClass" :style="{ borderColor: 'currentColor' }"
             >{{ entry.prefix.name }}</span>
             <span v-if="entry.title">{{ entry.title }}</span>
             <span v-if="isCollapsed" class="text-muted fst-italic ms-2">(collapsed)</span>
@@ -472,16 +472,14 @@
 
       <!--begin::엔트리 태그-->
       <div v-if="tagList.length > 0" class="d-flex flex-wrap gap-1 mt-1 ps-2">
-        <span
+        <TagChip
           v-for="tag in tagList"
           :key="tag.tagId"
-          class="text-muted cursor-pointer pe-1"
-          @click.stop="openTagContextMenu($event, tag)"
-        >
-          #<span class="border-bottom text-primary fw-lighter opacity-hover">
-            <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>{{ tag.name }}
-          </span>
-        </span>
+          :name="tag.name"
+          :ctgr="tag.ctgr"
+          clickable
+          @click="openTagContextMenu($event, tag)"
+        />
       </div>
       <!--end::엔트리 태그-->
 
@@ -586,7 +584,7 @@ import { useEntryLifecycleState } from "@/features/journal/entry/composables/use
 import { useEntryRelatedContent } from "@/features/journal/entry/composables/useEntryRelatedContent";
 import { useEntryCollapse } from "@/features/journal/entry/composables/useEntryCollapse";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
-import { useTagContextMenuStore } from "@/features/journal/stores/tagContextMenu";
+import { useJournalTagMenu } from "@/features/journal/shared/composables/useJournalTagMenu";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { refreshJournalEntryHostForRoute } from "@/features/journal/utils/journalEntryHostRefresh";
 import type { JournalEntryDto } from "@/features/journal/stores/journal";
@@ -596,6 +594,7 @@ import { highlightKeywordsInHtml } from "@/features/journal/utils/highlightKeywo
 import { openJournalEntryViewPopup } from "@/features/journal/utils/journalEntryViewPopup";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import JournalReflectionItem from "../../reflection/components/JournalReflectionItem.vue";
 import {
   useJournalDayResolved,
@@ -620,7 +619,7 @@ const props = defineProps<{
 
 const modalStore = useJournalModalStore();
 const attachableStore = useAttachableModalStore();
-const tagContextMenuStore = useTagContextMenuStore();
+const { openJournalTagMenu } = useJournalTagMenu();
 const journalStore = useJournalStore();
 const threadStore = useJournalThreadStore();
 const route = useRoute();
@@ -772,7 +771,7 @@ const {
 
 /** 태그 클릭 컨텍스트 메뉴 열기 */
 function openTagContextMenu(event: MouseEvent, tag: { tagId: number | string; name: string; ctgr?: string }): void {
-  tagContextMenuStore.open(event, {
+  openJournalTagMenu(event, {
     tagId: tag.tagId,
     name: tag.name,
     ctgr: tag.ctgr ?? "",

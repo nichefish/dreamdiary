@@ -3,6 +3,10 @@ node_modules/
 dist/
 web-build/
 
+# 네이티브 프로젝트는 app.json 기준으로 `npx expo prebuild` 가 생성한다(CNG). 커밋하지 않는다.
+/android/
+/ios/
+
 *.log
 npm-debug.log*
 yarn-debug.log*

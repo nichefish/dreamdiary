@@ -32,7 +32,8 @@ public enum ContentType implements LocalizedEnum {
     JOURNAL_THREAD("JOURNAL_THREAD", "저널 스레드"),
     JOURNAL_ANNUAL("JOURNAL_ANNUAL", "저널 연간"),
     JOURNAL_ANNUAL_REVIEW("JOURNAL_ANNUAL_REVIEW", "저널 연간 리뷰"),
-    JOURNAL_TODO("JOURNAL_TODO", "저널 투두", "book"),
+    PROSPECTIVE_PROJECT("PROSPECTIVE_PROJECT", "Prospective Project", "folder"),
+    PROSPECTIVE_KEEP("PROSPECTIVE_KEEP", "Prospective Keep", "bookmark-star"),
 
     SCHEDULE("SCHEDULE", "일정"),
     CHAT_MESSAGE("CHAT_MESSAGE", "채팅 메시지"),

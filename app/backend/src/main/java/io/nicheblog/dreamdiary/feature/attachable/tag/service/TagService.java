@@ -16,12 +16,14 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -54,6 +56,26 @@ public class TagService
     }
     public TagMapstruct getWriteMapstruct() {
         return this.mapstruct;
+    }
+
+    /**
+     * 로그인 사용자가 특정 콘텐츠 타입에 사용한 태그의 카테고리 맵을 조회한다.
+     * <pre>
+     *  Tagify 카테고리 자동완성이 쓰는 (태그명 -> 카테고리명 목록) 맵이다.
+     *  카테고리가 없는 태그는 빈 문자열 하나를 값으로 갖는다.
+     * </pre>
+     *
+     * @param contentType 콘텐츠 타입 (tag_content.ref_content_type)
+     * @return 태그명 기준 카테고리명 목록 맵
+     */
+    @Transactional(readOnly = true)
+    public Map<String, List<String>> getMyTagCategoryMap(final String contentType) {
+        final String username = AuthUtils.requireLoginUsername();
+        return repository.findCategoryRowsByUserAndContentType(username, contentType).stream()
+                .collect(Collectors.groupingBy(
+                        TagDto::getName,
+                        Collectors.mapping(tag -> StringUtils.defaultString(tag.getCtgr()), Collectors.toList())
+                ));
     }
 
     /**

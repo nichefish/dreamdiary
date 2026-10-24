@@ -1,5 +1,7 @@
 package io.nicheblog.dreamdiary.feature.journal.thread.model;
 
+import io.nicheblog.dreamdiary.global.type.TextClass;
+
 import java.time.LocalDate;
 
 /**
@@ -26,7 +28,7 @@ public interface JournalThreadPeriodSummaryProjection {
     String getPrefixName();
 
     /** 스레드에 선택된 말머리 색상 */
-    String getPrefixColor();
+    TextClass getPrefixTextClass();
 
     /** 스레드에 선택된 말머리 활성 상태 */
     String getPrefixActiveYn();

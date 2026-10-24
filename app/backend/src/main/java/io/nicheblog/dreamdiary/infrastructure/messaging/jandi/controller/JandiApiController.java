@@ -80,7 +80,7 @@ public class JandiApiController
 //
     //     JandiApiRespnsDto apiResponse = new JandiApiRespnsDto();
 //
-    //     log.account("requestUrl: {}", request.getRequestURL());
+    //     log.info("requestUrl: {}", request.getRequestURL());
 //
     //     final boolean isSuccess = false;
     //     final String rsltMsg = "";

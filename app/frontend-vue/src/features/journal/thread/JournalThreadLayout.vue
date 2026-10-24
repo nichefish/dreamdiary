@@ -11,8 +11,8 @@
     <JournalReflectionRegistModal />
     <HistoryModal @success="refreshThreadHistoryTarget" />
     <RelatedContentAddModal />
-    <JournalTagProfileModal />
-    <JournalTagContextMenu />
+    <TagProfileModal @success="refreshAfterTagProfileChange" />
+    <TagContextMenu />
     <!--end::스레드 모달 컨테이너-->
   </div>
   <!--end::스레드 레이아웃-->
@@ -27,9 +27,12 @@ import CommentRegistModal from "@/features/journal/shared/modals/CommentRegistMo
 import JournalReflectionRegistModal from "@/features/journal/reflection/modals/JournalReflectionRegistModal.vue";
 import HistoryModal from "@/features/attachable/HistoryModal.vue";
 import RelatedContentAddModal from "@/features/journal/shared/modals/RelatedContentAddModal.vue";
-import JournalTagProfileModal from "@/features/journal/shared/modals/JournalTagProfileModal.vue";
-import JournalTagContextMenu from "@/features/journal/shared/components/JournalTagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useJournalTagProfileRefresh } from "@/features/journal/shared/composables/useJournalTagProfileRefresh";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
+
+const { refreshAfterTagProfileChange } = useJournalTagProfileRefresh();
 
 const route = useRoute();
 const router = useRouter();

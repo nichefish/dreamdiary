@@ -13,6 +13,8 @@ import io.nicheblog.dreamdiary.auth.security.handler.LogoutHandler;
 import io.nicheblog.dreamdiary.auth.security.matcher.PublicApiRequestMatcher;
 import io.nicheblog.dreamdiary.auth.security.matcher.WebSocketHandshakeRequestMatcher;
 import io.nicheblog.dreamdiary.auth.security.service.AuthService;
+import io.nicheblog.dreamdiary.auth.security.session.ClientChannelConcurrentSessionControlAuthenticationStrategy;
+import io.nicheblog.dreamdiary.auth.security.session.ClientChannelSessionRegistry;
 import io.nicheblog.dreamdiary.global.Constant;
 import io.nicheblog.dreamdiary.global.Url;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +23,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.time.Duration;
@@ -53,6 +56,9 @@ import java.time.Duration;
 @Log4j2
 public class WebSecurityAdapter {
 
+    /** 중복 로그인 비허용 시 클라이언트 채널(WEB/MOBILE)별 최대 세션 수 */
+    private static final int MAXIMUM_SESSIONS_PER_CHANNEL = 1;
+
     private final AuthService authService;
     private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService;
     private final LoginFailureHandler webLoginFailureHandler;
@@ -62,7 +68,7 @@ public class WebSecurityAdapter {
     private final AjaxAwareAuthenticationEntryPoint ajaxAwareAuthenticationEntryPoint;
     private final LogoutHandler logoutHandler;
     private final AuthenticationProvider authenticationProvider;
-    private final SessionRegistry sessionRegistry;
+    private final ClientChannelSessionRegistry sessionRegistry;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthPolicyQueryService authPolicyQueryService;
     private final AuthProperties authProperties;
@@ -189,11 +195,24 @@ public class WebSecurityAdapter {
             log.info("Security session policy initialized. duplicateLoginAllowed=true");
         } else {
             sessionManagement
-                    .maximumSessions(1)
+                    .maximumSessions(MAXIMUM_SESSIONS_PER_CHANNEL)
                     .maxSessionsPreventsLogin(false)
                     .expiredUrl(Url.VUE_SIGN_IN + "?dupLoginAt=Y")
                     .sessionRegistry(sessionRegistry);
-            log.info("Security session policy initialized. duplicateLoginAllowed=false");
+            // 동시 세션 제어를 클라이언트 채널(WEB/MOBILE)별로 적용 :: 기본 전략을 채널 인식 전략으로 교체
+            // → 웹 1개 + 모바일 1개 공존, 같은 채널의 두 번째 로그인만 기존 세션 만료
+            sessionManagement.withObjectPostProcessor(new ObjectPostProcessor<ConcurrentSessionControlAuthenticationStrategy>() {
+                @Override
+                @SuppressWarnings("unchecked")
+                public <O extends ConcurrentSessionControlAuthenticationStrategy> O postProcess(final O object) {
+                    final ClientChannelConcurrentSessionControlAuthenticationStrategy channelStrategy =
+                            new ClientChannelConcurrentSessionControlAuthenticationStrategy(sessionRegistry);
+                    channelStrategy.setMaximumSessions(MAXIMUM_SESSIONS_PER_CHANNEL);
+                    channelStrategy.setExceptionIfMaximumExceeded(false);
+                    return (O) channelStrategy;
+                }
+            });
+            log.info("Security session policy initialized. duplicateLoginAllowed=false (per client channel)");
         }
 
         // 로그아웃 설정

@@ -9,6 +9,8 @@ import io.nicheblog.dreamdiary.auth.security.exception.IpNotAllowedException;
 import io.nicheblog.dreamdiary.auth.security.model.AuthInfo;
 import io.nicheblog.dreamdiary.auth.security.service.manager.DupIdLoginManager;
 import io.nicheblog.dreamdiary.auth.security.util.AuthUtils;
+import io.nicheblog.dreamdiary.auth.security.util.ClientChannelUtils;
+import io.nicheblog.dreamdiary.auth.type.ClientChannel;
 import io.nicheblog.dreamdiary.feature.user.account.service.UserService;
 import io.nicheblog.dreamdiary.global.util.date.DateUtils;
 import lombok.RequiredArgsConstructor;
@@ -112,8 +114,9 @@ public class AuthenticationHelper {
             throw new AccountNeedsPwResetException("AbstractUserDetailsAuthenticationProvider.AccountNeedsPwResetException", passwordToken);
         }
 
-        // 중복 로그인 체크 :: 세션 attribute 훑어서 "loginId" 비교
-        final boolean isDupLogin = DupIdLoginManager.isDupIdLogin(username);
+        // 중복 로그인 체크 :: 같은 클라이언트 채널(WEB/MOBILE) 내에서만 "loginId" 비교
+        final ClientChannel channel = ClientChannelUtils.resolveCurrentFromHeader();
+        final boolean isDupLogin = DupIdLoginManager.isDupIdLogin(username, channel);
         if (isDupLogin) throw new DupIdLoginException("AbstractUserDetailsAuthenticationProvider.DupIdLoginException");
 
         return true;
@@ -133,8 +136,13 @@ public class AuthenticationHelper {
         if (session == null) return false;
 
         final Object isDupIdLogin = session.getAttribute("isDupIdLogin");
+        final ClientChannel dupLoginChannel = ClientChannel.fromAttribute(session.getAttribute(ClientChannel.DUP_LOGIN_SESSION_ATTR));
         session.removeAttribute("isDupIdLogin");
-        return isDupIdLogin instanceof String && username.equals(isDupIdLogin);
+        session.removeAttribute(ClientChannel.DUP_LOGIN_SESSION_ATTR);
+        if (!(isDupIdLogin instanceof String) || !username.equals(isDupIdLogin)) return false;
+
+        // 중복 로그인 확인은 같은 클라이언트 채널의 재시도만 인정 (채널 정보가 없는 기존 세션은 기존 동작 유지)
+        return dupLoginChannel == null || dupLoginChannel == ClientChannelUtils.resolveFromHeader(servletRequestAttribute.getRequest());
     }
 
     /**

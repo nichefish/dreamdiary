@@ -394,13 +394,13 @@ public class JournalChapterService
                 prefixScopeContentType,
                 resolvedPrefixId
         );
-        dto.setPrefix(prefix == null ? null : PrefixDto.builder()
-                .id(prefix.getId())
-                .name(prefix.getName())
-                .color(prefix.getColor())
-                .sortOrder(prefix.getSortOrder())
-                .activeYn(prefix.getActiveYn())
-                .build());
+        dto.setPrefix(prefix == null ? null : PrefixDto.displayOf(
+                    prefix.getId(),
+                    prefix.getName(),
+                    prefix.getTextClass(),
+                    prefix.getSortOrder(),
+                    prefix.getActiveYn()
+                ));
         dto.setPrefixId(resolvedPrefixId);
     }
 

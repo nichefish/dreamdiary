@@ -42,7 +42,7 @@ class JournalDayFilterHelperTest {
     private JournalChapterDto createChapter(final Integer prefixId, final String diaryContent) {
         final JournalChapterDto chapter = JournalChapterDto.builder()
                 .prefixId(prefixId)
-                .prefix(PrefixDto.builder().id(prefixId).name("회고").color("#287D94").build())
+                .prefix(PrefixDto.builder().id(prefixId).name("회고").textClass("text-dialog").build())
                 .build();
         JournalEntryViewProjectionHelper.applyChapterEntries(chapter, List.of(
                 JournalEntryDto.builder()
@@ -68,7 +68,7 @@ class JournalDayFilterHelperTest {
         final JournalChapterDto hidden = JournalChapterDto.builder()
                 .summaryYn("N")
                 .prefixId(12)
-                .prefix(PrefixDto.builder().id(12).name("관계").color("#336699").build())
+                .prefix(PrefixDto.builder().id(12).name("관계").textClass("text-noti").build())
                 .build();
         final JournalDayDto day = JournalDayDto.builder()
                 .journalDate("2026-04-01")
@@ -86,7 +86,7 @@ class JournalDayFilterHelperTest {
         assertEquals(1, filtered.getHiddenChapterPrefixList().size());
         assertEquals(12, filtered.getHiddenChapterPrefixList().get(0).getPrefixId());
         assertEquals("관계", filtered.getHiddenChapterPrefixList().get(0).getPrefixName());
-        assertEquals("#336699", filtered.getHiddenChapterPrefixList().get(0).getPrefixColor());
+        assertEquals("text-noti", filtered.getHiddenChapterPrefixList().get(0).getPrefixTextClass());
     }
 
     @Test

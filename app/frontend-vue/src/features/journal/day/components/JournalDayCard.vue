@@ -191,17 +191,14 @@
       <div class="col">
         <div class="ms-5 mt-3">
           <i class="bi bi-tag"></i>
-          <span
+          <TagChip
             v-for="tag in tagList"
             :key="tag.tagId + ':' + tag.name"
-            class="text-muted cursor-pointer pe-1"
-            @click.stop="openTagContextMenu($event, tag)"
-          >
-            #<span class="border-bottom text-primary fw-lighter opacity-hover">
-              <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-              {{ tag.name }}
-            </span>
-          </span>
+            :name="tag.name"
+            :ctgr="tag.ctgr"
+            clickable
+            @click="openTagContextMenu($event, tag)"
+          />
         </div>
       </div>
     </div>
@@ -219,7 +216,7 @@
               v-for="prefix in hiddenChapterPrefixList"
               :key="prefix.prefixId"
               class="badge badge-light-secondary"
-              :style="{ color: prefix.prefixColor || 'var(--bs-gray-600)' }"
+              :class="prefix.prefixTextClass" :style="{ color: 'var(--bs-gray-600)' }"
             >{{ prefix.prefixName }}</span>
           </div>
         </div>
@@ -274,13 +271,14 @@ import { getWeekDayStr } from "@/features/journal/utils/journalDate";
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { refreshJournalDaysForRoute } from "@/features/journal/utils/journalDayRefresh";
-import { useTagContextMenuStore } from "@/features/journal/stores/tagContextMenu";
+import { useJournalTagMenu } from "@/features/journal/shared/composables/useJournalTagMenu";
 import JournalChapterItem from "../../chapter/components/JournalChapterItem.vue";
 import JournalDreamVirtualSection from "../../dream/components/JournalDreamVirtualSection.vue";
 import { hasDreamSections } from "@/features/journal/utils/journalDream";
 import type { JournalEntryDto } from "@/features/journal/stores/journal";
 import { joinAppBasePath } from "@/shared/utils/appPath";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { htmlToPlainText } from "@/features/journal/utils/htmlToPlainText";
 import { isJournalDayOff } from "@/features/journal/utils/journalVacation";
 import JournalDayVacationIndicator from "./JournalDayVacationIndicator.vue";
@@ -307,7 +305,7 @@ const route = useRoute();
 const router = useRouter();
 const modalStore = useJournalModalStore();
 const journalStore = useJournalStore();
-const tagContextMenuStore = useTagContextMenuStore();
+const { openJournalTagMenu } = useJournalTagMenu();
 const { t } = useLocaleStore();
 
 const tagList = computed(() => props.day.tag?.list ?? []);
@@ -513,7 +511,7 @@ function openDreamRegist(dreamerName = "") {
 
 /** 일자 태그 컨텍스트 메뉴 열기 */
 function openTagContextMenu(event: MouseEvent, tag: { tagId: number | string; name: string; ctgr?: string }) {
-  tagContextMenuStore.open(event, {
+  openJournalTagMenu(event, {
     tagId: tag.tagId,
     name: tag.name,
     ctgr: tag.ctgr ?? "",

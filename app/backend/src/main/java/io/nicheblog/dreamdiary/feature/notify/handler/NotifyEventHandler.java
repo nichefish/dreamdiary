@@ -137,7 +137,7 @@ public class NotifyEventHandler {
     //         logParam.setResult(false, MessageUtils.getExceptionMsg(e), ActvtyCtgr.JANDI);
     //         publisher.publishAsyncEvent(new LogEvent(this, logParam));
     //     }
-    //     log.account("{}", jandiRsltMsg);
+    //     log.info("{}", jandiRsltMsg);
     //     return isSuccess;
     // }
 

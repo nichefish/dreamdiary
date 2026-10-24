@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
 import io.nicheblog.dreamdiary.feature.attachable.history.HistoryType;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.PrefixEntity;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
+import io.nicheblog.dreamdiary.global.type.TextClass;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.service.PrefixContentService;
 import io.nicheblog.dreamdiary.feature.attachable.lifecycle.service.LifecycleService;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalLifecycleViewHelper;
@@ -314,25 +315,25 @@ public class JournalThreadService
         final BaseAttachableKey key = new BaseAttachableKey(entity.getId(), ContentType.JOURNAL_THREAD.key);
         final PrefixEntity prefix = prefixContentService.applySelection(
                 key, ContentType.JOURNAL_THREAD.key, prefixId);
-        dto.setPrefix(prefix == null ? null : PrefixDto.builder()
-                .id(prefix.getId())
-                .name(prefix.getName())
-                .color(prefix.getColor())
-                .sortOrder(prefix.getSortOrder())
-                .activeYn(prefix.getActiveYn())
-                .build());
+        dto.setPrefix(prefix == null ? null : PrefixDto.displayOf(
+                    prefix.getId(),
+                    prefix.getName(),
+                    prefix.getTextClass(),
+                    prefix.getSortOrder(),
+                    prefix.getActiveYn()
+                ));
         dto.setPrefixId(prefixId);
     }
 
     private PrefixDto toPrefixDto(final JournalThreadCandidateProjection candidate) {
         if (candidate.getPrefixId() == null) return null;
-        return PrefixDto.builder()
-                .id(candidate.getPrefixId())
-                .name(candidate.getPrefixName())
-                .color(candidate.getPrefixColor())
-                .sortOrder(0)
-                .activeYn(candidate.getPrefixActiveYn())
-                .build();
+        return PrefixDto.displayOf(
+                    candidate.getPrefixId(),
+                    candidate.getPrefixName(),
+                    TextClass.fromCode(candidate.getPrefixTextClassCd()),
+                    0,
+                    candidate.getPrefixActiveYn()
+                );
     }
 
     /**

@@ -44,6 +44,8 @@ Prefix 목록을 찾기 위한 논리 키다.
 - 개인 저널 챕터 말머리: `JOURNAL_CHAPTER_DIARY`(일기 챕터), `JOURNAL_CHAPTER_NOTE`(노트 챕터)
 - 개인 저널 엔트리 말머리: `JOURNAL_DIARY`, `JOURNAL_DREAM`, `JOURNAL_NOTE`
 - 개인 저널 스레드 말머리: `JOURNAL_THREAD`
+- 개인 Keep 말머리: `PROSPECTIVE_KEEP`
+- 개인 Project 말머리: `PROSPECTIVE_PROJECT` — Project 이름 앞에 `[말머리]이름`(공백 없음)으로 표시한다. 목록 관리 진입점은 웹 `/keep`의 Project 관리 모달뿐이며 내 설정 말머리 탭에는 두지 않는다. Scope 키와 `prefix_content.ref_content_type`이 모두 `PROSPECTIVE_PROJECT`다.
 - 게시판: `board.board_key`
 
 `prefix_content.ref_content_type`은 실제 attachable 콘텐츠 식별자이고, `prefix_scope.content_type`은 관리 목록을 찾는 논리 키다. 소비자 resolver가 실제 콘텐츠 문맥을 Scope 키로 변환한다. 게시판에서는 두 값이 모두 `boardKey`이므로 별도 매핑이 필요 없다.
@@ -237,6 +239,8 @@ boardKey
 
 PERSONAL과 GLOBAL은 영속 모델과 Prefix 불변식만 공유한다. 관리 권한과 API 진입점은 합치지 않는다.
 
+> 현재 구현(2026-10-11): `/api/my/prefixes`는 content type 허용 목록을 서버에서 강제하지 않는다(요청 문자열 그대로 PERSONAL Scope 키로 사용). 허용 목록 도입은 후속 과제이며, 도입 시 `PROSPECTIVE_PROJECT`를 포함해야 한다.
+
 ## 8. 구현 상태
 
 - PrefixScope는 `PERSONAL | GLOBAL` 소유 유형과 정규화 유일키를 사용한다.
@@ -247,6 +251,7 @@ PERSONAL과 GLOBAL은 영속 모델과 Prefix 불변식만 공유한다. 관리 
 - 게시글도 `prefix_content(ref_id, ref_content_type=boardKey, prefix_id)`와
   `PrefixEmbed`를 사용한다.
 - 개인 저널과 게시판의 등록·수정·검색·표시 경로가 이 계약을 사용한다.
+- Project 말머리: `prospective_project`에는 `content_type` 컬럼이 없어 `PrefixEmbed` 조인을 쓰지 않는다. `ProspectiveProjectService`가 등록·수정 시 `PrefixContentService.applySelection(key(PROSPECTIVE_PROJECT), "PROSPECTIVE_PROJECT", prefixId)`로 선택을 반영하고, 목록·상세는 `PrefixContentRepository.findAllByRefContentTypeAndRefIdIn`으로 일괄 부착한다(`ProspectiveProjectDto.prefixId`·`prefix`). 스키마 변경은 없다.
 
 `docs/migration/**`의 화면·인터랙션·컴포넌트 spec은 각 구현 SAVEPOINT의 실제 코드 상태에 맞춰 갱신한다.
 
@@ -260,6 +265,7 @@ PERSONAL과 GLOBAL은 영속 모델과 Prefix 불변식만 공유한다. 관리 
 - 활성 `prefix_content`는 콘텐츠당 최대 하나이며 선택한 Prefix의 Scope가 소비 문맥과 일치한다.
 - 게시판 Prefix의 Scope content type과 `prefix_content.ref_content_type`은 같은 boardKey다.
 - 시스템 요약·DREAM 챕터는 Prefix 연결을 갖지 않는다.
+- Project Prefix의 Scope content type과 `prefix_content.ref_content_type`은 모두 `PROSPECTIVE_PROJECT`다. `PROSPECTIVE_PROJECT`는 `ReservedStructuralBoard` 예약 키라 boardKey로 쓸 수 없다(2026-10-11 로컬 DB 확인: 해당 board 행 없음).
 
 ## 10. 삭제·비활성 계약
 
@@ -271,7 +277,7 @@ PERSONAL과 GLOBAL은 영속 모델과 Prefix 불변식만 공유한다. 관리 
 
 ## 11. 검증 기준
 
-- 개인 Prefix 관리 대상 6개가 각각 독립 Scope를 조회한다.
+- 개인 Prefix 관리 대상(내 설정 말머리 탭의 대상들과 Project 관리 모달의 `PROSPECTIVE_PROJECT`)이 각각 독립 Scope를 조회한다. Keep 말머리(`PROSPECTIVE_KEEP`)를 Project에 고르면 서버가 거부한다.
 - 게시판 관리 화면과 게시글 등록·수정·검색이 같은 `GLOBAL + boardKey` 목록을 사용한다.
 - Prefix가 없는 소비 화면은 빈 선택기를 렌더하지 않는다.
 - 비활성 Prefix는 신규 선택지에서 제외되며 기존 선택 표시는 유지된다.

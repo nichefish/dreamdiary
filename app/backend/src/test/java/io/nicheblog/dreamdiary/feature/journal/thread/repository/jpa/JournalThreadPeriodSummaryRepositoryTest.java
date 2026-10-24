@@ -1,5 +1,6 @@
 package io.nicheblog.dreamdiary.feature.journal.thread.repository.jpa;
 
+import io.nicheblog.dreamdiary.global.type.TextClass;
 import io.nicheblog.dreamdiary.auth.security.config.TestAuditConfig;
 import io.nicheblog.dreamdiary.feature.attachable._shared.entity.BaseAttachableKey;
 import io.nicheblog.dreamdiary.feature.attachable.prefix.entity.PrefixContentEntity;
@@ -89,7 +90,7 @@ class JournalThreadPeriodSummaryRepositoryTest {
         final JournalThreadEntity firstThread = saveThread("첫 번째 스레드", FIXTURE_USERNAME);
         final JournalThreadEntity secondThread = saveThread("두 번째 스레드", FIXTURE_USERNAME);
         final JournalThreadEntity otherThread = saveThread("다른 사용자 스레드", OTHER_USERNAME);
-        final PrefixEntity firstPrefix = savePrefix(firstThread, "가상 말머리", "#336699");
+        final PrefixEntity firstPrefix = savePrefix(firstThread, "가상 말머리", TextClass.NOTI);
 
         final JournalEntryEntity firstEntry = saveEntry(LocalDate.of(2026, 7, 6), weekStartDt, FIXTURE_USERNAME);
         final JournalEntryEntity secondEntry = saveEntry(LocalDate.of(2026, 7, 8), weekStartDt, FIXTURE_USERNAME);
@@ -117,7 +118,7 @@ class JournalThreadPeriodSummaryRepositoryTest {
         assertEquals(LocalDate.of(2026, 7, 6), result.get(firstThread.getId()).getFirstEntryDate());
         assertEquals(firstPrefix.getId(), result.get(firstThread.getId()).getPrefixId());
         assertEquals("가상 말머리", result.get(firstThread.getId()).getPrefixName());
-        assertEquals("#336699", result.get(firstThread.getId()).getPrefixColor());
+        assertEquals(TextClass.NOTI, result.get(firstThread.getId()).getPrefixTextClass());
         assertEquals("Y", result.get(firstThread.getId()).getPrefixActiveYn());
         assertEquals(1L, result.get(secondThread.getId()).getEntryCount().longValue());
         assertEquals(LocalDate.of(2026, 7, 8), result.get(secondThread.getId()).getFirstEntryDate());
@@ -186,7 +187,7 @@ class JournalThreadPeriodSummaryRepositoryTest {
     private PrefixEntity savePrefix(
             final JournalThreadEntity thread,
             final String name,
-            final String color
+            final TextClass textClass
     ) {
         final String username = thread.getCreatedBy();
         final PrefixScopeEntity scope = PrefixScopeEntity.builder()
@@ -198,7 +199,7 @@ class JournalThreadPeriodSummaryRepositoryTest {
         final PrefixEntity prefix = PrefixEntity.builder()
                 .scope(scope)
                 .name(name)
-                .color(color)
+                .textClass(textClass)
                 .sortOrder(0)
                 .activeYn("Y")
                 .createdBy(username)

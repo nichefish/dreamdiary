@@ -39,6 +39,7 @@
                     id="journalDate"
                     class="form-control form-control-solid w-150px"
                     v-model="model.journalDate"
+                    @blur="onJournalDateBlur"
                     placeholder="YYYY-MM-DD"
                     maxlength="10"
                     autocomplete="off"
@@ -217,7 +218,7 @@
 </template>
 
 <script setup lang="ts">
-import { swalConfirm, swalAlert, swalRequestError, swalAjaxResult } from "@/shared/utils/swal";
+import { swalConfirm, swalAlert, swalRequestError, swalAjaxResult, getAjaxFieldErrors } from "@/shared/utils/swal";
 import { useSafeModalClose } from "@/shared/utils/safeModalClose";
 import { ref, computed, watch, onMounted, nextTick } from "vue";
 import type { Instance as FlatpickrInstance } from "flatpickr/dist/types/instance";
@@ -229,6 +230,7 @@ import { bindSingleDatePicker, destroySingleDatePicker } from "@/shared/utils/fl
 import { useJournalModalStore } from "@/features/journal/stores/journalModal";
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { refreshJournalDaysForRoute } from "@/features/journal/utils/journalDayRefresh";
+import { normalizeJournalDateInput } from "@/features/journal/utils/journalDate";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 
 const modalStore = useJournalModalStore();
@@ -299,6 +301,41 @@ function attachJournalDatePicker(): void {
 function destroyJournalDatePicker(): void {
   destroySingleDatePicker(journalDateFp);
   journalDateFp = null;
+}
+
+/** catalog 에 키가 없으면(백엔드 재기동 전 신규 키 등) 한국어 기본 문구를 쓴다. */
+function tOr(key: string, fallback: string): string {
+  const msg = t(key);
+  return msg && msg !== key ? msg : fallback;
+}
+
+/** 입력 중 날짜를 YYYY-MM-DD 로 맞추고 datepicker 선택값도 동기화한다. 무효 값은 그대로 두고 submit 에서 막는다. */
+function applyNormalizedJournalDate(normalized: string): void {
+  if (!model.value || model.value.journalDate === normalized) return;
+  model.value.journalDate = normalized;
+  journalDateFp?.setDate(normalized, false);
+}
+
+/** 직접 입력(allowInput) 후 포커스를 잃을 때 2026-10-8 / 2026.10.08 / 20261008 등을 정규화한다. */
+function onJournalDateBlur(): void {
+  const normalized = normalizeJournalDateInput(model.value?.journalDate);
+  if (normalized) applyNormalizedJournalDate(normalized);
+}
+
+/** 서버 검증 실패 필드 → 화면 라벨 키 */
+const FIELD_LABEL_KEYS: Record<string, string> = {
+  journalDate: "journal.day.field.date",
+  journalDatePrecision: "journal.day.regist.field.date-precision",
+  weather: "journal.day.field.weather",
+};
+
+/** 저장 실패 응답의 필드 오류를 "(날짜, 날씨)" 형태 라벨로 만든다. 없으면 undefined. */
+function buildFieldErrorDetail(e: unknown): string | undefined {
+  const labels = [...new Set(getAjaxFieldErrors(e).map((f) => {
+    const key = FIELD_LABEL_KEYS[f.field];
+    return key ? t(key) : f.field;
+  }))];
+  return labels.length ? `(${labels.join(", ")})` : undefined;
 }
 
 function openJournalDatePicker(): void {
@@ -402,10 +439,16 @@ function refreshCurrentDayView(targetDate?: string): void {
 /** 등록/수정 처리 (axios multipart). */
 async function submit() {
   if (!model.value) return;
-  if (!model.value.journalDate) {
+  const normalizedDate = normalizeJournalDateInput(model.value.journalDate);
+  if (normalizedDate === "") {
     void swalAlert(t("journal.day.date.required"));
     return;
   }
+  if (normalizedDate === null) {
+    void swalAlert(tOr("journal.day.date.invalid", "올바른 날짜를 입력해 주세요. (예: 2026-10-08)"));
+    return;
+  }
+  applyNormalizedJournalDate(normalizedDate);
 
   const isEdit = !!model.value.id;
   const confirmed = await swalConfirm(isEdit ? t("common.confirm.mdf") : t("common.confirm.reg"));
@@ -452,7 +495,8 @@ async function submit() {
       });
     }
   } catch (e: unknown) {
-    void swalRequestError(e);
+    /* 서버 message(검증 메시지) + 실패 필드 라벨을 보여주고, 모달은 열린 채 둔다. */
+    void swalRequestError(e, undefined, buildFieldErrorDetail(e));
   } finally {
     submitting.value = false;
   }

@@ -10,7 +10,6 @@ export type {
   JournalReflectionRegistModel,
   DayFilterSeedType,
   JournalDayFilterPayload,
-  JournalTodoRegistModel,
   JournalChapterOption,
   JournalEntryRegistModel,
 } from "@/features/journal/stores/journalModal.types";
@@ -24,7 +23,6 @@ import { createJournalModalOneShotSignals } from "@/features/journal/stores/jour
 import { createJournalModalDay } from "@/features/journal/stores/journalModalDay";
 import { createJournalModalChapter } from "@/features/journal/stores/journalModalChapter";
 import { createJournalModalReflection } from "@/features/journal/stores/journalModalReflection";
-import { createJournalModalTodo } from "@/features/journal/stores/journalModalTodo";
 import { createJournalModalEntry } from "@/features/journal/stores/journalModalEntry";
 
 // ---- 스토어 ----
@@ -40,7 +38,6 @@ export const useJournalModalStore = defineStore("journalModal", () => {
   });
   const chapter = createJournalModalChapter({ personalPrefixOptionsStore });
   const reflection = createJournalModalReflection();
-  const todo = createJournalModalTodo();
   const entry = createJournalModalEntry({
     t,
     ensureCategoryMap: (url) => categoryMaps.ensure(url),
@@ -112,11 +109,6 @@ export const useJournalModalStore = defineStore("journalModal", () => {
     reflectionRegistModel: reflection.reflectionRegistModel,
     openReflectionRegist: reflection.openReflectionRegist,
     closeReflectionRegist: reflection.closeReflectionRegist,
-    // 할일 등록/수정
-    todoRegistOpen: todo.todoRegistOpen,
-    todoRegistModel: todo.todoRegistModel,
-    openTodoRegist: todo.openTodoRegist,
-    closeTodoRegist: todo.closeTodoRegist,
     // 엔트리 등록/수정·읽기 전용
     entryRegistOpen: entry.entryRegistOpen,
     entryRegistLoading: entry.entryRegistLoading,

@@ -23,7 +23,7 @@
             <span
               v-if="thread.prefix"
               class="journal-period-thread-summary__prefix badge fs-9"
-              :style="prefixBadgeStyle(thread.prefix.color)"
+              :class="thread.prefix.textClass" :style="prefixBadgeStyle()"
             >{{ thread.prefix.name }}</span>
             <span>{{ thread.title }}</span>
             <span class="text-muted fs-9">
@@ -137,8 +137,12 @@ function formatEntryCount(count: number): string {
 }
 
 /** 스레드 목록과 같은 이름·색 계약으로 기간 요약 말머리를 표시한다. */
-function prefixBadgeStyle(color?: string | null): Record<string, string> {
-  return color ? { borderColor: color, color } : {};
+/**
+ * 말머리 배지의 테두리 색.
+ * 글자색은 말머리 색 의미 클래스(`textClass`)가 정하고, 테두리는 그 글자색을 따라가게 둔다.
+ */
+function prefixBadgeStyle(): Record<string, string> {
+  return { borderColor: "currentColor" };
 }
 
 function openThreadDetail(threadId: number): void {

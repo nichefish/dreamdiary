@@ -31,7 +31,7 @@
 | 저널 주간 | `/journal/weekly` | `JournalDayWeekly.vue` | ✓ |
 | 저널 일간 (탭) | `/journal/daily` | `JournalDayDaily.vue` | ✓ 정식 탭(맨앞), JournalDayLayout, aside 포함, 이전/다음 네비 |
 | 저널 일간 (팝업) | `/journal/daily-popup` | `JournalDayDaily.vue` | ✓ 새 창 전용, SystemLayout, 사이드바/헤더 없음, 이전/다음 네비 |
-| 저널 작성 미리보기 (팝업) | `/journal/entry/preview-pop` | `JournalEntryPreviewPage.vue` | ✓ 새 창 전용, SystemLayout, 등록 모달 미저장 본문 |
+| 저널 작성 미리보기 (팝업) | `/journal/entry/preview-pop` | `JournalEntryPreviewPage.vue` | ✓ 새 창 전용, SystemLayout, 등록 모달 미저장 본문 (Prospective Keep 등록 모달 공용) |
 | 저장된 저널 엔트리 보기 (팝업) | `/journal/entry/view-pop?entryId={id}` | `JournalEntryViewPage.vue` | ✓ 새 창 전용, SystemLayout, 엔트리·리플렉션 단건 읽기 전용 |
 | 저널 달력 | `/journal/calendar` | `JournalDayCalendar.vue` | ✓ |
 | 저널 메타 | `/journal/meta` | `JournalDayMeta.vue` | ✓ 컨텍스트 메뉴·단일 비교 차트(최대 2시리즈)·연도 전체 |
@@ -43,7 +43,6 @@
 | 스레드 수정 | `/thread/:id/edit` | `JournalThreadEditPage.vue` | ✓ |
 | 내 설정 | `/my/profile`, `/my/security`, `/my/journal`, `/my/prefixes` | `UserMyPage.vue` + `UserMy*Tab.vue` | ✓ |
 | 일정 | `/schedule` | `ScheduleCalendar.vue` | ✓ |
-| Keep 전수관리 | `/keep` | `KeepPage.vue` | ✓ 전 범위 journal_todo(scope=all) 조회·미해결/완료 그룹·제목/본문 검색·추가(현재 년월 발생지 기본)·제목 클릭 수정·완료/보류/되돌리기. 사이드바는 활성 projection으로 유지. 대메뉴 노출은 DB 메뉴 레코드 몫(코드 fallback 에는 등록). |
 
 ### 저널 달력 (`JournalDayCalendar.vue`)
 
@@ -228,7 +227,7 @@
 | 저널 일자 태그 상세 | `JournalDayMetaModal.vue` | 태그 클릭(`openDayFilterModal`) |
 | 저널 일자 메타 | `JournalDayMetaModal.vue` | 메타 버튼 클릭 |
 | 태그 목록 | `JournalTagListModal.vue` | 태그 관련 팝업 |
-| 태그 프로필 | `JournalTagProfileModal.vue` | 태그 프로필 클릭 |
+| 태그 프로필 | `TagProfileModal.vue` | 태그 프로필 클릭 |
 | 이력 | `HistoryModal.vue` | 이력 버튼 클릭 |
 | 댓글 등록 | `CommentRegistModal.vue` | 댓글 등록 버튼 클릭 |
 | 관련 글 추가 | `RelatedContentAddModal.vue` | 엔트리 ⋯ 메뉴의 「관련 글 추가」 클릭. 선택한 일기/꿈 유형에서 제목·본문 키워드로 최신 8건을 검색하며 실패와 정상 0건을 구분 |
@@ -435,7 +434,7 @@
 - 결산 상세의 SUMMARY·REVIEWS·로딩·태그 메뉴 tooltip·IMPORTANT·REFERENCE와 상세/목록 aside의 FILTER·TAGCLOUD·ENTRY FILTER·SUMMARY FILTER·키워드 레이블은 현재 locale의 클라이언트 카탈로그를 사용한다. 영어는 기존 대문자 표기를 유지하며 locale 변경은 선택 연도·활성 탭·필터값·토글 상태를 변경하지 않는다. DIARY/DREAM 엔트리 목록 조회 실패(`store.entriesError` / `journal.annual.entries.load.failure`)는 정상 빈 목록과 구분하며, 실패 시 직전 성공 목록을 유지한다.
 - Vue SPA의 상세 aside는 연도 이동·태그클라우드·엔트리 필터 전용 영역이며 결산 등록 액션을 두지 않는다. 신규 결산 등록은 목록 화면 총 집계 카드 우측 액션 영역에서 수행한다.
 - 결산 상세의 SUMMARY 본문과 DIARY/DREAM 엔트리 본문은 저널 일자 엔트리와 같은 `journal-content p-2` 타이포그래피 계약을 따른다. 상세 엔트리 제목도 일자 엔트리와 맞춰 `fs-5 fw-bold` 크기로 표시한다(변경 전 `fs-7`). 선택된 Prefix는 같은 행의 제목 앞 색상 배지로 표시하고 제목이 없어도 배지만 남긴다. 본문(`.journal-content`)은 fs 클래스 없이 base 1rem 을 상속하므로, 제목은 본문보다 한 단계 위 크기가 된다. 상세 엔트리 목록은 행 왼쪽 날짜 칼럼을 반복하지 않고, 저널 일자 카드처럼 `journal-day-header` 날짜 헤더 아래에 해당 날짜의 엔트리 본문을 배치한다. DIARY/DREAM 엔트리 태그는 일자 `JournalEntryItem` 과 동일하게 밑줄 primary `#이름`(ctgr·클릭 메뉴 포함, `bi-tag` 없음)으로 표시한다(변경 전: `bi-tag` + 단순 `#name`).
-- Vue SPA `JournalAnnualLayout`은 태그 컨텍스트 메뉴와 짝으로 `JournalTagProfileModal`·`JournalDayMetaModal`을 마운트하고, 기간별 스레드 요약에서 연 문맥형 상세를 위해 `HistoryModal`도 마운트한다. 일자(`JOURNAL_DAY`) 태그 검색은 `openDayFilterModal` → `JournalDayMetaModal`이며, 짝 모달 미마운트 시 무반응처럼 보였다.
+- Vue SPA `JournalAnnualLayout`은 태그 컨텍스트 메뉴와 짝으로 `TagProfileModal`·`JournalDayMetaModal`을 마운트하고, 기간별 스레드 요약에서 연 문맥형 상세를 위해 `HistoryModal`도 마운트한다. 일자(`JOURNAL_DAY`) 태그 검색은 `openDayFilterModal` → `JournalDayMetaModal`이며, 짝 모달 미마운트 시 무반응처럼 보였다.
 - Vue SPA의 결산 상세 날짜 요일·리뷰 등록 모달 표시 문구, 툴팁, 확인창은 `useLocaleStore.t()`를 사용하며 `journal.annual.*`와 공통 i18n 키를 한국어/영어 카탈로그에서 동일하게 제공한다.
 - 리뷰 등록·수정 결과와 삭제 확인·결과 fallback은 현재 locale의 카탈로그를 사용하며, API 응답의 `message`를 우선 표시한다.
 
@@ -450,13 +449,13 @@
 
 - 레이아웃: `JournalThreadLayout` (사이드바 없음)
 - 메인 영역:
-  - 검색 카드: 분류·제목·멀티 태그 필터
+  - 검색 카드: 상단 말머리 탭 행 + 라이프사이클·제목·멀티 태그 필터
   - 카드: `.card.post`
     - 카드 바디: `JournalThreadList.vue` 테이블 (`store.list`)
     - 카드 푸터: 클라이언트 페이지네이션
 - 마운트 루트: `<div id="journal_thread_list_app" class="d-none">`
 
-**현재 Vue SPA 구조**: `JournalThreadLayout`이 목록 route에서 `JournalThreadViewToolbar`(등록, `pe-5 mt-3 mb-1`)를 목록 위에 두고, 그 아래 컴팩트한 검색 카드를 표시한다. ASIDE는 없다. 검색 카드는 분류·제목 검색과 검색·초기화 액션만 두며 `margin-top: 0`으로 툴바에 붙인다. **태그 클라우드 행은 2c-A 에서 제거됐다**(스레드 자체 태그 미소유, 2b). 목록 테이블 행에는 소속 집계 쿼리로 채운 엔트리 태그 집계(`tag.list`), 활성 소속 수(`membershipCount`, 제목 옆 `{n}건`, 0이면 숨김), 소속 기간(`firstEntryDate`/`lastEntryDate`, 같은 날이면 단일 일자·범위면 `{0} ~ {1}`, 유효 일자 없으면 숨김)을 표시한다. 검색 카드에서 멀티 태그 필터(AND, `tagIds`)를 제공한다. 별도 카드 제목 행은 두지 않으며 기존 목록 카드의 테이블 DOM·클래스와 페이지네이션 구조는 유지한다. `/thread/:id`는 목록을 배경으로 모달을 띄우지 않고 `JournalThreadDetailPage`를 렌더하며, 목록 이동·수정 버튼과 공용 `JournalThreadDetailContent`를 가진 독립 상세 카드가 스레드 자체를 주 문맥으로 표시한다. `/thread/:id/edit`는 같은 탭의 `JournalThreadEditPage`를 렌더하고 공용 `JournalThreadEditorForm`으로 카테고리·제목·본문을 수정한 뒤 해당 독립 상세에 복귀한다.
+**현재 Vue SPA 구조**: `JournalThreadLayout`이 목록 route에서 `JournalThreadViewToolbar`(등록, `pe-5 mt-3 mb-1`)를 목록 위에 두고, 그 아래 컴팩트한 검색 카드를 표시한다. ASIDE는 없다. 검색 카드 상단에는 Keep의 Project 탭과 같은 `nav-line-tabs` 말머리 탭 행을 두고, 그 아래 카드 바디에 라이프사이클·제목 검색과 검색·초기화 액션을 둔다. 검색 카드는 `margin-top: 0`으로 툴바에 붙인다. 말머리 탭은 `전체`(기본) → 활성 `JOURNAL_THREAD` 개인 Prefix(서버 정렬 순) → `말머리 없음` 순으로 표시하고, 탭 행 우측 `말머리 관리` 버튼이 같은 화면에서 개인 말머리 관리 모달(`PersonalPrefixManageModal`, `contentType=JOURNAL_THREAD`)을 연다. 말머리는 별도 엔티티가 아니라 스레드 목록의 선택 범위다. **태그 클라우드 행은 2c-A 에서 제거됐다**(스레드 자체 태그 미소유, 2b). 목록 테이블 행에는 소속 집계 쿼리로 채운 엔트리 태그 집계(`tag.list`), 활성 소속 수(`membershipCount`, 제목 옆 `{n}건`, 0이면 숨김), 소속 기간(`firstEntryDate`/`lastEntryDate`, 같은 날이면 단일 일자·범위면 `{0} ~ {1}`, 유효 일자 없으면 숨김)을 표시한다. 검색 카드에서 멀티 태그 필터(AND, `tagIds`)를 제공한다. 별도 카드 제목 행은 두지 않으며 기존 목록 카드의 테이블 DOM·클래스와 페이지네이션 구조는 유지한다. `/thread/:id`는 목록을 배경으로 모달을 띄우지 않고 `JournalThreadDetailPage`를 렌더하며, 목록 이동·수정 버튼과 공용 `JournalThreadDetailContent`를 가진 독립 상세 카드가 스레드 자체를 주 문맥으로 표시한다. `/thread/:id/edit`는 같은 탭의 `JournalThreadEditPage`를 렌더하고 공용 `JournalThreadEditorForm`으로 카테고리·제목·본문을 수정한 뒤 해당 독립 상세에 복귀한다.
 
 ### Key UI Elements
 
@@ -464,7 +463,9 @@
 |---------|------|----------------|-------------|-------|
 | 태그 필터 | Vue | `JournalThreadList.vue` 검색 카드 | `tagIds` | 멀티 태그 AND 필터 |
 | 뷰 툴바 | `JournalThreadViewToolbar` | Vue 신규 툴바 | Vue Router `thread-create` | 등록 버튼만. 결산·일자 액션 행과 동형(`pe-5 mt-3 mb-1`). ASIDE 없음. 탭용 `mt-5` 빈 여백 없음 |
-| Vue 검색 카드 | `.card.mb-4` + `margin-top: 0` | Vue 신규 검색 카드 | `/api/my/prefixes/options`, `prefixId`, `tagIds` | 단일 말머리·제목·멀티 태그 AND 검색. 등록은 뷰 툴바에 둔다. |
+| Vue 검색 카드 | `.card.mb-4` + `margin-top: 0` | Vue 신규 검색 카드 | `lifecycleKey`, `searchKeyword`, `tagIds` | 라이프사이클·제목·멀티 태그 AND 검색. 등록은 뷰 툴바에 둔다. |
+| 말머리 탭 행 | `.nav.nav-tabs.nav-line-tabs` | 검색 카드 상단 `border-bottom` 행 | `/api/my/prefixes/options?contentType=JOURNAL_THREAD`, `prefixId`, `noPrefixYn` | `전체`·활성 말머리·`말머리 없음` 탭. 비활성 Prefix는 탭에서 제외하고 `전체`에서만 보인다. 우측 `말머리 관리` 버튼(`btn-sm btn-light`) |
+| 말머리 관리 모달 | `PersonalPrefixManageModal` | `JournalThreadList.vue` | `/api/my/prefixes?contentType=JOURNAL_THREAD` | 내 설정 말머리 탭과 같은 모달. 생성·수정·정렬값·색·활성 상태 관리 |
 | 테이블 | `<table>` | `.table.align-middle.table-row-dashed.fs-small.gy-5.table-fixed.hoverTable.mb-3` | 서버 모델 | 고정 레이아웃, 행 hover |
 | 번호 열 | `<th>` | `.text-center.wb-keepall.w-10.hidden-table` | `post.rnum` | 모바일 숨김 |
 | 제목 열 | `<th>` | `.col-lg-9.col-9.text-center.wb-keepall` | `post.title` | `txt.title` i18n |
@@ -473,11 +474,11 @@
 | 목록 tbody | `<tbody>` | `JournalThreadList.vue` | `store.list` | 스레드 행 렌더 |
 | 페이지네이션 | Vue | `JournalThreadList.vue` | `store.totalPages` | 클라이언트 페이지네이션 |
 
-`JournalThreadList.vue`의 분류·라이프사이클 필터·제목 placeholder·태그 빈 상태와 조회 실패, 등록 버튼·테이블 헤더·빈 상태·댓글 목록·컨텍스트 메뉴(수정·이력·라이프사이클·삭제) 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록 조회 실패(`journal.thread.list.load.failure`)는 테이블에 표시하며 정상 빈 목록(`journal.thread.empty`)과 구분한다. 목록 행 선두는 카테고리 배지 몫이라, 라이프사이클(진행중 등) 배지는 제목·메타(개수·기간·댓글) 뒤=댓글 버튼 뒤·태그 줄 앞(`ms-2`)에 표시한다.
+`JournalThreadList.vue`의 말머리 탭(`전체`·`말머리 없음`)·관리 버튼·관리 모달 제목, 라이프사이클 필터·제목 placeholder·태그 빈 상태와 조회 실패, 등록 버튼·테이블 헤더·빈 상태·댓글 목록·컨텍스트 메뉴(수정·이력·라이프사이클·삭제) 문구는 현재 locale의 클라이언트 카탈로그를 사용한다. 목록 조회 실패(`journal.thread.list.load.failure`)는 테이블에 표시하며 정상 빈 목록(`journal.thread.empty`)과 구분한다. 목록 행 선두는 카테고리 배지 몫이라, 라이프사이클(진행중 등) 배지는 제목·메타(개수·기간·댓글) 뒤=댓글 버튼 뒤·태그 줄 앞(`ms-2`)에 표시한다.
 
-`JournalThreadLayout.vue`는 목록 검색과 등록·수정이 공유할 활성 Prefix 선택지를 콘텐츠 타입별 공통 store에서 조회한다. 내 설정의 등록·수정·활성 변경 성공 시 해당 `contentType` 캐시를 무효화하므로 스레드 화면 재진입은 서버 확정 목록을 다시 조회한다(변경 전: `journalThread` store의 최초 정상 조회가 세션 동안 고정되어 관리 변경 뒤에도 이전 옵션을 표시). 등록·수정은 단일 말머리 select와 nullable `prefixId`를 사용한다. 비활성 과거 Prefix는 옵션에서 제외하되 목록·상세 DTO의 이름·색으로 계속 표시한다. Prefix 조회 실패는 목록 검색 카드와 편집 폼에 현재 locale 오류를 표시한다. 개인 말머리 목록은 `(user, content_type)`로 분리되므로 `/api/my/prefixes` 계열(옵션 조회·빠른 추가·관리) 호출은 `contentType` 파라미터를 요구하며, 스레드 문맥은 `JOURNAL_THREAD`를 보낸다. UI의 단일 select·nullable `prefixId` 계약은 그대로이고, 저장 시 서버가 이를 attachable 연결(`prefix_content`)로 흡수한다(콘텐츠는 prefix FK를 직접 두지 않는다).
+`JournalThreadLayout.vue`는 목록 말머리 탭과 등록·수정이 공유할 활성 Prefix 선택지를 콘텐츠 타입별 공통 store에서 조회한다. 말머리 관리 모달의 등록·수정·활성 변경 성공 시 해당 `contentType` 캐시를 무효화하고 목록 화면이 즉시 선택지와 목록을 서버 확정 상태로 다시 조회한다(변경 전: `journalThread` store의 최초 정상 조회가 세션 동안 고정되어 관리 변경 뒤에도 이전 옵션을 표시). 등록·수정은 단일 말머리 select와 nullable `prefixId`를 사용한다. 비활성 과거 Prefix는 옵션에서 제외하되 목록·상세 DTO의 이름·색으로 계속 표시한다. Prefix 조회 실패는 목록 검색 카드와 편집 폼에 현재 locale 오류를 표시하며, 이때 말머리 탭 행은 `전체`·`말머리 없음`만 표시한다. 개인 말머리 목록은 `(user, content_type)`로 분리되므로 `/api/my/prefixes` 계열(옵션 조회·빠른 추가·관리) 호출은 `contentType` 파라미터를 요구하며, 스레드 문맥은 `JOURNAL_THREAD`를 보낸다. UI의 단일 select·nullable `prefixId` 계약은 그대로이고, 저장 시 서버가 이를 attachable 연결(`prefix_content`)로 흡수한다(콘텐츠는 prefix FK를 직접 두지 않는다).
 
-공용 편집 폼은 Prefix 이름 빠른 추가를 제공하고 생성 성공 시 서버 옵션 재조회와 현재 선택 반영을 마친다. 전체 관리는 「말머리 관리 탭」 링크로 `/my/prefixes`에 진입한다.
+공용 편집 폼은 Prefix 이름 빠른 추가를 제공하고 생성 성공 시 서버 옵션 재조회와 현재 선택 반영을 마친다. 전체 관리는 스레드 목록 말머리 탭 행의 `말머리 관리` 버튼이 담당하며, 내 설정 `/my/prefixes`에는 스레드 대상 행을 두지 않는다.
 
 스레드 삭제 확인·성공·실패 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 삭제 API의 서버 `message`가 있으면 우선 표시하고, 성공 알림 확인 후 첫 페이지 목록을 다시 조회한다.
 
@@ -492,10 +493,12 @@
 | 상세 소속 엔트리 정렬 | 독립 상세 페이지 또는 문맥형 모달 조회·갱신 | `GET /api/journal/threads/{id}/entries` | 일자 → 원본 엔트리 `sortOrder` → ID 오름차순. 소속 `sort_order`는 미사용 |
 | 문맥형 상세에서 수정 | 상세 모달 헤더 「수정」 클릭 | `store.openModifyFromDetail(id)` | route·배경 스크롤과 상세 데이터를 유지하고 같은 앱의 수정 모달로 전환. 저장·취소 뒤 원래 상세 모달로 복귀하며 저장 성공 시 상세와 주간·월간·일간 배경을 갱신 |
 | 등록 모달 열기 | 뷰 툴바(`JournalThreadViewToolbar`) 등록 버튼 클릭 | `router.push({ name: "thread-create" })` | 등록 모달 오픈 + URL `/thread/new` 동기화 |
-| 말머리 검색·선택 | 스레드 영역 진입 또는 검색·편집 선택 변경 | `ensurePrefixOptions()`, `filterPrefixId`, `registModel.prefixId` | `/api/my/prefixes/options`를 조회해 목록 검색과 등록·수정이 공유 |
+| 말머리 선택지 | 스레드 영역 진입 또는 편집 선택 변경 | `ensurePrefixOptions()`, `registModel.prefixId` | `/api/my/prefixes/options`를 조회해 목록 말머리 탭과 등록·수정이 공유 |
+| 말머리 탭 선택 | 말머리 탭 클릭 | `store.selectPrefixScope(scope)` | `filterPrefixId`를 빈 값(전체)·Prefix ID·`NONE`(말머리 없음)으로 설정하고 첫 페이지 조회. Prefix 탭은 `prefixId`, 말머리 없음은 `noPrefixYn=Y`를 전송하며 다른 필터와 AND로 결합. 상세 왕복 후에도 store 값으로 선택 탭을 유지 |
+| 말머리 관리 | 탭 행 우측 `말머리 관리` 클릭 | `PersonalPrefixManageModal` (`@changed` → `fetchPrefixOptions()` → `reconcilePrefixScope()` → `fetchList`) | 같은 화면에서 관리 모달을 연다. 변경 성공 시 선택지·목록을 재조회하고, 선택 탭의 Prefix가 활성 선택지에서 빠지면 `전체`로 돌아가 첫 페이지를 조회 |
 | 태그 필터 | 검색 카드에서 태그 추가/배지 제거 | `filterTagIds` + `tagIds` 반복 파라미터로 `fetchList(0)` | 멀티 태그 AND. 배지에 `[ctgr]`(`text-noti`) + 이름 모두 `fs-7`, 세로 가운데. 소속 엔트리 태그 합집합이 선택 태그를 모두 포함하는 스레드만 |
-| 말머리·제목 검색 | 말머리 select 변경 또는 검색 버튼·Enter | `filterPrefixId`, `filterKeyword` 설정 후 `fetchList(0)` | 말머리는 단일 `prefixId`, 제목은 `searchType=title`, `searchKeyword`로 첫 페이지 조회 |
-| 검색 초기화 | 초기화 버튼 클릭 | `resetFilters()` | 태그·분류·제목 조건을 모두 비우고 첫 페이지 조회 |
+| 제목 검색 | 검색 버튼·Enter | `filterKeyword` 설정 후 `fetchList(0)` | 제목은 `searchType=title`, `searchKeyword`로 첫 페이지 조회 |
+| 검색 초기화 | 초기화 버튼 클릭 | `resetFilters()` | 태그·라이프사이클·제목 조건을 비우고 첫 페이지 조회. 말머리 탭 범위는 검색 조건이 아니므로 유지 |
 | 목록에서 수정 페이지 열기 | ⋯ 메뉴의 수정 클릭 | `router.push({ name: "thread-edit", params: { id } })` | 같은 탭의 독립 수정 페이지 `/thread/:id/edit`로 이동 |
 | 스레드 본문 이력 | 목록 ⋯ 메뉴 또는 상세 페이지·모달의 「히스토리」 클릭 | `attachableStore.openHistory("JOURNAL_THREAD", id)` | `history.historyTriggeredAt`이 있을 때 공통 이력 모달을 열어 본문 스냅샷을 조회·복원·삭제. 성공 후 열린 상세와 현재 목록을 재조회 |
 | 댓글 모달 | 댓글 수 클릭 | `attachableStore.openCommentList(id, contentType)` | 댓글 목록 모달 |
@@ -541,7 +544,7 @@
 | 리플렉션 등록·수정 | `JournalReflectionRegistModal.vue` | 소속 엔트리 대상 리플렉션 등록·수정 |
 | 이력 | `HistoryModal.vue` | 스레드 자체 또는 소속 엔트리의 본문 이력 조회·복원·삭제 |
 | 관련글 추가 | `RelatedContentAddModal.vue` | 소속 엔트리 관련글 추가 |
-| 태그 프로필 | `JournalTagProfileModal.vue` | 소속 엔트리 태그 설정 |
+| 태그 프로필 | `TagProfileModal.vue` | 소속 엔트리 태그 설정 |
 
 스레드 상세의 소속 엔트리·연관 스레드 조회 실패(`detailEntriesError` / `journal.thread.entries.load.failure`, `detailRelatedError` / `journal.thread.related.load.failure`)와 연관 스레드 피커 검색 실패(`pickerSearchError` / `journal.thread.related.picker.load.failure`)는 각각 정상 빈 목록·검색 0건과 구분하며, 실패 시 직전 성공 목록을 유지한다.
 
@@ -788,25 +791,25 @@ const pinnedMnth = ref<number | null>(null);
 
 `JournalDayLayout.vue`의 필터 패널 열기와 `JournalAside.vue`의 필터 패널 닫기·정렬 변경·날짜 선택·Pinpoint 저장/복귀 tooltip, 월 단위와 요일 축약명은 현재 locale의 클라이언트 카탈로그를 사용한다. locale 변경은 필터 상태·기간·선택 일자·Pinpoint 저장값·route query를 변경하지 않는다.
 
-필터 영역의 고정 영문 제목·토글·섹션명, 로딩·말머리 조회 실패, 라이프사이클 선택지, 일기·꿈 키워드 placeholder/적용 tooltip, 필터 초기화와 TODO 카드 제목·할일 등록 문구도 현재 locale의 클라이언트 카탈로그를 사용한다. TODO 목록 조회 실패(`store.todoError` / `journal.todo.list.load.failure`)는 정상 빈 목록(`journal.todo.empty`)과 구분하며, 실패 시 직전 성공 목록을 유지한다. locale 변경은 기존 필터값과 조회·초기화·모달 호출 동작을 변경하지 않는다.
+필터 영역의 고정 영문 제목·토글·섹션명, 로딩·말머리 조회 실패, 라이프사이클 선택지, 일기·꿈 키워드 placeholder/적용 tooltip, 필터 초기화와 Keep 카드 문구도 현재 locale의 클라이언트 카탈로그를 사용한다. Keep 목록 조회 실패(`store.keepError` / `prospective.keep.list.load.failure`)는 정상 빈 목록(`prospective.keep.empty`)과 구분하며, 실패 시 직전 성공 목록을 유지한다. locale 변경은 기존 필터값과 조회·초기화·모달 호출 동작을 변경하지 않는다.
 
 - 챕터 말머리 필터로 제외된 Prefix는 서버가 ID·이름·색상을 `hiddenChapterPrefixList`로 반환하고 일자 카드가 배지로 표시한다. 시스템 요약과 Prefix 미선택 챕터는 필터 선택과 무관하게 유지한다.
 
 ---
 
-### 섹션 4: TODO 카드
+### 섹션 4: Keep 카드
 
 **API**:
-- 활성 목록 조회: `GET /api/journal/todos` (`yy`·`mnth` 전달돼도 무시) → `rsltList: TodoRow[]` — 월 무관 활성 집합(OPEN·PENDING)
-- 라이프사이클 전이: `PUT /api/lifecycles` `{id, contentType:'JOURNAL_TODO', lifecycleKey}` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN)
-- 삭제: `DELETE /api/journal/todo/{id}`
-- 등록: 별도 모달 (`#journal_todo_regist`) Bootstrap modal
+- 활성 목록 조회: `GET /api/prospective/keeps` → `rsltList: KeepRow[]` — 월 무관 활성 집합(OPEN·PENDING)
+- 라이프사이클 전이: `PUT /api/lifecycles` `{id, contentType:'PROSPECTIVE_KEEP', lifecycleKey}` — 완료(RESOLVED)·보류(PENDING)·해제(OPEN)
+- 삭제: `DELETE /api/prospective/keep/{id}`
+- 등록: 별도 모달 (`#prospective_keep_regist`) Bootstrap modal
 
-**TodoRow 데이터 모델**:
+**KeepRow 데이터 모델**:
 ```typescript
-type TodoRow = {
+type KeepRow = {
     id: string | number;
-    title: string;       // 할일 제목 (텍스트만, HTML 없음)
+    title: string;       // Keep 제목 (텍스트만, HTML 없음)
     // 활성 목록엔 OPEN·PENDING만 온다(RESOLVED 제외). 행 부재 = OPEN.
     lifecycle?: { lifecycleKey?: string | null } | null;
 };
@@ -816,26 +819,26 @@ type TodoRow = {
 
 ```html
 <div class="card card-reset card-p-0">
-    <!-- 카드 헤더: "TODO List" + 추가 버튼 -->
-    <div id="journal_todo_aside_header" class="card-header min-h-auto mb-5">
+    <!-- 카드 헤더: "Keep" + 추가 버튼 -->
+    <div id="prospective_keep_aside_header" class="card-header min-h-auto mb-5">
         <h3 class="card-title text-gray-900 fw-bold fs-3">
-            <i class="bi bi-list-task fs-2 me-1"></i> TODO List
+            <i class="bi bi-list-task fs-2 me-1"></i> Keep
         </h3>
         <div class="card-toolbar">
             <a href="javascript:void(0);"
                class="btn btn-sm btn-icon btn-primary"
                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-dismiss="click"
-               title="할일 추가"
-               @click.prevent="openTodoRegist">
-                <i class="bi bi-plus fs-2 pe-0" id="journalTodoAsideRegistIcon"></i>
+               title="Keep 추가"
+               @click.prevent="openRegist">
+                <i class="bi bi-plus fs-2 pe-0" id="prospectiveKeepAsideRegistIcon"></i>
             </a>
         </div>
     </div>
-    <!-- 카드 바디: todo 목록 -->
-    <div id="journal_todo_list_div">
+    <!-- 카드 바디: Keep 목록 -->
+    <div id="prospective_keep_list_div">
         <!-- 목록이 있을 때 -->
-        <template v-if="todos.length > 0">
-            <div v-for="item in todos" :key="'todo-' + item.id"
+        <template v-if="keepList.length > 0">
+            <div v-for="item in keepList" :key="'keep-' + item.id"
                  class="row d-flex-align-center justify-content-between">
                 <!-- 제목 (overflow truncate, tooltip) -->
                 <div class="col text-truncate cursor-pointer"
@@ -857,24 +860,19 @@ type TodoRow = {
         </template>
         <!-- 목록 없을 때 -->
         <div v-else class="journal-day d-flex-center">
-            할일이 없습니다.
+            Keep이 없습니다.
         </div>
     </div>
 </div>
 ```
 
-**TODO 카드 초기화 타이밍**:
-- `onMounted`에서 `fetchTodos({ yy: store.yy, mnth: store.mnth })` 호출
-- `watch([store.yy, store.mnth])` → 연/월 변경 시 재조회
-- 등록 모달: `modalStore.openTodoRegist({ yy: store.yy, mnth: store.mnth })`
-- 삭제: `DELETE /api/journal/todo/{id}` 성공 후 목록 재조회
+**Keep 카드 초기화 타이밍**:
+- `onMounted`에서 `fetchKeeps()` 호출
+- 연/월 변경은 Keep 재조회 조건이 아니다.
+- 등록 모달: `useProspectiveKeepModalStore().openRegist()`
+- 삭제: `DELETE /api/prospective/keep/{id}` 성공 후 목록 재조회
 
-**TODO 등록 모달** (`#journal_todo_regist`):
-- Bootstrap modal: `modal-xl`, id=`journal_todo_regist`
-- 폼: `#journalTodoRegistForm` (multipart/form-data)
-- 본문 textarea: `#tinymce_journalTodoCn` (TinyMCE 에디터)
-- Vue SPA: `journalModalStore.openTodoRegist()` → 모달 open, `JournalTodoRegistModal.vue` 처리 — 등록 성공 시 `journalStore.fetchTodos()` 재호출
-- 모달 제목·대상 년월·필드·placeholder·안내·검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용하고, 저장 API의 서버 `message`가 있으면 우선 표시한다.
+Keep 등록 모달 자체의 화면 계약은 [Prospective 화면 스펙](../prospective/screen-spec.md)을 따른다. 저널 aside는 `prospectiveKeepModalStore.openRegist()`로 이 모달을 열고 저장 성공 후 `journalStore.fetchKeeps()`로 카드를 갱신한다.
 
 ---
 
@@ -904,9 +902,9 @@ type TodoRow = {
 | 3. 엔트리 필터 | DREAMS 토글 | ✓ 구현 |
 | 3. 엔트리 필터 | 꿈 키워드 | ✓ 구현 (위치 다름) |
 | 3. 엔트리 필터 | 고급 필터 아코디언 (블록 D) | — 이식 대상 아님 — 검색 팝업 고급필터 ✓ |
-| 4. TODO 카드 | "TODO List" 카드 헤더 | ✓ `JournalAsideTodoCard.vue` (현재 locale 카탈로그 사용) |
-| 4. TODO 카드 | TODO 목록 표시 | ✓ `store.fetchTodos()` 월별 목록 표시 |
-| 4. TODO 카드 | TODO 삭제 버튼 | ✓ 삭제 API 성공 후 목록 재조회 |
+| 4. Keep 카드 | "Keep" 카드 헤더 | ✓ `JournalAsideKeepCard.vue` (현재 locale 카탈로그 사용) |
+| 4. Keep 카드 | 활성 Keep 목록 표시 | ✓ `store.fetchKeeps()` 전 범위 활성 목록 표시 |
+| 4. Keep 카드 | Keep 라이프사이클·삭제 | ✓ 전이·삭제 API 성공 후 목록 재조회 |
 
 ---
 
@@ -943,11 +941,11 @@ type TodoRow = {
 
 ### Behavioral Contract
 
-- 태그 클릭 자체는 검색을 실행하지 않고 `JournalTagContextMenu`를 연다.
+- 태그 클릭 자체는 검색을 실행하지 않고 `TagContextMenu`를 연다.
 - 태그 컨텍스트 메뉴의 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale의 클라이언트 카탈로그를 사용한다.
 - 일기/꿈 태그의 `검색` 액션은 현재 월간/주간 목록 필터를 변경하지 않고 새 창 검색 화면으로 이동한다.
 - 검색 팝업 내부에서 일기/꿈 태그의 `검색` 액션을 누르면 새 팝업을 열지 않고 같은 창의 URL query를 바꿔 결과를 재조회한다.
-- 검색 팝업 내부의 `태그 설정` 액션은 `JournalTagProfileModal`을 같은 창에서 연다. 저장·삭제 성공 후 `success` 이벤트로 검색 결과(`loadEntries`)를 재조회한다.
+- 검색 팝업 내부의 `태그 설정` 액션은 `TagProfileModal`을 같은 창에서 연다. 저장·삭제 성공 후 `success` 이벤트로 검색 결과(`loadEntries`)를 재조회한다.
 - 스레드 소속 추가·해제·상태/라이프사이클 등 엔트리 액션 성공 후 `refreshJournalEntryHostForRoute`가 등록된 검색 호스트(`loadEntries`)로 로컬 결과를 갱신한다. 스레드 상세가 열려 있으면 전경 상세와 검색 결과를 함께 재조회한다.
 - 검색 팝업 내부 검색 결과에 리플렉션이 표시되면, 수정 액션은 `JournalReflectionRegistModal`을 같은 창에서 열어야 한다.
 - 각 검색 결과는 수정/삭제가 가능하다. 수정 저장 성공 시 성공 알림 표시 전에 현재 검색 조건 목록 또는 수정 대상 DOM을 준비하고, 성공 알림 OK 이후 저장한 결과 위치로 스크롤하며, 삭제 성공 시 결과 목록에서 제거한다.

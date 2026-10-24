@@ -9,6 +9,7 @@ import io.nicheblog.dreamdiary.feature.attachable.prefix.repository.jpa.PrefixCo
 import io.nicheblog.dreamdiary.feature.attachable.prefix.service.PrefixService;
 import io.nicheblog.dreamdiary.feature.journal.thread.model.JournalThreadDto;
 import io.nicheblog.dreamdiary.feature.journal.thread.model.JournalThreadDtoTestFactory;
+import io.nicheblog.dreamdiary.feature.journal.thread.model.JournalThreadSearchParam;
 import io.nicheblog.dreamdiary.feature.user.account.entity.UserEntity;
 import io.nicheblog.dreamdiary.feature.user.account.entity.UserEntityTestFactory;
 import io.nicheblog.dreamdiary.feature.user.account.repository.jpa.UserRepository;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -30,12 +32,14 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 저널 스레드와 개인 Prefix 연결의 실제 영속·소유권 계약을 검증한다.
@@ -159,6 +163,30 @@ class JournalThreadPrefixIntegrationTest {
         assertThrows(NotAuthorizedException.class, () -> registThread(otherPrefix.getId()));
     }
 
+    /** 목록의 말머리 없음 필터는 prefix_content 연결이 없는 스레드만 남기고, prefixId 필터는 해당 연결만 남긴다. */
+    @Test
+    void pageFiltersByNoPrefixAndPrefixId() throws Exception {
+        final PrefixDto prefix = createPrefix(FIXTURE_PREFIX_NAME);
+        final JournalThreadDto prefixed = registThread(prefix.getId());
+        final JournalThreadDto unprefixed = registThread(null);
+        entityManager.flush();
+        entityManager.clear();
+
+        final List<Integer> noPrefixIds = pageIds(JournalThreadSearchParam.builder().noPrefixYn("Y").build());
+        final List<Integer> prefixIds = pageIds(JournalThreadSearchParam.builder().prefixId(prefix.getId()).build());
+
+        assertTrue(noPrefixIds.contains(unprefixed.getId()));
+        assertFalse(noPrefixIds.contains(prefixed.getId()));
+        assertTrue(prefixIds.contains(prefixed.getId()));
+        assertFalse(prefixIds.contains(unprefixed.getId()));
+    }
+
+    private List<Integer> pageIds(final JournalThreadSearchParam searchParam) throws Exception {
+        return journalThreadService.getPageDto(searchParam, PageRequest.of(0, 100)).getContent().stream()
+                .map(JournalThreadDto::getId)
+                .toList();
+    }
+
     private JournalThreadDto registThread(final Integer prefixId) throws Exception {
         final JournalThreadDto request = JournalThreadDtoTestFactory.create();
         request.setContent("Integration thread content");
@@ -178,7 +206,7 @@ class JournalThreadPrefixIntegrationTest {
     private PrefixDto createPrefix(final String name) {
         return prefixService.create(ContentType.JOURNAL_THREAD.key, PrefixDto.builder()
                 .name(name)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(1)
                 .build());
     }

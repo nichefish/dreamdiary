@@ -137,7 +137,7 @@ public class BoardPostRestController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDetailAjax(
-            final @RequestParam("id") Integer id
+            final @PathVariable("id") Integer id
     ) throws Exception {
 
         final BoardPostDto retrievedDto = boardPostService.viewDtlPage(id);
@@ -158,7 +158,7 @@ public class BoardPostRestController
     @Secured({Constant.ROLE_USER, Constant.ROLE_MNGR})
     @ResponseBody
     public ResponseEntity<AjaxResponse> boardPostDelAjax(
-            final @RequestParam("id") Integer id
+            final @PathVariable("id") Integer id
     ) throws Exception {
 
         final ServiceResponse result = boardPostService.delete(id);

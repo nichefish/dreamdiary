@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -10,19 +11,22 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { colors } from "../../theme/colors";
 import { stripHtml } from "../../utils/text";
 import type { RootStackParamList } from "../../navigation/AppNavigator";
-import type { JournalChapter, JournalEntry } from "../../types/journalDay";
+import type { DisplayTag, JournalChapter, JournalEntry } from "../../types/journalDay";
+import { chapterEntries, chapterHeaderLabel, displayTagsOf } from "../../types/journalDay";
+import { JournalTagChips, JournalThreadChips } from "./JournalTagChips";
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
 
-function EntryCard({ entry, isDream }: { entry: JournalEntry; isDream: boolean }) {
+function EntryCard({ entry, isDream, dayTags }: { entry: JournalEntry; isDream: boolean; dayTags?: DisplayTag[] }) {
   const navigation = useNavigation<Nav>();
   const preview = entry.content ? stripHtml(entry.content).slice(0, 160) : "";
   const hasMore = entry.content ? stripHtml(entry.content).length > 160 : false;
+  const tags = displayTagsOf(entry.tag);
 
   return (
     <Pressable
       accessibilityRole="button"
-      onPress={() => navigation.navigate("EntryDetail", { entry, isDream })}
+      onPress={() => navigation.navigate("EntryDetail", { entry, isDream, dayTags })}
       style={[styles.entryCard, isDream && styles.entryCardDream]}
     >
       {entry.title ? (
@@ -36,30 +40,34 @@ function EntryCard({ entry, isDream }: { entry: JournalEntry; isDream: boolean }
       {hasMore && (
         <Text style={[styles.entryMore, isDream && styles.entryMoreDream]}>더 보기 →</Text>
       )}
+      {tags.length > 0 && (
+        <View style={styles.entryTags}>
+          <JournalTagChips tags={tags} variant={isDream ? "dream" : "diary"} />
+        </View>
+      )}
+      {(entry.threadList?.length ?? 0) > 0 && (
+        <View style={styles.entryTags}>
+          <JournalThreadChips threads={entry.threadList} />
+        </View>
+      )}
     </Pressable>
   );
 }
 
-function ChapterSection({ chapter }: { chapter: JournalChapter }) {
-  const diaries = chapter.journalDiaryList ?? [];
-  const dreams = chapter.journalDreamList ?? [];
-  const notes = chapter.journalNoteList ?? [];
-  const allEntries = [
-    ...diaries.map((e) => ({ entry: e, isDream: false })),
-    ...dreams.map((e) => ({ entry: e, isDream: true })),
-    ...notes.map((e) => ({ entry: e, isDream: false }))
-  ];
+function ChapterSection({ chapter, dayTags }: { chapter: JournalChapter; dayTags?: DisplayTag[] }) {
+  const allEntries = chapterEntries(chapter).map((e) => ({
+    entry: e,
+    isDream: e.contentType === "JOURNAL_DREAM"
+  }));
   if (allEntries.length === 0) return null;
 
-  const label = chapter.categoryName
-    ? `[${chapter.categoryName}] ${chapter.title ?? ""}`.trim()
-    : chapter.title ?? `챕터 ${chapter.sortOrder ?? ""}`.trim();
+  const label = chapterHeaderLabel(chapter);
 
   return (
     <View style={styles.chapterSection}>
       <Text style={styles.chapterLabel}>{label}</Text>
       {allEntries.map(({ entry, isDream }) => (
-        <EntryCard key={entry.id} entry={entry} isDream={isDream} />
+        <EntryCard key={entry.id} entry={entry} isDream={isDream} dayTags={dayTags} />
       ))}
     </View>
   );
@@ -75,8 +83,12 @@ export type JournalDayListProps = {
   emptyText: string;
   /** 빈 목록 보조 힌트 (선택) */
   emptyHint?: string;
+  /** 조회로 확인된 빈 상태에서 제공하는 추가 조작. 표시 조건은 호출자가 확정한다. */
+  emptyAction?: ReactNode;
   /** center 영역 paddingVertical — 탭/스택 레이아웃 차이 보정 */
   centerPaddingVertical?: number;
+  /** 이 목록이 속한 일자의 태그 — 엔트리 상세로 넘겨 "일자 태그" 행으로 보여준다 */
+  dayTags?: DisplayTag[];
 };
 
 /**
@@ -91,7 +103,9 @@ export function JournalDayList({
   topDreams,
   emptyText,
   emptyHint,
-  centerPaddingVertical = 48
+  emptyAction,
+  centerPaddingVertical = 48,
+  dayTags
 }: JournalDayListProps) {
   if (loading) {
     return (
@@ -114,6 +128,7 @@ export function JournalDayList({
       <View style={[styles.center, { paddingVertical: centerPaddingVertical }]}>
         <Text style={styles.emptyText}>{emptyText}</Text>
         {emptyHint != null && <Text style={styles.emptyHint}>{emptyHint}</Text>}
+        {emptyAction}
       </View>
     );
   }
@@ -121,10 +136,10 @@ export function JournalDayList({
   return (
     <View style={styles.content}>
       {chapters.map((ch) => (
-        <ChapterSection key={ch.id} chapter={ch} />
+        <ChapterSection key={ch.id} chapter={ch} dayTags={dayTags} />
       ))}
       {topDreams.map((e) => (
-        <EntryCard key={e.id} entry={e} isDream />
+        <EntryCard key={e.id} entry={e} isDream dayTags={dayTags} />
       ))}
     </View>
   );
@@ -174,5 +189,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: 2
   },
-  entryMoreDream: { color: "#8E44AD" }
+  entryMoreDream: { color: "#8E44AD" },
+  entryTags: { marginTop: 6 }
 });

@@ -68,7 +68,7 @@ attachable과 journal 사이에는 독립적으로 확인 가능한 의존 방�
 | 논리적 CRUD 대상 | 14 | 16개에서 같은 테이블의 목록·참조용 간소화 매핑 `BoardPostSmpEntity`, `JournalThreadSmpEntity`를 제외한 콘텐츠 aggregate 수. |
 | 대응 canonical service | 14/14 | 각 논리적 CRUD 대상 entity를 generic `Entity`로 갖는 `BaseAttachableService` 구현체 수. |
 
-14개 구현체는 `PopupService`, `CommentService`, `BoardPostService`, `ScheduleService`, `ChatMessageService`, `JournalAnnualService`, `JournalAnnualReviewService`, `JournalChapterService`, `JournalDayService`, `JournalEntryService`, `JournalReflectionService`, `JournalThreadService`, `JournalTodoService`, `UserService`다.
+14개 구현체는 `PopupService`, `CommentService`, `BoardPostService`, `ScheduleService`, `ChatMessageService`, `JournalAnnualService`, `JournalAnnualReviewService`, `JournalChapterService`, `JournalDayService`, `JournalEntryService`, `JournalReflectionService`, `JournalThreadService`, `ProspectiveKeepService`, `UserService`다.
 
 → attachable 데이터축 서비스의 base 형태를 세는 방식은 관할이 달라 H2-A를 판정할 수 없다. 올바른 모집단에서는 **14/14 coverage**로 구조적 수렴이 강하게 확인된다.
 
@@ -116,7 +116,7 @@ attachable과 journal 사이에는 독립적으로 확인 가능한 의존 방�
 
 - `BaseAttachableProcPostProcessor` → `JournalPeriodModule`
 - `CommentService` → `JournalDayResolvedGuard`
-- `StateService` → `JournalContentOwnershipGuard`, `JournalDayResolvedGuard`
+- `StateService` → `AttachableContentOwnershipGuard`, `JournalDayResolvedGuard`
 - `LifecycleService` → journal lifecycle cascade·ownership/resolved guard
 - `RelatedContentService`/`RelatedContentQueryService` → journal entry/thread/day 구성요소
 - tag/lifecycle cache adapter 구현 → journal cache/query 구성요소

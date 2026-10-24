@@ -44,6 +44,13 @@ class AttachableContentStatePolicyTest {
     }
 
     @Test
+    void keepAllowsDemandedAndImprtc() {
+        assertTrue(AttachableContentStatePolicy.isAllowed(ContentType.PROSPECTIVE_KEEP, StateKey.DEMANDED));
+        assertTrue(AttachableContentStatePolicy.isAllowed(ContentType.PROSPECTIVE_KEEP, StateKey.IMPRTC));
+        assertFalse(AttachableContentStatePolicy.isAllowed(ContentType.PROSPECTIVE_KEEP, StateKey.REFRNC));
+    }
+
+    @Test
     void unregisteredContentTypeRejected() {
         assertFalse(AttachableContentStatePolicy.isAllowed(ContentType.BOARD, StateKey.COLLAPSED));
     }

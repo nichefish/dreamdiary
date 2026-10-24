@@ -27,7 +27,32 @@ public final class AttachableContentLifecyclePolicy {
         ALLOWED.put(ContentType.JOURNAL_DREAM, EnumSet.copyOf(journalLifecycle));
         ALLOWED.put(ContentType.JOURNAL_REFLECTION, EnumSet.copyOf(journalLifecycle));
         ALLOWED.put(ContentType.JOURNAL_THREAD, EnumSet.copyOf(journalLifecycle));
-        ALLOWED.put(ContentType.JOURNAL_TODO, EnumSet.copyOf(journalLifecycle));
+
+        /*
+         * Project는 장기 맥락의 진행·보류·완료·중단만 구분한다. 개별 Keep의 시도 실패나
+         * 기한 만료를 상위 Project에 투영하지 않는다.
+         */
+        ALLOWED.put(ContentType.PROSPECTIVE_PROJECT, EnumSet.of(
+                LifecycleKey.OPEN,
+                LifecycleKey.PENDING,
+                LifecycleKey.RESOLVED,
+                LifecycleKey.DROPPED
+        ));
+
+        /*
+         * Keep 항목(prospective_keep)은 저널과 종결 어휘가 다르다. 저널 기록은 시간이 지나도
+         * 사라지지 않지만 Keep 항목은 시도했다 지고(FAILED), 기회가 만료되고(EXPIRED),
+         * 의미를 잃어 내려놓기도 한다(DROPPED).
+         * 넷을 RESOLVED 하나로 뭉치면 「해냈다」와 「못 한 채 끝났다」가 구분되지 않는다.
+         */
+        ALLOWED.put(ContentType.PROSPECTIVE_KEEP, EnumSet.of(
+                LifecycleKey.OPEN,
+                LifecycleKey.PENDING,
+                LifecycleKey.RESOLVED,
+                LifecycleKey.FAILED,
+                LifecycleKey.EXPIRED,
+                LifecycleKey.DROPPED
+        ));
     }
 
     private AttachableContentLifecyclePolicy() {

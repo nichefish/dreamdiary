@@ -1,0 +1,109 @@
+package io.nicheblog.dreamdiary.feature.prospective.keep.model;
+
+import io.nicheblog.dreamdiary.feature.attachable._shared.model.BaseAttachableDto;
+import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstn;
+import io.nicheblog.dreamdiary.feature.attachable.prefix.model.PrefixDto;
+import io.nicheblog.dreamdiary.feature.attachable.state.model.cmpstn.StateCmpstn;
+import io.nicheblog.dreamdiary.feature.attachable.state.model.cmpstn.StateCmpstnModule;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstnModule;
+import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstn;
+import io.nicheblog.dreamdiary.feature.attachable.tag.model.cmpstn.TagCmpstnModule;
+import io.nicheblog.dreamdiary.global.intrfc.model.Identifiable;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+/**
+ * ProspectiveKeepDto
+ * <pre>
+ *  Prospective Keep Dto.
+ * </pre>
+ *
+ * @author nichefish
+ */
+@Getter
+@Setter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ProspectiveKeepDto
+        extends BaseAttachableDto
+        implements Identifiable<Integer>, TagCmpstnModule, LifecycleCmpstnModule,
+                   StateCmpstnModule {
+
+    /** 필수: 컨텐츠 타입 */
+    @Builder.Default
+    private static final ContentType CONTENT_TYPE = ContentType.PROSPECTIVE_KEEP;
+    /** 컨텐츠 타입 */
+    @Builder.Default
+    private String contentType = CONTENT_TYPE.key;
+
+       /** 제목 */
+    private String title;
+
+    /** 내용 */
+    private String content;
+
+    /** 마크다운 처리된 내용 */
+    private String markdownContent;
+
+    /** 위치 */
+    @Size(max = 200)
+    private String location;
+
+    /**
+     * 일시(자유 텍스트 원문).
+     * <pre>
+     *  단일일·연속 범위·불연속 다회차·시각을 사용자가 쓴 표현 그대로 한 문자열로 보존한다.
+     *  서버는 이 값을 해석하지 않고 원문 그대로 저장·반환한다.
+     * </pre>
+     */
+    @Size(max = 200)
+    private String dateText;
+
+    /**
+     * 유효 기한 (ISO {@code yyyy-MM-dd} 또는 빈 문자열).
+     * <pre>
+     *  「이 날이 지나면 더는 할 수 없다」는 단일 날짜. 시각은 갖지 않는다.
+     *  클라이언트가 「~12/31」 같은 축약 입력을 해석해 확정한 절대 날짜만 보낸다 --
+     *  서버는 축약 표기를 해석하지 않으므로, 년도 생략 입력이 여기 도달하는 일은 없다.
+     *  빈 문자열은 기한 해제를 뜻하며 null 로 변환되어 저장된다.
+     * </pre>
+     */
+    @Pattern(regexp = "^$|^\\d{4}-\\d{2}-\\d{2}$", message = "{prospective.keep.expire-dt.invalid}")
+    private String expireDt;
+
+    /** 선택된 말머리(표시용). prefix_content 연결에서 조립한다. */
+    private PrefixDto prefix;
+
+    /** 선택한 말머리 ID (0..1, null 이면 선택 해제) */
+    private Integer prefixId;
+
+    /* ----- */
+
+    /** 순번 */
+    private Integer sortOrder;
+
+    /** 선택한 Prospective Project ID. null이면 Project 미지정이다. */
+    private Integer projectId;
+
+    /* ----- */
+
+    @Override
+    public Integer getKey() {
+        return this.id;
+    }
+
+    /** 위임 :: 라이프사이클 모듈. 목록·상세 enrich 가 부착 테이블에서 채운다. 없으면 OPEN. */
+    public LifecycleCmpstn lifecycle;
+
+    /** 위임 :: 상태 모듈. 목록·상세 enrich 가 부착 테이블에서 채운다. */
+    public StateCmpstn state;
+
+    /** 위임 :: 태그 정보 모듈 */
+    public TagCmpstn tag;
+}

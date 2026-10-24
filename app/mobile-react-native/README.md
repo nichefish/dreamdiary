@@ -6,8 +6,8 @@ React Native / Expo based mobile starter. It is intentionally independent from `
 
 ### IntelliJ / PC Android 에뮬레이터 (UI 선검증)
 
-1. Android Studio AVD 실행, 백엔드 `localhost:8080` 기동
-2. `.env`: `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:8080`
+1. Android Studio AVD 실행, 백엔드 `localhost:18081` 기동
+2. `.env`: `EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:18081`
 3. 실행 (택 1):
    - **Gradle** (우클릭 Run): 루트 프로젝트 → Tasks → **mobile** → **mobileAndroid**
    - `app/mobile-react-native/run-android.bat` 더블클릭
@@ -38,23 +38,23 @@ npm run start
 Copy `.env.example` to `.env` and adjust the API URL when connecting to a local backend.
 
 ```bash
-EXPO_PUBLIC_API_BASE_URL=http://localhost:8080
+EXPO_PUBLIC_API_BASE_URL=http://localhost:18081
 ```
 
-Android emulators usually reach the host machine through `http://10.0.2.2:8080`. Physical devices need the PC IP address on the same network.
+Android emulators usually reach the host machine through `http://10.0.2.2:18081`. Physical devices need the PC IP address on the same network.
 
 ### API URL by Runtime
 
-- Expo Go on Android emulator (AVD): `http://10.0.2.2:8080`
-- iOS simulator: `http://localhost:8080` (host setup dependent)
-- Physical device (Android/iOS): `http://<YOUR_PC_LAN_IP>:8080`
+- Expo Go on Android emulator (AVD): `http://10.0.2.2:18081`
+- iOS simulator: `http://localhost:18081` (host setup dependent)
+- Physical device (Android/iOS): `http://<YOUR_PC_LAN_IP>:18081`
 
 Quick LAN IP examples:
 
 - Windows PowerShell: `ipconfig`
 - macOS/Linux: `ifconfig` or `ip a`
 
-If the app runs on a physical device, make sure backend port `8080` is reachable from the same Wi-Fi network.
+If the app runs on a physical device, make sure backend port `18081` is reachable from the same Wi-Fi network.
 
 ## Build Flow
 
@@ -82,9 +82,18 @@ This checks the React Native screens and API client TypeScript.
 npx expo prebuild
 ```
 
-This creates `android/` and `ios/` only when needed. In the starter phase, keep the app in Expo managed workflow and avoid committing generated native folders unless native code changes become necessary.
+This creates `android/` and `ios/` only when needed. In the starter phase, keep the app in Expo managed workflow and avoid committing generated native folders unless native code changes become necessary. Both folders are listed in `.gitignore` (CNG: native settings live in `app.json` and config plugins).
 
 ### 4. App Artifacts
+
+Local release APK for a real phone (no EAS account, Windows), recommended for device QA:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1           # dist/dreamdiary-<version>-release.apk
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build-android-apk.ps1 -Install  # + adb install -r on the USB phone
+```
+
+The script bakes the PC Tailscale IP (`tailscale ip -4`, or `-ApiBaseUrl`) into the bundle without touching `.env`, and signs with the template debug keystore (personal sideloading only). Details: `docs/migration/mobile/run-guide.md` §5.5.
 
 With EAS Build:
 
@@ -102,7 +111,7 @@ npx expo run:ios
 
 The `preview` profile in `eas.json` is for internal Android APK testing. The `production` profile is for store-ready builds.
 
-## EAS Preview (Recommended for Device QA)
+## EAS Preview (optional, needs an EAS account)
 
 1. Install dependencies and login:
 
@@ -119,7 +128,7 @@ npx eas-cli build --platform android --profile preview
 ```
 
 3. Install APK from the EAS build link on a physical device.
-4. Set `.env` with your LAN IP based API URL, then run backend and verify:
+4. Set the API URL **before** building via `eas.json` `build.preview.env.EXPO_PUBLIC_API_BASE_URL` or EAS environment variables — `.env` is gitignored and may not be uploaded to EAS cloud builds. Then run backend and verify:
    - Login
    - Today date navigation
    - Calendar/Tag/Search to EntryDetail

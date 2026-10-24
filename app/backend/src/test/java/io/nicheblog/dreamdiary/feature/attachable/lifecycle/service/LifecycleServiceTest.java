@@ -10,7 +10,7 @@ import io.nicheblog.dreamdiary.feature.attachable.state.StateKey;
 import io.nicheblog.dreamdiary.feature.attachable.state.entity.StateEntity;
 import io.nicheblog.dreamdiary.feature.attachable.state.repository.jpa.StateRepository;
 import io.nicheblog.dreamdiary.feature.attachable.state.service.StateService;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.service.helper.JournalDayResolvedGuard;
 import io.nicheblog.dreamdiary.feature.journal._shared.lifecycle.JournalReflectionLifecycleCascade;
 import io.nicheblog.dreamdiary.global.model.ServiceResponse;
@@ -20,6 +20,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.nicheblog.dreamdiary.feature.attachable.lifecycle.model.cmpstn.LifecycleCmpstn;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +50,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class LifecycleServiceTest {
 
+    private static final LocalDateTime FIXTURE_RESOLVED_AT = LocalDateTime.of(2026, 1, 2, 3, 4, 5, 123456000);
     private static final Integer FIXTURE_CONTENT_ID = 101;
     private static final ContentType FIXTURE_CONTENT_TYPE = ContentType.JOURNAL_DIARY;
 
@@ -53,7 +61,7 @@ class LifecycleServiceTest {
     @Mock
     private StateService stateService;
     @Mock
-    private JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     @Mock
     private JournalDayResolvedGuard journalDayResolvedGuard;
     @Mock
@@ -68,7 +76,7 @@ class LifecycleServiceTest {
                 stateRepository,
                 stateService,
                 List.of(),
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard,
                 journalReflectionLifecycleCascade
         );
@@ -202,7 +210,7 @@ class LifecycleServiceTest {
     @Test
     void setRejectsUnownedContentBeforePersistence() throws Exception {
         doThrow(new NotAuthorizedException("common.result.access-not-authorized"))
-                .when(journalContentOwnershipGuard)
+                .when(attachableContentOwnershipGuard)
                 .assertOwned(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE);
 
         assertThrows(NotAuthorizedException.class, () -> service.set(request(LifecycleKey.PENDING)));
@@ -226,7 +234,7 @@ class LifecycleServiceTest {
                 repository,
                 stateRepository,
                 stateService,
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard
         );
     }
@@ -246,11 +254,179 @@ class LifecycleServiceTest {
                 repository,
                 stateRepository,
                 stateService,
-                journalContentOwnershipGuard,
+                attachableContentOwnershipGuard,
                 journalDayResolvedGuard
         );
     }
 
+    /** Keep 최초 완료는 서버의 현재 UTC 시각을 저장한다. */
+    @Test
+    void keepFirstCompletionRecordsUtcTimestamp() throws Exception {
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.empty());
+        final LocalDateTime before = LocalDateTime.now(ZoneOffset.UTC);
+        service.set(keepRequest(LifecycleKey.RESOLVED));
+        final LocalDateTime after = LocalDateTime.now(ZoneOffset.UTC);
+        verify(repository).save(argThat(entity -> entity.getResolvedAt() != null
+                && !entity.getResolvedAt().isBefore(before) && !entity.getResolvedAt().isAfter(after)));
+    }
+
+    /** 동일 완료 요청은 이미 저장한 완료 시각을 유지한다. */
+    @Test
+    void keepRepeatedCompletionPreservesTimestamp() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.RESOLVED);
+        lifecycle.setResolvedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.RESOLVED));
+        assertEquals(FIXTURE_RESOLVED_AT, lifecycle.getResolvedAt());
+    }
+
+    /** 완료 시각이 없는 완료 행은 동일 완료 요청으로 시각을 추정하지 않는다. */
+    @Test
+    void keepRepeatedLegacyCompletionPreservesUnknownTimestamp() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.RESOLVED);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.RESOLVED));
+        assertEquals(null, lifecycle.getResolvedAt());
+    }
+
+    /** 완료 밖의 명시적 상태 전이는 완료 시각을 비운다. */
+    @ParameterizedTest
+    @EnumSource(value = LifecycleKey.class, names = {"PENDING", "FAILED", "EXPIRED", "DROPPED"})
+    void keepLeavingCompletionClearsTimestamp(final LifecycleKey nextKey) throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.RESOLVED);
+        lifecycle.setResolvedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(nextKey));
+        assertEquals(null, lifecycle.getResolvedAt());
+        assertEquals(nextKey.key, lifecycle.getLifecycleKey());
+    }
+
+    /** OPEN은 완료 시각을 포함한 현재 lifecycle 행을 삭제한다. */
+    @Test
+    void keepReopenDeletesTimestampWithLifecycleRow() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.RESOLVED);
+        lifecycle.setResolvedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.OPEN));
+        verify(repository).deleteCurrentByRef(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key);
+        verify(repository, never()).save(any());
+    }
+
+    /** 재완료는 새 시각을 저장하고 이전 완료 시각을 재사용하지 않는다. */
+    @Test
+    void keepRecompletionRecordsNewTimestamp() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.PENDING);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.RESOLVED));
+        assertTrue(lifecycle.getResolvedAt().isAfter(FIXTURE_RESOLVED_AT));
+    }
+
+    /** 완료 시각 기록은 Keep에만 적용한다. */
+    @Test
+    void journalCompletionKeepsTimestampEmpty() throws Exception {
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE.key))
+                .thenReturn(Optional.empty());
+        service.set(request(LifecycleKey.RESOLVED));
+        verify(repository).save(argThat(entity -> entity.getResolvedAt() == null));
+    }
+
+    /** Keep 일괄 조회는 상태와 완료 시각을 함께 반환하고 JSON은 UTC를 명시한다. */
+    @Test
+    void keepMapIncludesTimestampAndSerializesUtc() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.RESOLVED);
+        lifecycle.setResolvedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, List.of(FIXTURE_CONTENT_ID)))
+                .thenReturn(List.of(lifecycle));
+        final LifecycleCmpstn result = service.getKeepLifecycleMap(List.of(FIXTURE_CONTENT_ID)).get(FIXTURE_CONTENT_ID);
+        assertTrue(result.is(LifecycleKey.RESOLVED));
+        assertEquals(FIXTURE_RESOLVED_AT, result.getResolvedAt());
+        final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        assertEquals("2026-01-02T03:04:05.123456Z", mapper.readTree(mapper.writeValueAsString(result)).get("resolvedAt").asText());
+        verify(repository).findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, List.of(FIXTURE_CONTENT_ID));
+    }
+
+    /** 시각 미확인 완료는 조회 응답에서도 null이다. */
+    @Test
+    void keepMapPreservesUnknownCompletionTimestamp() {
+        when(repository.findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, List.of(FIXTURE_CONTENT_ID)))
+                .thenReturn(List.of(keepStored(LifecycleKey.RESOLVED)));
+        assertEquals(null, service.getKeepLifecycleMap(List.of(FIXTURE_CONTENT_ID)).get(FIXTURE_CONTENT_ID).getResolvedAt());
+    }
+
+    /** Keep 을 DROPPED 로 바꾸면 상태 변경 시각을 UTC 로 새로 기록한다. */
+    @Test
+    void keepDroppedChangeStampsChangedAt() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.PENDING);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        final LocalDateTime before = LocalDateTime.now(ZoneOffset.UTC);
+        service.set(keepRequest(LifecycleKey.DROPPED));
+        final LocalDateTime after = LocalDateTime.now(ZoneOffset.UTC);
+        assertEquals(LifecycleKey.DROPPED.key, lifecycle.getLifecycleKey());
+        assertTrue(!lifecycle.getChangedAt().isBefore(before) && !lifecycle.getChangedAt().isAfter(after));
+    }
+
+    /** OPEN(행 없음)에서 처음 상태를 저장하면 컨텐츠 타입과 관계없이 변경 시각을 기록한다. */
+    @Test
+    void firstLifecycleInsertStampsChangedAt() throws Exception {
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, FIXTURE_CONTENT_TYPE.key))
+                .thenReturn(Optional.empty());
+        final LocalDateTime before = LocalDateTime.now(ZoneOffset.UTC);
+        service.set(request(LifecycleKey.PENDING));
+        verify(repository).save(argThat(entity -> entity.getChangedAt() != null && !entity.getChangedAt().isBefore(before)));
+    }
+
+    /** 같은 상태의 반복 요청은 변경 시각을 유지한다. */
+    @Test
+    void sameStateRepeatPreservesChangedAt() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.DROPPED);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findByRefIdAndRefContentType(FIXTURE_CONTENT_ID, ContentType.PROSPECTIVE_KEEP.key))
+                .thenReturn(Optional.of(lifecycle));
+        service.set(keepRequest(LifecycleKey.DROPPED));
+        assertEquals(FIXTURE_RESOLVED_AT, lifecycle.getChangedAt());
+    }
+
+    /** Keep 목록·상세 공용 일괄 조회는 종결 상태의 변경 시각을 UTC 로 노출하고, 완료가 아니면 resolvedAt 은 비운다. */
+    @Test
+    void keepMapExposesChangedAtAndSerializesUtc() throws Exception {
+        final LifecycleEntity lifecycle = keepStored(LifecycleKey.DROPPED);
+        lifecycle.setChangedAt(FIXTURE_RESOLVED_AT);
+        when(repository.findAllByRefContentTypeAndRefIdIn(ContentType.PROSPECTIVE_KEEP.key, List.of(FIXTURE_CONTENT_ID)))
+                .thenReturn(List.of(lifecycle));
+        final LifecycleCmpstn result = service.getKeepLifecycleMap(List.of(FIXTURE_CONTENT_ID)).get(FIXTURE_CONTENT_ID);
+        assertTrue(result.is(LifecycleKey.DROPPED));
+        assertEquals(FIXTURE_RESOLVED_AT, result.getChangedAt());
+        assertEquals(null, result.getResolvedAt());
+        final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        assertEquals("2026-01-02T03:04:05.123456Z", mapper.readTree(mapper.writeValueAsString(result)).get("changedAt").asText());
+    }
+
+    /** 빈 ID 목록은 DB를 조회하지 않는다. */
+    @Test
+    void keepMapEmptyInputSkipsQuery() {
+        assertTrue(service.getKeepLifecycleMap(List.of()).isEmpty());
+        verifyNoInteractions(repository);
+    }
+
+    /** 가상 Keep 상태 요청을 만든다. */
+    private LifecycleSetDto keepRequest(final LifecycleKey key) {
+        return LifecycleSetDto.builder().id(FIXTURE_CONTENT_ID)
+                .contentType(ContentType.PROSPECTIVE_KEEP).lifecycleKey(key).build();
+    }
+
+    /** 가상 Keep 현재 상태 행을 만든다. */
+    private LifecycleEntity keepStored(final LifecycleKey key) {
+        return LifecycleEntity.builder().id(1).refId(FIXTURE_CONTENT_ID)
+                .refContentType(ContentType.PROSPECTIVE_KEEP.key).lifecycleKey(key.key).build();
+    }
     private LifecycleSetDto request(final LifecycleKey lifecycleKey) {
         return LifecycleSetDto.builder()
                 .id(FIXTURE_CONTENT_ID)

@@ -76,8 +76,10 @@ public class JournalThreadSpec
                     // board를 contentType으로 이용
                     predicate.add(builder.equal(root.get("contentType"), value));
                     continue;
+                case "title":
+                    // CmmUtils 가 searchType=title + searchKeyword 를 {title: 키워드} 로 변환해 넘긴다. 부분 일치로 검색.
                 case "searchKeyword":
-                    // 제목 키워드 (searchType=title 과 함께 전달). 빈 값은 무시.
+                    // 제목 키워드. 빈 값은 무시.
                     if (value == null || StringUtils.isBlank(value.toString())) continue;
                     predicate.add(builder.like(
                             builder.lower(root.get("title")),
@@ -103,6 +105,19 @@ public class JournalThreadSpec
                                 builder.equal(prefixRoot.get("prefixId"), Integer.valueOf(value.toString()))
                         );
                         predicate.add(builder.exists(prefixSubquery));
+                    }
+                    continue;
+                case "noPrefixYn":
+                    // 말머리 없음: 이 스레드를 가리키는 prefix_content 연결이 하나도 없어야 한다.
+                    if (value != null && "Y".equals(value.toString())) {
+                        final Subquery<Integer> noPrefixSubquery = query.subquery(Integer.class);
+                        final Root<PrefixContentEntity> noPrefixRoot = noPrefixSubquery.from(PrefixContentEntity.class);
+                        noPrefixSubquery.select(noPrefixRoot.get("id"));
+                        noPrefixSubquery.where(
+                                builder.equal(noPrefixRoot.get("refId"), root.get("id")),
+                                builder.equal(noPrefixRoot.get("refContentType"), ContentType.JOURNAL_THREAD.key)
+                        );
+                        predicate.add(builder.not(builder.exists(noPrefixSubquery)));
                     }
                     continue;
                 case "lifecycleKey":

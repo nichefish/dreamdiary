@@ -296,7 +296,7 @@ export const useAdminPageStore = defineStore("adminPage", () => {
   async function syncHolyday(yy: string) {
     const fd = new FormData();
     fd.append("yy", yy);
-    const res = await apiPost("/api/holyday/get-holyday-account.do", fd);
+    const res = await apiPost("/api/holyday/get-holyday-info.do", fd);
     assertOk(res, t("admin.page.holyday.sync.failure"));
     return res.message ?? t("common.result.processed");
   }

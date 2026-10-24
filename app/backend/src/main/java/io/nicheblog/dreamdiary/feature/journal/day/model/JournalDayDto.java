@@ -51,8 +51,8 @@ public class JournalDayDto
     /* ----- */
 
     /** 저널 일자 */
-    @Size(max = 10, message = "{msg.journal.day.date.max-length}")
-    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2}|\\s*)", message = "{msg.journal.day.date.format}")
+    @Size(max = 10, message = "{journal.day.date.max-length}")
+    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2}|\\s*)", message = "{journal.day.date.format}")
     private String journalDate;
 
     /** 저널 일자 요일 */
@@ -88,7 +88,7 @@ public class JournalDayDto
     private List<String> vacationReasonList = List.of();
 
     /** 날씨 */
-    @Size(max = 100, message = "{msg.journal.day.weather.max-length}")
+    @Size(max = 100, message = "{journal.day.weather.max-length}")
     private String weather;
 
     /**
@@ -124,6 +124,16 @@ public class JournalDayDto
      */
     public String getStdrdDt() {
         return journalDate;
+    }
+
+    /**
+     * 저널 날짜 setter. 앞뒤 공백을 제거해 {@code @Pattern} 검증 전에 정규화한다.
+     * (변경 전: "2026-10-08 " 처럼 공백이 섞인 multipart 값이 BindException(400)으로 거절됨.)
+     *
+     * @param journalDate 저널 날짜 (yyyy-MM-dd)
+     */
+    public void setJournalDate(final String journalDate) {
+        this.journalDate = journalDate == null ? null : journalDate.trim();
     }
 
     /**

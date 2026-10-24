@@ -32,17 +32,17 @@
     <JournalChapterRegistModal />
     <JournalReflectionRegistModal />
     <!-- JournalEntryRegistModal: App.vue global mount (chat RAG source deep-link) -->
-    <JournalTodoRegistModal />
+    <ProspectiveKeepRegistModal />
     <JournalDayMetaModal />
     <CommentRegistModal />
     <CommentListModal />
     <HistoryModal @success="onHistorySuccess" />
     <RelatedContentAddModal />
-    <JournalTagProfileModal />
+    <TagProfileModal @success="refreshAfterTagProfileChange" />
     <JournalMetaProfileModal />
     <!--end::저널 모달 컨테이너-->
     <!--begin::태그·메타 컨텍스트 메뉴 (전역 단일 인스턴스)-->
-    <JournalTagContextMenu />
+    <TagContextMenu />
     <JournalMetaContextMenu />
     <!--end::태그·메타 컨텍스트 메뉴-->
   </div>
@@ -62,16 +62,19 @@ import JournalDayRegistModal from "./modals/JournalDayRegistModal.vue";
 import JournalDayDetailModal from "./modals/JournalDayDetailModal.vue";
 import JournalChapterRegistModal from "../chapter/modals/JournalChapterRegistModal.vue";
 import JournalReflectionRegistModal from "../reflection/modals/JournalReflectionRegistModal.vue";
-import JournalTodoRegistModal from "../todo/modals/JournalTodoRegistModal.vue";
+import ProspectiveKeepRegistModal from "@/features/prospective/keep/modals/ProspectiveKeepRegistModal.vue";
 import JournalDayMetaModal from "./modals/JournalDayMetaModal.vue";
 import CommentRegistModal from "../shared/modals/CommentRegistModal.vue";
 import CommentListModal from "@/features/attachable/CommentListModal.vue";
 import HistoryModal from "@/features/attachable/HistoryModal.vue";
 import RelatedContentAddModal from "../shared/modals/RelatedContentAddModal.vue";
-import JournalTagProfileModal from "../shared/modals/JournalTagProfileModal.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useJournalTagProfileRefresh } from "@/features/journal/shared/composables/useJournalTagProfileRefresh";
 import JournalMetaProfileModal from "../shared/modals/JournalMetaProfileModal.vue";
-import JournalTagContextMenu from "../shared/components/JournalTagContextMenu.vue";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
 import JournalMetaContextMenu from "../shared/components/JournalMetaContextMenu.vue";
+
+const { refreshAfterTagProfileChange } = useJournalTagProfileRefresh();
 
 const asideStore = useJournalAsideStore();
 const journalStore = useJournalStore();

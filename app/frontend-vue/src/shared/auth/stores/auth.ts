@@ -8,6 +8,7 @@ import { preloadCategoryMaps, useJournalModalStore } from "@/features/journal/st
 import { useJournalStore } from "@/features/journal/stores/journal";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { useMenuStore } from "@/shared/menu/stores/menu";
+import { useProspectiveKeepCategoryMapStore } from "@/features/prospective/keep/stores/prospectiveKeepCategoryMap";
 
 /** 라우트 이동이 서버 인증 확인 결과를 재사용하는 메모리 신선도 구간. */
 export const AUTH_VERIFICATION_FRESHNESS_MS = 15_000;
@@ -47,7 +48,7 @@ function resolveServerMessage(error: AxiosError<{ message?: string }>): string |
  * useAuthStore
  * Spring Boot JWT 쿠키 기반 인증 상태를 관리한다.
  * - 로그인: POST /api/auth/login (JSON) → JWT HttpOnly 쿠키 발급
- * - 인증 확인: GET /api/auth/get-auth-account → 현재 쿠키로 사용자 정보 조회
+ * - 인증 확인: GET /api/auth/get-auth-info → 현재 쿠키로 사용자 정보 조회
  * - 로그아웃: POST /api/auth/logout-json → 쿠키 삭제
  */
 export const useAuthStore = defineStore("auth", () => {
@@ -83,6 +84,7 @@ export const useAuthStore = defineStore("auth", () => {
     lastAuthVerifiedAt = 0;
     authVerificationRequest = null;
     useJournalModalStore().resetCategoryMaps();
+    useProspectiveKeepCategoryMapStore().reset();
     useJournalStore().resetTagCloudState();
     useMenuStore().resetMenu();
     isAuthenticated.value = false;
@@ -192,7 +194,7 @@ export const useAuthStore = defineStore("auth", () => {
   /** 서버 인증 정보를 조회하고 현재 세대의 응답만 store에 반영한다. */
   async function verifyAuthFromServer(requestGeneration: number): Promise<void> {
     try {
-      const { data } = await ApiService.get("/api/auth/get-auth-account");
+      const { data } = await ApiService.get("/api/auth/get-auth-info");
       if (requestGeneration !== authVerificationGeneration) {
         console.info("[auth] 무효화된 인증 확인 응답 폐기", {
           requestGeneration,

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import type { RouteProp } from "@react-navigation/native";
@@ -8,6 +9,8 @@ import { JournalWeeklyView } from "../components/journal/JournalWeeklyView";
 import { JournalMonthlyView } from "../components/journal/JournalMonthlyView";
 import { useSelectedJournalDate } from "../hooks/useSelectedJournalDate";
 import type { MainTabParamList } from "../navigation/AppNavigator";
+import { MENU_URL } from "../navigation/appMenu";
+import { AppMenuButton } from "../components/navigation/AppMenu";
 import { colors } from "../theme/colors";
 
 type TodayNav = BottomTabNavigationProp<MainTabParamList, "Today">;
@@ -23,8 +26,8 @@ const VIEW_MODES: Array<{ id: ViewMode; label: string }> = [
 ];
 
 /**
- * Today 탭 — 날짜 조회 허브. 일/주 토글로 일별·주별 조회 뷰를 전환한다.
- * 달력·태그 탭에서 `{ date }` 로 진입하면 일별 모드로 전환해 해당 날짜를 보여준다.
+ * Today 탭 — 날짜 조회 허브. 일/주/월 토글로 일별·주별·월별 조회 뷰를 전환한다.
+ * 태그별 기록·스레드 글 목록 화면의 날짜 헤더(navigateToDailyHub)가 `{ date }` 로 진입시키면 일별 모드로 전환해 해당 날짜를 보여준다.
  */
 export function TodayScreen() {
   const navigation = useNavigation<TodayNav>();
@@ -32,7 +35,7 @@ export function TodayScreen() {
   const { selectedDate, setSelectedDate, shiftDay, goToToday, atToday } = useSelectedJournalDate();
   const [viewMode, setViewMode] = useState<ViewMode>("daily");
 
-  // 달력·태그 탭 등에서 `{ date }` 로 진입 시 일별 모드로 전환 + 선택일 동기화 (1회 소비)
+  // 스택 화면(태그별 기록·스레드 글 목록)의 날짜 헤더에서 `{ date }` 로 진입 시 일별 모드로 전환 + 선택일 동기화 (1회 소비)
   useFocusEffect(
     useCallback(() => {
       const paramDate = route.params?.date;
@@ -43,10 +46,7 @@ export function TodayScreen() {
     }, [navigation, route.params?.date, setSelectedDate])
   );
 
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.topBar}>
-        <Text style={styles.kicker}>DreamDiary</Text>
+  const modeSelector = (
         <View style={styles.segment}>
           {VIEW_MODES.map((item) => {
             const active = item.id === viewMode;
@@ -65,19 +65,30 @@ export function TodayScreen() {
             );
           })}
         </View>
+  );
+
+  return (
+    <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
+      <View style={styles.topBar}>
+        <View style={styles.kickerRow}>
+          <AppMenuButton currentUrl={MENU_URL.JOURNAL_DAY} />
+          <Text style={styles.kicker}>DreamDiary</Text>
+        </View>
       </View>
 
       {viewMode === "daily" ? (
         <JournalDailyView
+          modeSelector={modeSelector}
           selectedDate={selectedDate}
           atToday={atToday}
           shiftDay={shiftDay}
           goToToday={goToToday}
+          setSelectedDate={setSelectedDate}
         />
       ) : viewMode === "weekly" ? (
-        <JournalWeeklyView initialDate={selectedDate} />
+        <JournalWeeklyView initialDate={selectedDate} modeSelector={modeSelector} />
       ) : (
-        <JournalMonthlyView initialDate={selectedDate} />
+        <JournalMonthlyView initialDate={selectedDate} modeSelector={modeSelector} />
       )}
     </SafeAreaView>
   );
@@ -91,6 +102,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     gap: 10
   },
+  kickerRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   kicker: {
     color: colors.accent,
     fontSize: 12,
@@ -100,20 +112,20 @@ const styles = StyleSheet.create({
   },
   segment: {
     flexDirection: "row",
-    gap: 6,
+    gap: 2,
     backgroundColor: colors.surface,
     borderRadius: 8,
-    padding: 4,
+    padding: 3,
     alignSelf: "flex-start"
   },
   segmentButton: {
-    minWidth: 56,
+    minWidth: 30,
     alignItems: "center",
     borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 14
+    paddingVertical: 7,
+    paddingHorizontal: 6
   },
   segmentButtonActive: { backgroundColor: colors.text },
-  segmentText: { color: colors.secondaryText, fontSize: 14, fontWeight: "700" },
+  segmentText: { color: colors.secondaryText, fontSize: 12, fontWeight: "700" },
   segmentTextActive: { color: colors.onDark }
 });

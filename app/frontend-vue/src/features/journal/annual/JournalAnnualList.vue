@@ -95,16 +95,12 @@
               <!-- TODO: 태그 클릭 → JournalDayTagService 연동 미구현 (Sub-2 범위 외) -->
               <div v-if="hasTags(annual)" class="mt-2 ms-5 mt-3">
                 <i class="bi bi-tag"></i>
-                <span
+                <TagChip
                   v-for="tag in annual.tag?.list"
                   :key="(tag.tagId as number | string) + ':' + tag.name"
-                  class="text-muted pe-1"
-                >
-                  #<span class="border-bottom text-primary fw-lighter opacity-hover">
-                    <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                    {{ tag.name }}
-                  </span>
-                </span>
+                  :name="tag.name"
+                  :ctgr="tag.ctgr"
+                />
               </div>
               <!--end::태그 목록-->
             </div>
@@ -164,6 +160,7 @@ import { useRouter } from "vue-router";
 import { useJournalAnnualStore } from "@/features/journal/stores/journalAnnual";
 import type { JournalAnnualDto } from "@/features/journal/stores/journalAnnual";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
 
 const router = useRouter();

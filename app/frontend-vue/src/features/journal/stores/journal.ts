@@ -150,7 +150,10 @@ export interface JournalEntryDto {
 export interface JournalPrefixDto {
   id: number;
   name: string;
-  color?: string | null;
+  /** 색 의미 코드 (TEXT_CLASS_CD 어휘). 태그 프로필과 같은 값 집합. */
+  textClassCd?: string | null;
+  /** 렌더용 CSS 클래스 (서버 해석). 미지정이면 빈 문자열. */
+  textClass?: string | null;
   sortOrder?: number;
   activeYn?: "Y" | "N";
 }
@@ -219,7 +222,7 @@ export interface MetaDto {
 export interface JournalChapterPrefixHintDto {
   prefixId?: number;
   prefixName?: string;
-  prefixColor?: string;
+  prefixTextClass?: string;
 }
 
 /** 저널 일자에 투영된 현재 사용자 휴가의 시간 범위 상태 */
@@ -314,12 +317,14 @@ export interface JournalCalEvent {
   [key: string]: unknown;
 }
 
-/** 저널 할일 항목 — 백엔드 JournalTodoDto 직렬화 (aside TODO 카드 표시분) */
-export interface JournalTodoItem {
+/** Prospective Keep 항목 — 백엔드 ProspectiveKeepDto 직렬화 (aside Keep 카드 표시분) */
+export interface ProspectiveKeepItem {
   id: number;
   title?: string;
   /** 라이프사이클 현재값(백엔드 enrich). 활성 목록엔 OPEN·PENDING만 온다. */
   lifecycle?: { lifecycleKey?: string | null } | null;
+  /** 부착된 상태(다중). 중요(IMPRTC) 강조 표시에 쓴다. */
+  state?: { list?: Array<{ stateKey?: string }> } | null;
 }
 
 export type TagCloudSection = "day" | "diary" | "dream";
@@ -393,25 +398,25 @@ export const useJournalStore = defineStore("journal", () => {
   const metaError = ref<string | null>(null);
 
   /** 태그 클라우드 결과 */
-  /** aside TODO 카드 목록 (레거시 journal_todo yyMnthListAjax 등가 — 현재 년/월 기준) */
-  const todoList = ref<JournalTodoItem[]>([]);
-  /** aside TODO 목록 조회 실패 메시지 */
-  const todoError = ref<string | null>(null);
+  /** aside Keep 카드 목록 (레거시 prospective_keep yyMnthListAjax 등가 — 현재 년/월 기준) */
+  const keepList = ref<ProspectiveKeepItem[]>([]);
+  /** aside Keep 목록 조회 실패 메시지 */
+  const keepError = ref<string | null>(null);
 
-  /** aside TODO 목록 조회 — 등록/삭제 후에도 호출해 카드를 갱신한다. */
-  async function fetchTodos() {
-    todoError.value = null;
+  /** aside Keep 목록 조회 — 등록/삭제 후에도 호출해 카드를 갱신한다. */
+  async function fetchKeeps() {
+    keepError.value = null;
     try {
-      // 활성 할일은 월에 종속되지 않는다(cross-month). 백엔드가 yy/mnth를 무시하므로 전달하지 않는다.
-      const res = await axios.get("/api/journal/todos");
+      // 활성 Keep은 월에 종속되지 않으므로 저널의 yy/mnth를 전달하지 않는다.
+      const res = await axios.get("/api/prospective/keeps");
       if (!res.data?.rslt) {
-        todoError.value = res.data?.message ?? t("journal.todo.list.load.failure");
+        keepError.value = res.data?.message ?? t("prospective.keep.list.load.failure");
         return;
       }
-      todoList.value = (res.data?.rsltList ?? []) as JournalTodoItem[];
+      keepList.value = (res.data?.rsltList ?? []) as ProspectiveKeepItem[];
     } catch (e: unknown) {
-      console.error("[journal] fetchTodos failed", e);
-      todoError.value = t("journal.todo.list.load.failure");
+      console.error("[journal] fetchKeeps failed", e);
+      keepError.value = t("prospective.keep.list.load.failure");
     }
   }
 
@@ -903,9 +908,9 @@ export const useJournalStore = defineStore("journal", () => {
     tagCloudLoading,
     fetchTagCloud,
     resetTagCloudState,
-    todoList,
-    todoError,
-    fetchTodos,
+    keepList,
+    keepError,
+    fetchKeeps,
     patchEntryReflections,
     patchEntryLifecycle,
   };

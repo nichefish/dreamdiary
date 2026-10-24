@@ -20,7 +20,7 @@ public interface ApiUrl {
     String API_AUTH_REFRESH = Prefix.API + "/auth/refresh";
     String API_AUTH_EXPIRE_SESSION = Prefix.API + "/auth/expire-session";
     String API_AUTH_VERIFY = Prefix.API + "/auth/verify/{token}";
-    String API_AUTH_INFO = Prefix.API + "/auth/get-auth-account";
+    String API_AUTH_INFO = Prefix.API + "/auth/get-auth-info";
     /** Vue SPA authenticated action preflight. */
     String API_SESSION_PING = Prefix.API + "/session/ping";
     /** Vue SPA용 JSON 로그인/로그아웃 */
@@ -79,9 +79,16 @@ public interface ApiUrl {
     String JOURNAL_ENTRY_TAG_GROUP_LIST_AJAX = Prefix.API + "/journal/entry/tag/group-list";
     String JOURNAL_ENTRY_TAG_CATEGORIES = Prefix.API + "/journal/entry/tag/categories";
 
-    /** 저널 할일 */
-    String JOURNAL_TODOS = Prefix.API + "/journal/todos";
-    String JOURNAL_TODO = Prefix.API + "/journal/todo/{id}";
+    /** Prospective Keep */
+    String PROSPECTIVE_KEEPS = Prefix.API + "/prospective/keeps";
+    String PROSPECTIVE_KEEP = Prefix.API + "/prospective/keep/{id}";
+    String PROSPECTIVE_KEEP_PROJECT = Prefix.API + "/prospective/keep/{id}/project";
+    String PROSPECTIVE_KEEP_TAG_CATEGORIES = Prefix.API + "/prospective/keep/tag/categories";
+
+    /** Prospective Project */
+    String PROSPECTIVE_PROJECTS = Prefix.API + "/prospective/projects";
+    String PROSPECTIVE_PROJECT = Prefix.API + "/prospective/project/{id}";
+    String PROSPECTIVE_PROJECT_SORT_ORDERS = Prefix.API + "/prospective/projects/sort-orders";
 
     /** 저널 스레드 */
     String JOURNAL_THREAD_API_LIST = Prefix.API + "/journal/threads";
@@ -230,7 +237,7 @@ public interface ApiUrl {
 
     /** (공통) 파일 */
     String FILE_DOWNLOAD_CHK_AJAX = Prefix.API + "/file/file-download-chk";
-    String FILE_INFO_LIST_AJAX = Prefix.API + "/file/file-account-list";
+    String FILE_INFO_LIST_AJAX = Prefix.API + "/file/file-info-list";
     String FILE_DOWNLOAD = Prefix.API + "/file/file-download.do";
     String FILE_UPLOAD_AJAX = Prefix.API + "/file/file-upload";
 
@@ -266,7 +273,7 @@ public interface ApiUrl {
     String JANDI_CONNECT_WH = "https://wh.jandi.com/connect-api/webhook";
 
     /** (API) 한국천문연구원 : 특일 정보 조회 */
-    String API_HOLYDAY_GET = Prefix.API + "/holyday/get-holyday-account.do";
+    String API_HOLYDAY_GET = Prefix.API + "/holyday/get-holyday-info.do";
     
     /** (API) SNMP : 메세지 발신 */
     String URL_API_SNMP_SEND_AJAX = Prefix.API +"/snmp/send";

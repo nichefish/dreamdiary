@@ -8,12 +8,7 @@
     <input type="hidden" name="id" :value="model.id ?? ''" />
     <input type="hidden" name="contentType" value="JOURNAL_THREAD" />
 
-    <!--begin::말머리-->
-    <div class="d-flex justify-content-end mb-3">
-      <a href="#" class="link-primary fs-8" @click.prevent="openPrefixSettingsTab">
-        <i class="bi bi-gear me-1"></i>{{ t("journal.thread.prefix.manage-tab") }}
-      </a>
-    </div>
+    <!--begin::말머리 — 전체 관리는 스레드 목록의 말머리 탭 관리 버튼이 담당하고, 폼은 선택과 빠른 추가만 제공한다.-->
     <div class="row d-flex mb-8">
       <div class="col-12">
         <label class="d-flex align-items-center mb-2">
@@ -88,15 +83,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
 import RichEditor from "@/shared/ui/editor/RichEditor.vue";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
-import { swalConfirm } from "@/shared/utils/swal";
 
 const store = useJournalThreadStore();
 const { t } = useLocaleStore();
-const router = useRouter();
 const quickAddName = ref("");
 const quickAdding = ref(false);
 
@@ -121,23 +113,5 @@ async function quickAdd() {
   } finally {
     quickAdding.value = false;
   }
-}
-async function openPrefixSettingsTab() {
-  /*
-   * 독립 편집 페이지는 상위 route leave guard가 확인을 담당한다.
-   * 전역 모달 표면은 route guard가 없으므로 이 진입점에서 미저장 폐기를 확인한다.
-   */
-  if (store.registSurface === "modal") {
-    if (store.registDirty) {
-      const confirmed = await swalConfirm(t("common.confirm.leave-unsaved"));
-      if (!confirmed) {
-        console.info("[journal-thread] prefix settings tab navigation canceled: unsaved modal remains");
-        return;
-      }
-      console.info("[journal-thread] prefix settings tab navigation confirmed: discarding unsaved modal");
-    }
-    store.closeRegist();
-  }
-  await router.push({ name: "user-my-prefixes" });
 }
 </script>

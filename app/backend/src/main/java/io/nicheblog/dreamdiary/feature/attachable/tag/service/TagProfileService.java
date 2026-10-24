@@ -398,11 +398,6 @@ public class TagProfileService
     }
 
     private String toCssTextClass(final String textClassCd) {
-        if (StringUtils.isBlank(textClassCd)) return "";
-
-        final String normalized = StringUtils.trimToEmpty(textClassCd);
-        if (StringUtils.equalsIgnoreCase(normalized, TextClass.DEFAULT.getKey())) return "";
-
-        return "text-" + normalized.toLowerCase(Locale.ROOT);
+        return TextClass.fromCode(textClassCd).toCssClass();
     }
 }

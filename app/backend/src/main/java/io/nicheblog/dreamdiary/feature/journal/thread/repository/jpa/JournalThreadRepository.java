@@ -46,7 +46,7 @@ public interface JournalThreadRepository
      */
     @Query(value = "SELECT jt.id AS id, " +
             "       jt.title AS title, " +
-            "       p.id AS prefixId, p.name AS prefixName, p.color AS prefixColor, p.active_yn AS prefixActiveYn, " +
+            "       p.id AS prefixId, p.name AS prefixName, p.text_class_cd AS prefixTextClassCd, p.active_yn AS prefixActiveYn, " +
             "       COALESCE(( " +
             "           SELECT lc.lifecycle_key " +
             "           FROM lifecycle lc " +
@@ -78,7 +78,7 @@ public interface JournalThreadRepository
             "           LIMIT 1 " +
             "       ), 'OPEN') <> 'RESOLVED') " +
             "GROUP BY jt.id, jt.title, jt.created_at, jt.updated_at, " +
-            "         p.id, p.name, p.color, p.active_yn " +
+            "         p.id, p.name, p.text_class_cd, p.active_yn " +
             "ORDER BY MAX(CASE WHEN jte.entry_id = :entryId THEN 1 ELSE 0 END) DESC, " +
             "         CASE WHEN MAX(jte.created_at) IS NULL THEN 1 ELSE 0 END ASC, " +
             "         MAX(jte.created_at) DESC, " +

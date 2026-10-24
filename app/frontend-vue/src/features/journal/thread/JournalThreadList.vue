@@ -4,17 +4,35 @@
 
     <!--begin::검색 카드 — 등록은 JournalThreadViewToolbar. 카드는 툴바에 붙인다(margin-top: 0).-->
     <div class="card mb-4" style="margin-top: 0 !important;">
+      <!--begin::말머리 탭
+        말머리(JOURNAL_THREAD 개인 Prefix)는 별도 화면이 아니라 스레드 목록의 선택 범위다(Keep의 Project 탭과 같은 구조).
+        탭은 전체 → 활성 말머리(서버 정렬 순) → 말머리 없음 순이며, 관리 버튼은 같은 화면에서 관리 모달을 연다. -->
+      <div class="d-flex align-items-center gap-2 px-4 pt-3 border-bottom border-gray-200 overflow-auto">
+        <ul class="nav nav-tabs nav-line-tabs flex-nowrap border-0 mb-0">
+          <li class="nav-item">
+            <button type="button" class="nav-link text-nowrap" :class="{ active: store.filterPrefixId === '' }" @click="selectPrefixScope('')">
+              {{ t("journal.thread.prefix.tab.all") }}
+            </button>
+          </li>
+          <li v-for="prefix in store.prefixOptions" :key="prefix.id" class="nav-item">
+            <button type="button" class="nav-link text-nowrap" :class="{ active: store.filterPrefixId === String(prefix.id) }" @click="selectPrefixScope(String(prefix.id))">
+              {{ prefix.name }}
+            </button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link text-nowrap" :class="{ active: store.filterPrefixId === THREAD_PREFIX_SCOPE_NONE }" @click="selectPrefixScope(THREAD_PREFIX_SCOPE_NONE)">
+              {{ t("journal.thread.prefix.tab.none") }}
+            </button>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-sm btn-light flex-shrink-0 ms-auto mb-2" @click="prefixManageOpen = true">
+          <i class="bi bi-tags me-1"></i>{{ t("journal.thread.prefix.manage.button") }}
+        </button>
+      </div>
+      <!--end::말머리 탭-->
       <div class="card-body px-4 py-3">
         <!--begin::검색 폼-->
         <form class="d-flex flex-wrap align-items-center gap-2" @submit.prevent="search">
-          <select
-            v-model="store.filterPrefixId"
-            class="form-select form-select-sm form-select-solid w-auto flex-shrink-0"
-            @change="search"
-          >
-            <option value="">{{ t("journal.thread.filter.all-prefixes") }}</option>
-            <option v-for="prefix in store.prefixOptions" :key="prefix.id" :value="String(prefix.id)">{{ prefix.name }}</option>
-          </select>
           <select
             v-model="store.filterLifecycleKey"
             class="form-select form-select-sm form-select-solid w-auto flex-shrink-0"
@@ -143,7 +161,7 @@
             >
               <td class="text-center text-gray-500 fs-7 hidden-table">{{ thread.rnum }}</td>
               <td class="ps-3">
-                <span v-if="thread.prefix" class="badge me-2 fs-9" :style="prefixBadgeStyle(thread.prefix.color)">{{ thread.prefix.name }}</span>
+                <span v-if="thread.prefix" class="badge me-2 fs-9" :class="thread.prefix.textClass" :style="prefixBadgeStyle()">{{ thread.prefix.name }}</span>
                 <span class="fs-6 fw-semibold">{{ thread.title }}</span>
                 <span
                   v-if="membershipCountOf(thread) > 0"
@@ -167,14 +185,12 @@
                 >{{ lifecycleLabel(lifecycleKeyOf(thread)) }}</span>
                 <!--begin::태그 (스레드 상세·일자 뷰와 동일 렌더: [분류] #이름 밑줄 primary, bi-tag 아이콘 제거)-->
                 <div v-if="hasThreadTags(thread)" class="mt-1">
-                  <span
+                  <TagChip
                     v-for="tag in thread.tag?.list"
                     :key="String(tag.tagId)"
-                    class="text-muted pe-1"
-                  >
-                    <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                    #<span class="border-bottom text-primary fw-lighter opacity-hover">{{ tag.name }}</span>
-                  </span>
+                    :name="tag.name"
+                    :ctgr="tag.ctgr"
+                  />
                 </div>
                 <!--end::태그-->
               </td>
@@ -283,6 +299,15 @@
       <!--end::페이지네이션-->
     </div>
 
+    <PersonalPrefixManageModal
+      v-if="prefixManageOpen"
+      content-type="JOURNAL_THREAD"
+      :title="t('journal.thread.prefix.manage.title')"
+      :description="t('journal.thread.prefix.manage.description')"
+      @close="prefixManageOpen = false"
+      @changed="onPrefixManaged"
+    />
+
   </div>
   <!--end::저널 스레드 목록-->
 </template>
@@ -292,9 +317,12 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { useJournalThreadStore } from "@/features/journal/stores/journalThread";
+import { THREAD_PREFIX_SCOPE_NONE } from "@/features/journal/stores/journalThreadList";
+import PersonalPrefixManageModal from "@/features/user/components/PersonalPrefixManageModal.vue";
 import { useAttachableModalStore } from "@/features/attachable/stores/attachableModal";
 import type { JournalThreadDto } from "@/features/journal/stores/journalThread";
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
+import TagChip from "@/shared/ui/tag/TagChip.vue";
 import { formatThreadMembershipPeriod } from "@/features/journal/utils/threadMembershipPeriod";
 import { swalAlert } from "@/shared/utils/swal";
 import { isMetronicMenuEventTarget, reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
@@ -347,6 +375,24 @@ onMounted(() => {
 
 function search(): void {
   void store.fetchList(0);
+}
+
+/** 말머리 관리 모달 표시 여부 */
+const prefixManageOpen = ref(false);
+
+/** 말머리 탭을 선택하고 첫 페이지를 조회한다. */
+function selectPrefixScope(scope: string): void {
+  void store.selectPrefixScope(scope);
+}
+
+/**
+ * 관리 모달에서 말머리가 바뀌면 탭 선택지를 서버 확정 목록으로 다시 맞춘다.
+ * 선택 탭이 비활성화되면 전체로 돌리고, 행의 말머리 이름·색도 바뀔 수 있으므로 목록을 다시 조회한다.
+ */
+async function onPrefixManaged(): Promise<void> {
+  await store.fetchPrefixOptions();
+  const reset = store.reconcilePrefixScope();
+  await store.fetchList(reset ? 0 : undefined);
 }
 
 function resetFilters(): void {
@@ -408,8 +454,12 @@ function hasThreadTags(thread: JournalThreadDto): boolean {
   return Array.isArray(thread.tag?.list) && thread.tag!.list!.length > 0;
 }
 
-function prefixBadgeStyle(color?: string | null): Record<string, string> {
-  return color ? { borderColor: color, color } : {};
+/**
+ * 말머리 배지의 테두리 색.
+ * 글자색은 말머리 색 의미 클래스(`textClass`)가 정하고, 테두리는 그 글자색을 따라가게 둔다.
+ */
+function prefixBadgeStyle(): Record<string, string> {
+  return { borderColor: "currentColor" };
 }
 
 /** 활성 소속 엔트리 수. 없거나 비정상이면 0. */

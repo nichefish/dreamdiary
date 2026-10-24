@@ -209,7 +209,7 @@ class JournalPrefixSelectionIntegrationTest {
     private PrefixDto createPrefix(final ContentType contentType, final String name) {
         return prefixService.create(contentType.key, PrefixDto.builder()
                 .name(name)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(1)
                 .build());
     }

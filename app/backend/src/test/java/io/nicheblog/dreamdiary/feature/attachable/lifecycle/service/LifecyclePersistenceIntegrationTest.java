@@ -9,7 +9,7 @@ import io.nicheblog.dreamdiary.feature.attachable.lifecycle.repository.jpa.Lifec
 import io.nicheblog.dreamdiary.feature.attachable.state.StateKey;
 import io.nicheblog.dreamdiary.feature.attachable.state.entity.StateEntity;
 import io.nicheblog.dreamdiary.feature.attachable.state.repository.jpa.StateRepository;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.reflection.entity.JournalReflectionEntity;
 import io.nicheblog.dreamdiary.feature.journal.reflection.repository.jpa.JournalReflectionRepository;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class LifecyclePersistenceIntegrationTest {
     private JournalReflectionRepository journalReflectionRepository;
     /** 이 테스트는 lifecycle/state 영속 전이에 집중하고 원본 소유권 계약은 전용 가드 테스트에 위임한다. */
     @MockBean
-    private JournalContentOwnershipGuard journalContentOwnershipGuard;
+    private AttachableContentOwnershipGuard attachableContentOwnershipGuard;
     @PersistenceContext
     private EntityManager entityManager;
 

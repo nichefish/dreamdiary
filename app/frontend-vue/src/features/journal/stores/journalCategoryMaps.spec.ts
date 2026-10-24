@@ -59,7 +59,7 @@ describe("journalCategoryMaps", () => {
     expect(mockedGet).toHaveBeenCalledTimes(1);
   });
 
-  it("preloadAll 은 4종 URL 을 조회한다", async () => {
+  it("preloadAll 은 저널 소유 4종 URL 을 조회한다", async () => {
     mockedGet.mockResolvedValue({ data: { rslt: true, rsltMap: {} } });
     const store = useJournalCategoryMapStore();
 

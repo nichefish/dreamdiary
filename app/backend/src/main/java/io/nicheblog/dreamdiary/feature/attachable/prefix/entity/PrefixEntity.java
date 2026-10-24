@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Where;
 
+import io.nicheblog.dreamdiary.global.type.TextClass;
+
 import javax.persistence.*;
 
 /**
@@ -34,8 +36,14 @@ public class PrefixEntity extends BaseAuditEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "color", length = 7)
-    private String color;
+    /**
+     * 표시 색 의미 코드.
+     * 태그 프로필({@code tag_profile.text_class})과 같은 {@link TextClass} 어휘를 공유하므로,
+     * hex 를 저장하지 않고 의미 코드만 저장한다. 렌더 클래스는 {@link TextClass#toCssClass()} 가 해석한다.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "text_class_cd", length = 20)
+    private TextClass textClass;
 
     @Column(name = "sort_order", nullable = false)
     private Integer sortOrder;

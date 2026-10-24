@@ -31,7 +31,7 @@
 - ID/PW 폼 로그인 → `POST /api/auth/login`
 - 아이디 또는 비밀번호가 비어 있으면 `POST /api/auth/login`을 호출하지 않고 해당 필드에 `auth.login.required`를 표시한다. 빈 비밀번호 제출은 로그인 실패로 집계하지 않는다.
 - POST /api/auth/login internal server errors return HTTP 500 with a login-scoped error message and must not be classified as login-required/session-expired.
-- Vue auth verification treats only HTTP 401 from `/api/auth/get-auth-account` as unauthenticated/session-expired; HTTP 403, HTTP 500, and network failures surface as auth verification/runtime errors and must not purge auth state as a login-required diagnosis. 정상 인증 결과는 새로고침 시 초기화되는 메모리에 15초간 신선한 상태로 보존하고, 같은 구간의 라우트 이동은 서버 조회를 생략한다. 로그인·프로필 변경·팝업 사전 확인은 `force` 검증을 사용한다.
+- Vue auth verification treats only HTTP 401 from `/api/auth/get-auth-info` as unauthenticated/session-expired; HTTP 403, HTTP 500, and network failures surface as auth verification/runtime errors and must not purge auth state as a login-required diagnosis. 정상 인증 결과는 새로고침 시 초기화되는 메모리에 15초간 신선한 상태로 보존하고, 같은 구간의 라우트 이동은 서버 조회를 생략한다. 로그인·프로필 변경·팝업 사전 확인은 `force` 검증을 사용한다.
 - Google OAuth2 소셜 로그인 → `/oauth2/authorization/google` (팝업)
 - Naver OAuth2 소셜 로그인 → `/oauth2/authorization/naver` (팝업)
 - 로그인 실패 메시지 표시
@@ -82,7 +82,7 @@
 | 내 정보 | `/my/profile` | `UserMyProfileTab.vue` | 개인 연락처·프로필은 조회·수정하고 재직 정보는 조회 전용으로 표시한다. |
 | 보안 | `/my/security` | `UserMySecurityTab.vue` | 허용 IP를 표시하고 비밀번호 변경 모달을 연다. |
 | 저널 설정 | `/my/journal` | `UserMyJournalTab.vue` | 저널 일자 공통 진입점에서 사용할 일간·주간·월간 기본 보기를 조회·저장한다. |
-| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 고정 대상 6행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색상·활성 상태를 관리하는 모달을 연다. |
+| 말머리 관리 | `/my/prefixes` | `UserMyPrefixesTab.vue` | 초기 화면의 작은 `저널` 도메인 헤더 아래 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트` 고정 대상 5행, 이어서 `Keep` 도메인 헤더 아래 `Keep 항목`(content_type `PROSPECTIVE_KEEP`) 1행을 표시하고, 행을 누르면 해당 개인 Prefix 목록의 생성·수정·정렬·색·활성 상태를 관리하는 공통 모달(`PersonalPrefixManageModal`)을 연다. 스레드 말머리(`JOURNAL_THREAD`)는 같은 모달을 저널 스레드 목록의 말머리 탭 행에서 관리한다. 색은 태그 프로필 모달과 같은 `TEXT_CLASS_CD` select 로 고르며 선택지·표시 규약을 그대로 공유한다. |
 
 - 탭은 로컬 상태가 아니라 Vue Router 하위 route로 유지하므로 새로고침·직접 URL 진입·브라우저 앞뒤 이동 시 같은 탭을 복원한다.
 - 공통 헤더의 보안 버튼은 `/my/security`로 이동하며 비밀번호 모달을 직접 열지 않는다.
@@ -93,9 +93,9 @@
 - 저장 성공 후 내 정보와 인증 상태를 다시 조회해 공통 정체성 헤더·계정 메뉴의 닉네임을 서버 확정 상태로 갱신한다.
 - 저널 설정은 `GET /api/journal/settings/me`의 서버 확정값을 표시하고 `PUT /api/journal/settings/me`로 선택값만 저장한다. 저장 버튼은 선택값이 서버 확정값과 다를 때 활성화한다.
 - 말머리는 콘텐츠당 0개 또는 1개다. 관리 화면은 `(user, content_type)`별 개인 Scope를 `JOURNAL_CHAPTER_DIARY`, `JOURNAL_CHAPTER_NOTE`, `JOURNAL_DIARY`, `JOURNAL_DREAM`, `JOURNAL_NOTE`, `JOURNAL_THREAD`로 분리한다. 챕터 말머리는 일기 챕터·노트 챕터로 나뉘며, 챕터의 attachable 정체성(`prefix_content.ref_content_type`)은 `JOURNAL_CHAPTER`로 유지한다.
-- 대상 6행은 Scope 존재 여부와 무관하게 `저널` 도메인 그룹 안에 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 순으로 항상 표시한다. 초기 화면에서는 각 목록을 미리 조회하거나 말머리 미리보기를 표시하지 않고, 행을 눌러 관리 모달을 열 때 해당 `contentType` 목록만 조회한다. Prefix가 하나도 없는 모달은 빈 상태와 추가 버튼을 표시하며 최초 등록 시 서버가 Scope를 lazy 생성한다.
+- 대상 5행은 Scope 존재 여부와 무관하게 `저널` 도메인 그룹 안에 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트` 순으로 항상 표시한다. 초기 화면에서는 각 목록을 미리 조회하거나 말머리 미리보기를 표시하지 않고, 행을 눌러 관리 모달을 열 때 해당 `contentType` 목록만 조회한다. Prefix가 하나도 없는 모달은 빈 상태와 추가 버튼을 표시하며 최초 등록 시 서버가 Scope를 lazy 생성한다.
 - 이번 화면 SAVEPOINT는 여섯 목록 관리까지만 포함하고 실제 챕터·일기·꿈·노트 등록·수정 소비 연결은 후속 범위다.
-- Prefix는 해당 Scope의 평면 목록이며 이름·색상·정렬·활성 상태를 관리한다. 비활성화는 기존 콘텐츠 선택을 보존한다.
+- Prefix는 해당 Scope의 평면 목록이며 이름·색 의미 코드·정렬·활성 상태를 관리한다. 비활성화는 기존 콘텐츠 선택을 보존한다.
 
 ### Layout Structure
 
@@ -121,7 +121,7 @@
 | 수정 | 내 정보 탭의 개인 연락처·프로필 표시를 편집 폼으로 전환한다. 재직 정보는 조회 전용으로 유지한다. |
 | 저장 | 「내 정보를 저장하시겠습니까?」 확인 후 로그인 사용자 본인의 닉네임·개인 연락처·생년월일·음력 여부·자기소개를 저장한 뒤 서버 상태를 다시 조회한다. 확인을 취소하면 API를 호출하지 않고 편집 상태를 유지한다. |
 | 취소 | 저장하지 않고 조회 상태로 돌아가며 서버에서 조회한 값을 복원한다. |
-| 말머리 관리 모달 | `저널` 그룹의 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트 / 스레드` 행을 누르면 해당 `(user, content_type)` 목록만 조회해 관리 모달을 연다. 모달을 닫을 때 편집 중이면 미저장 변경 폐기 확인을 표시하고, 취소하면 현재 모달과 편집 상태를 유지한다. |
+| 말머리 관리 모달 | `저널` 그룹의 `일기 챕터 / 노트 챕터 / 일기 / 꿈 / 노트` 행을 누르면 해당 `(user, content_type)` 목록만 조회해 관리 모달(`PersonalPrefixManageModal`)을 연다. 모달을 닫을 때 편집 중이면 미저장 변경 폐기 확인을 표시하고, 취소하면 현재 모달과 편집 상태를 유지한다. |
 | 프로필 이미지 업로드 | 파일 선택 후 `/file/fileUploadAjax.do` 업로드 |
 | 프로필 이미지 삭제 | 이미지 제거 |
 | 비밀번호 변경 | 비밀번호 변경 모달 오픈 |

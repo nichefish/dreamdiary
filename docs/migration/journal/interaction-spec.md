@@ -9,7 +9,7 @@
 | 인터랙션 | `features/journal/stores/journal.ts` / UI | 상태 |
 |----------|---------------------------|------|
 | 정렬 토글 | `sortOrder` + `toggleSort` + localStorage 유지 + 프론트 역순 | ✓ |
-| 태그 클릭 컨텍스트 메뉴 | `tagContextMenu.ts` + `JournalTagContextMenu.vue` — 메뉴 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale 카탈로그 사용 | ✓ |
+| 태그 클릭 컨텍스트 메뉴 | `tagContextMenu.ts` + `TagContextMenu.vue` — 메뉴 액션과 태그 프로필 콘텐츠 유형 레이블은 현재 locale 카탈로그 사용 | ✓ |
 | 일자 카드 ⋯ 컨텍스트 메뉴 | `JournalDayCard.vue` — Metronic dropdown | ✓ |
 | 메타 버튼 드롭다운 | `JournalDayCard.vue` — `bi-bar-chart` 버튼 클릭 시 Bootstrap `dropup` 메뉴; 해당 일자 메타 항목 1개씩 나열; 항목 클릭 → `JournalDayMetaModal` 오픈; `width: max-content`로 내용 폭에 맞게 auto-size | ✓코드 |
 | 일자 필터 모달 (메타+태그 다중 AND) | `JournalDayMetaModal.vue` — 메타 또는 태그를 시드로 열림(`openDayFilterModal`); 상단 칩에 선택 메타(파랑)·태그(초록) 혼합 표시; 최초 시드 칩도 × 클릭으로 자유 제거(제한 없음)되며 같은 seed 의 payload 재조회로 다시 주입하지 않는다; 모든 필터 제거 시 빈 결과 반환(payload.list 전체 노출 방지); AND 필터(모든 선택 메타+태그 보유 날짜만); 행에서 비선택 메타 뱃지 클릭 → 메타 필터 추가, 비선택 태그 클릭 → 태그 필터 추가, 선택된 태그 클릭 → 태그 필터 제거; 각 행의 선택 메타 값은 `selectedMetas` 배열 순서(선택 순)대로 표시하여 행마다 순서 일관성 유지; 연도 변경 시 필터 유지(재조회만), 신규 오픈 시 시드 1개로 초기화; 각 일자는 카드형(날짜 → 메타·태그 → SUMMARY)으로 표시하고, SUMMARY 첫 non-empty 엔트리 본문(`summaryEntryHtmlOf`, SEARCH `journalChapterList` 파생)을 `collapse-3`/`expand-btn`으로 최대 3줄 미리보기한 뒤 클릭·더보기로 전체를 펼친다(접힘 중 빈 문단·여백 축소, 펼침 시 원문 유지); `JournalDayTagDetailModal` 제거하여 단일 모달로 수렴; 태그 입력 검색 — 컨트롤 행의 태그 입력(모달 내 datalist 미표시 대응: 인라인 typeahead 미리보기; 모달 오픈·포커스 시 `journalModalStore.dayTagCategoryMap`(SSOT)과 `/api/journal/day/tags` 를 병합해 최초 1회 로드)으로 기존 태그만 AND 필터에 추가(엔트리 검색과 동일 `findKnownTagName`·categoryMap 매칭); 카탈로그에 없는 이름은 Swal 대신 인라인 안내(모달 유지), 동명 태그(다중 카테고리)는 카테고리 선택 버튼으로 분기; 모달 닫힘 시 입력·힌트·카테고리 선택 상태 초기화(카탈로그 캐시는 유지) | ✓코드 |
@@ -346,7 +346,7 @@ const weekRangeLabel = computed(() => {
 - 일기/꿈 엔트리 태그: `JournalEntryItem.vue`
 - 결산 상세 태그클라우드·DIARY/DREAM 엔트리 태그: `JournalAnnualDetail.vue` (`JournalAnnualLayout`에 메뉴·짝 모달 마운트)
 
-**컨텍스트 메뉴**: `JournalTagContextMenu.vue`
+**컨텍스트 메뉴**: `TagContextMenu.vue`
 - 버튼: `검색`, `태그 설정`
 - 위치: 클릭 좌표 기준, viewport 안쪽으로 clamp
 - 닫기: 외부 클릭, ESC, scroll/resize
@@ -369,7 +369,7 @@ const weekRangeLabel = computed(() => {
 - 일기/꿈 태그 검색은 현재 목록의 `diaryKeyword` / `dreamKeyword` 필터로 대체하지 않는다.
 - 검색은 URL 기반 새 창으로 열어야 하며, 검색 조건은 주소로 재현 가능해야 한다.
 - 새 창 검색은 앱 내 탐색 화면이 아니므로 기본 메뉴와 저널 aside를 붙이지 않는다. route는 `SystemLayout.vue` 하위 auth route로 둔다.
-- 검색 팝업 내부 태그 클릭도 동일 컨텍스트 메뉴(`JournalTagContextMenu`)를 사용하며, `태그 설정`은 팝업 안에서 `JournalTagProfileModal`을 열 수 있어야 한다.
+- 검색 팝업 내부 태그 클릭도 동일 컨텍스트 메뉴(`TagContextMenu`)를 사용하며, `태그 설정`은 팝업 안에서 `TagProfileModal`을 열 수 있어야 한다.
 
 ---
 
@@ -709,7 +709,7 @@ target 리플렉션 본문 평문 (full·no-pending 모드에서만, 리플렉�
 
 **확정 전 입력 안내**: 키워드/태그 입력칸에 값이 남아 있으면 `hasPendingSearchInputs` 기준으로 고급 필터 영역에 검색 실행 시 현재 입력값도 조건에 포함된다는 locale 안내를 표시한다. 안내는 URL query, 검색 실행 순서, 입력값 확정 규칙을 변경하지 않는다.
 
-**태그 컨텍스트 메뉴에서 태그 추가** (`JournalTagContextMenu.vue`):
+**태그 컨텍스트 메뉴에서 태그 추가** (`TagContextMenu.vue`):
 - 팝업 외부: 새 창 열기 (`tagIds` 파라미터)
 - 팝업 내부 (`route.name === "journal-entry-search"`): 기존 `tagIds` 배열에 APPEND (중복 무시) → `router.replace()`
 
@@ -803,7 +803,7 @@ assistant 메시지 `metadataJson.ragSources` 행을 클릭하면 `useJournalMod
 
 **저널 스레드 자체 수정 정책**: 문맥형 상세 모달의 헤더 「수정」은 route·저널 배경·스크롤과 상세 데이터를 유지한 채 `detailSurface`만 보류하고 같은 앱의 수정 모달(`registSurface=modal`)로 전환한다. 취소는 보류한 ID와 현재 상세 ID가 같을 때만 원래 상세 모달을 복원한다. 저장 성공도 상세 모달을 복원한 뒤 `refreshJournalEntryHostForRoute`로 상세와 주간·월간·일간 배경을 갱신하며 배경 스크롤은 하지 않는다. 목록·외부 딥링크의 독립 상세에서 「수정」을 누르면 같은 탭의 `/thread/{id}/edit` 독립 편집 페이지(`registSurface=page`)로 이동하고 저장·취소 뒤 `/thread/{id}` 독립 상세로 복귀한다. 두 표면은 같은 `registModel`과 `JournalThreadEditorForm`을 사용한다. 변경 전의 이름 있는 브라우저 팝업·`window.opener.postMessage`·팝업 query 계약은 제거했다.
 
-**저널 스레드 Prefix 선택 정책**: Prefix는 목록 검색과 등록·수정이 함께 쓰는 단일 말머리 데이터다. `JournalThreadLayout`이 `ensurePrefixOptions()`로 콘텐츠 타입별 공통 Prefix 옵션 store를 통해 `GET /api/my/prefixes/options`의 활성 Prefix를 조회하고 검색 카드·공용 편집 폼·스레드 소속 후보 메뉴가 같은 `JOURNAL_THREAD` 목록을 공유한다. 이 API와 저장 검증은 로그인 사용자의 `(PERSONAL, user_id, JOURNAL_THREAD)` Scope를 기준으로 하며 `created_by`를 소유권으로 재해석하지 않는다. 동시 조회는 한 요청으로 합치고 실패는 다음 route 동기화에서 재시도한다. 내 설정의 등록·수정·활성 변경 성공 시 `JOURNAL_THREAD` 캐시를 즉시 무효화하고, 다음 스레드 화면·후보 메뉴 진입이 서버 확정 목록을 다시 조회한다(변경 전: 관리 store만 재조회해 소비 store의 세션 캐시가 이전 값을 유지). 목록 select는 단일 `prefixId` 필터를 즉시 적용한다. 편집은 nullable `registModel.prefixId`를 전송하며 빠른 추가는 `/api/my/prefixes`를 재사용해 생성 후 옵션을 강제 재조회하고 새 Prefix를 즉시 선택한다. 전체 관리는 `/my/prefixes` 탭으로 이동한다. 조회 DTO의 `prefix`는 이름·색·활성 상태를 포함해 비활성 과거 선택도 목록·상세에 남기며 신규 비활성 선택은 서버가 거부한다.
+**저널 스레드 Prefix 선택 정책**: Prefix는 목록 말머리 탭과 등록·수정이 함께 쓰는 단일 말머리 데이터이며, 별도 엔티티가 아니라 스레드 목록의 선택 범위다. `JournalThreadLayout`이 `ensurePrefixOptions()`로 콘텐츠 타입별 공통 Prefix 옵션 store를 통해 `GET /api/my/prefixes/options`의 활성 Prefix를 조회하고 말머리 탭·공용 편집 폼·스레드 소속 후보 메뉴가 같은 `JOURNAL_THREAD` 목록을 공유한다. 이 API와 저장 검증은 로그인 사용자의 `(PERSONAL, user_id, JOURNAL_THREAD)` Scope를 기준으로 하며 `created_by`를 소유권으로 재해석하지 않는다. 동시 조회는 한 요청으로 합치고 실패는 다음 route 동기화에서 재시도한다. 스레드 목록 말머리 관리 모달의 등록·수정·활성 변경 성공 시 `JOURNAL_THREAD` 캐시를 즉시 무효화하고, 목록 화면은 선택지와 목록을 곧바로 다시 조회하며 후보 메뉴는 다음 진입에서 서버 확정 목록을 다시 조회한다(변경 전: 관리 store만 재조회해 소비 store의 세션 캐시가 이전 값을 유지). 목록 말머리 탭은 `전체`(기본)·활성 말머리·`말머리 없음` 범위를 즉시 적용하고, Prefix 탭은 단일 `prefixId`, `말머리 없음`은 `noPrefixYn=Y`(prefix_content 연결이 없는 스레드)를 전송한다. 비활성 Prefix는 탭에서 제외되어 `전체`에서만 보이며, 선택 탭의 Prefix가 비활성화되면 `전체`로 돌아간다. 편집은 nullable `registModel.prefixId`를 전송하며 빠른 추가는 `/api/my/prefixes`를 재사용해 생성 후 옵션을 강제 재조회하고 새 Prefix를 즉시 선택한다. 전체 관리는 스레드 목록 말머리 탭 행의 `말머리 관리` 버튼이 같은 화면에서 `PersonalPrefixManageModal`을 열어 수행한다. 조회 DTO의 `prefix`는 이름·색·활성 상태를 포함해 비활성 과거 선택도 목록·상세에 남기며 신규 비활성 선택은 서버가 거부한다.
 
 **저널 스레드 독립 수정 이탈 정책**: 스토어는 수정 모델을 연 시점의 제목·본문·분류를 snapshot으로 보존하고 현재 값과 비교해 `registDirty`를 계산한다. `/thread/{id}/edit`에서 브라우저 뒤로가기·사이드 메뉴처럼 편집 버튼을 우회해 이동할 때 dirty이면 현재 locale의 미저장 변경 폐기 확인창을 표시한다. 취소하면 route와 폼을 유지하고, 확인하면 편집 상태를 닫은 뒤 원래 이동을 계속한다. 저장 성공과 페이지의 안전 취소 버튼은 편집 상태를 먼저 닫으므로 이 확인을 중복 표시하지 않는다. 수정 조회 응답이 비었거나 요청 ID와 다른 ID를 반환하면 불완전한 폼을 열지 않고 조회 실패로 닫아 목록으로 복귀한다.
 
@@ -815,15 +815,13 @@ assistant 메시지 `metadataJson.ragSources` 행을 클릭하면 `useJournalMod
 
 **저널 스레드 상세 lifecycle 표시·접힘 정책**: 소속 엔트리는 `JournalThreadEntryService.getEntriesByThread`가 `JournalEntryStateEnricher.enrichLifecycleMixed`로 lifecycle을 병합해 내려준다. 완료(`RESOLVED`) 엔트리의 `#순번`은 저널 일자와 같은 초록(꿈은 보라), 보류(`PENDING`) 엔트리는 같은 회색 상태 표현을 사용한다. 스레드 상세는 `JournalEntryItem`에 `disableLifecycleCollapse`를 넘겨 lifecycle 자동 접힘을 억제하고 본문을 펼친 상태로 표시한다. 수동 접기와 서버 `COLLAPSED`는 유지하며 state는 병합하지 않는다.
 
-**저널 스레드 목록 검색 카드**: 화면 진입 시 목록과 함께 콘텐츠 타입별 공통 캐시의 `GET /api/my/prefixes/options` 말머리 선택지를 조회한다. 내 설정 변경으로 `JOURNAL_THREAD`가 무효화된 상태면 이전 선택지를 재사용하지 않고 최신 목록을 받는다. 말머리·제목 검색과 초기화는 모두 `fetchList(0)`으로 첫 페이지부터 조회한다. 제목은 `searchType=title`·`searchKeyword`, 말머리는 단일 `prefixId`를 전송한다. 등록·수정·삭제 성공 후 목록을 갱신하고, 보조 데이터 조회 실패는 빈 상태로 가장하지 않고 오류 로그와 현재 locale 안내를 표시한다. 목록 API(`GET /api/journal/threads`) 실패는 `journal.thread.list.load.failure`를 테이블에 표시하며 `journal.thread.empty`(정상 0건)와 구분한다. 등록은 `JournalThreadViewToolbar`에 두며 ASIDE는 없다. 목록 행에는 Prefix 배지 하나, 소속 엔트리 태그 합집합(`thread.tag.list`), 활성 소속 수와 기간을 표시한다. 이 값들은 `JournalThreadService.getPageDto` enrich 가 소속 집계 쿼리로 채우며 엔트리 풀 DTO 로드는 하지 않는다. 멀티 태그 필터는 기존 `tagIds` AND 계약을 유지한다.
+**저널 스레드 목록 검색 카드**: 화면 진입 시 목록과 함께 콘텐츠 타입별 공통 캐시의 `GET /api/my/prefixes/options` 말머리 선택지를 조회한다. 말머리 관리 모달 변경으로 `JOURNAL_THREAD`가 무효화된 상태면 이전 선택지를 재사용하지 않고 최신 목록을 받는다. 말머리 탭 선택·제목 검색·초기화는 모두 `fetchList(0)`으로 첫 페이지부터 조회한다. 제목은 `searchType=title`·`searchKeyword`, Prefix 탭은 단일 `prefixId`, `말머리 없음` 탭은 `noPrefixYn=Y`를 전송한다. 초기화는 탭 범위를 유지한다. 등록·수정·삭제 성공 후 목록을 갱신하고, 보조 데이터 조회 실패는 빈 상태로 가장하지 않고 오류 로그와 현재 locale 안내를 표시한다. 목록 API(`GET /api/journal/threads`) 실패는 `journal.thread.list.load.failure`를 테이블에 표시하며 `journal.thread.empty`(정상 0건)와 구분한다. 등록은 `JournalThreadViewToolbar`에 두며 ASIDE는 없다. 목록 행에는 Prefix 배지 하나, 소속 엔트리 태그 합집합(`thread.tag.list`), 활성 소속 수와 기간을 표시한다. 이 값들은 `JournalThreadService.getPageDto` enrich 가 소속 집계 쿼리로 채우며 엔트리 풀 DTO 로드는 하지 않는다. 멀티 태그 필터는 기존 `tagIds` AND 계약을 유지한다.
 
 **저널 스레드 목록 행 액션**: 관리 열은 수정·삭제 개별 버튼 대신 ⋯ 컨텍스트 메뉴를 제공한다. 수정은 기존 수정 route로 이동하고 삭제는 기존 확인·삭제 store 액션을 유지한다. **변경 후**: 저널 일자·게시판 목록과 동일하게 Metronic `data-kt-menu`(+목록 렌더 후 `reinitMetronicAfterDom`)를 쓴다. KTMenu 는 `document.body` 위임 클릭으로 열리므로 트리거에 `@click.stop`을 두면 메뉴가 열리지 않는다 — 행 상세 이동은 `isMetronicMenuEventTarget` 가드로 막는다. Bootstrap `strategy:fixed` 땜빵은 제거했다.
 
 **저널 스레드 본문 이력**: 스레드는 공통 `HistoryEmbed`와 `history` 테이블을 사용한다. 본문이 실제로 달라질 때 수정 전 본문을 `ref_content_type=JOURNAL_THREAD` 스냅샷으로 저장하고 `historyTriggeredAt`을 갱신한다. 제목·Prefix·소속·라이프사이클 변경은 이력을 만들지 않으며 복원도 본문만 교체한다. 목록 ⋯ 메뉴와 문맥형 상세 모달·독립 상세 페이지의 이력 액션은 `history.historyTriggeredAt`이 있을 때 활성화되고 `HistoryModal`을 연다. 조회·복원·단건 삭제·전체 삭제는 현재 사용자 소유 스레드만 허용한다. 복원은 현재 본문도 새 스냅샷으로 남기며, 성공 후 열린 상세가 있으면 상세·소속 엔트리를 재조회하고 현재 스레드 목록도 재조회한다.
 
-저널 할일 등록·수정 모달의 제목 필수 검증·확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 저장 API의 서버 `message`가 있으면 우선 표시하고, 성공 시 모달을 닫은 뒤 성공 알림 확인 후 `refreshJournalDaysForRoute()`로 현재 route의 저널 목록을 갱신한다.
-
-**아사이드 TODO 카드 라이프사이클 인터랙션**: 각 할일 행은 왼쪽 체크박스로 완료(`RESOLVED` 전이, `PUT /api/lifecycles`, contentType `JOURNAL_TODO`)하고, kebab(⋯) 드롭다운으로 보류(`PENDING`)·보류 해제(`OPEN`)·삭제(하드 `DELETE`, `journal.todo.delete.confirm` 확인)를 수행한다. `PENDING` 행은 제목 앞 「보류」 배지(`lifecycle.pending`)로 표시한다. 전이·삭제 성공 시 `store.fetchTodos()` 로 재조회하며 `RESOLVED` 는 활성 목록에서 빠진다. 완료는 별도 확인 없이 즉시 처리하고(데이터는 삭제가 아니라 `RESOLVED` 로 보존), 실패 시 서버 `message` 를 알림으로 표시한다. 목록은 월 무관 cross-month 활성 집합이라 년/월 이동에도 재조회하지 않는다. **제목 클릭 시 수정**: 각 할일의 제목(`cursor-pointer`)을 클릭하면 상세(`GET /api/journal/todo/:id`)를 조회해 기존 데이터로 등록/수정 모달을 modify 모드(`id` 포함)로 연다 — 등록(+ 버튼)과 같은 모달을 공유하며, 저장 성공 시 모달 submit 이 `fetchTodos()` 로 카드를 갱신한다.
+**아사이드 Keep 카드 라이프사이클 인터랙션**: 각 Keep 행은 왼쪽 체크박스로 완료(`RESOLVED` 전이, `PUT /api/lifecycles`, contentType `PROSPECTIVE_KEEP`)하고, kebab(⋯) 드롭다운으로 보류(`PENDING`)·보류 해제(`OPEN`)·삭제(하드 `DELETE`, `prospective.keep.delete.confirm` 확인)를 수행한다. `PENDING` 행은 제목 앞 「보류」 배지(`lifecycle.pending`)로 표시한다. 전이·삭제 성공 시 `store.fetchKeeps()`로 재조회하며 `RESOLVED`는 활성 목록에서 빠진다. 목록은 월 무관 활성 집합이라 년/월 이동에도 재조회하지 않는다. 제목 클릭 시 상세(`GET /api/prospective/keep/:id`)를 조회해 `useProspectiveKeepModalStore`의 수정 모드로 연다.
 
 저널 해석 등록·수정 모달의 확인·결과 fallback은 현재 locale의 클라이언트 카탈로그를 사용한다. 해석 제목은 선택값으로 유지하고, 저장 API의 서버 `message`가 있으면 우선 표시하며, 성공 시 모달을 닫은 뒤 성공 알림 확인 후 `refreshJournalEntryHostForRoute()`로 현재 표시 호스트를 갱신한다. 스레드 상세에서는 열린 상세·집계 태그·소속 엔트리를 재조회하고, 그 밖의 route에서는 기존 저널 목록 갱신을 유지한다.
 

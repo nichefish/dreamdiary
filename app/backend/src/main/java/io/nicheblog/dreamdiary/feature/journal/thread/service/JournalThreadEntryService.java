@@ -601,12 +601,12 @@ public class JournalThreadEntryService {
      */
     private PrefixDto toPeriodSummaryPrefixDto(final JournalThreadPeriodSummaryProjection projection) {
         if (projection.getPrefixId() == null) return null;
-        return PrefixDto.builder()
-                .id(projection.getPrefixId())
-                .name(projection.getPrefixName())
-                .color(projection.getPrefixColor())
-                .sortOrder(0)
-                .activeYn(projection.getPrefixActiveYn())
-                .build();
+        return PrefixDto.displayOf(
+                projection.getPrefixId(),
+                projection.getPrefixName(),
+                projection.getPrefixTextClass(),
+                0,
+                projection.getPrefixActiveYn()
+        );
     }
 }

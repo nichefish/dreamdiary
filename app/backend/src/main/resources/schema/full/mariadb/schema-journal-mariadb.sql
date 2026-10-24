@@ -132,31 +132,6 @@ CREATE TABLE IF NOT EXISTS journal_reflection (
     INDEX idx_journal_reflection_created_by (created_by)
 ) COMMENT = '저널 Reflection (Commentary)';
 
--- 저널 할일 (journal_todo)
--- @extends: BasePostEntity
--- @uses: CommentEmbed
-CREATE TABLE IF NOT EXISTS journal_todo (
-    -- ATTACHABLE
-    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '저널 결산 ID',
-    content_type VARCHAR(32) DEFAULT 'JOURNAL_TODO' COMMENT '컨텐츠 타입',
-    --
-    sort_order INT DEFAULT 1 COMMENT '저널 일기 인덱스',
-    yy INT UNIQUE COMMENT '결산 년도',
-    mnth INT COMMENT '월',
-    -- POST
-    title VARCHAR(200) COMMENT '제목',
-    content LONGTEXT COMMENT '내용',
-    category_code VARCHAR(50) COMMENT '글 분류 코드',
-    -- FILE_GROUP
-    file_group_id INT COMMENT '첨부파일 번호',
-    -- AUDIT
-    created_by VARCHAR(20) COMMENT '등록자 ID',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
-    updated_by VARCHAR(20) COMMENT '수정자 ID',
-    updated_at DATETIME COMMENT '수정일시',
-    deleted_at DATETIME COMMENT '삭제일시'
-) COMMENT = '저널 할일';
-
 -- 저널 스레드 (journal_thread)
 -- @extends: BasePostEntity
 -- @uses: FileEmbed, CommentEmbed, PrefixEmbed, HistoryEmbed

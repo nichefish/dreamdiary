@@ -71,19 +71,6 @@ export interface JournalDayFilterPayload {
   list: JournalDayDto[];
 }
 
-/** 저널 할일 등록/수정 폼 모델 */
-export interface JournalTodoRegistModel {
-  id?: number;
-  yy?: number | string;
-  mnth?: number | string;
-  categoryCode?: string;
-  title?: string;
-  sortOrder?: number;
-  content?: string;
-  /** 태그 컴포지션 */
-  tag?: { tagListStrWithCtgr?: string };
-}
-
 /** 챕터 선택 옵션 (entry 등록 시 챕터 선택) */
 export interface JournalChapterOption {
   id: number | string;

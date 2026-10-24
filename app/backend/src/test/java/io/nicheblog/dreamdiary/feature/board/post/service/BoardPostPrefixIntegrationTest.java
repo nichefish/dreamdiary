@@ -197,7 +197,7 @@ class BoardPostPrefixIntegrationTest {
     private PrefixDto createPrefix(final BoardEntity board, final String name) {
         return boardPrefixService.create(board.getId(), PrefixDto.builder()
                 .name(name)
-                .color("#6B7280")
+                .textClassCd("MUTED")
                 .sortOrder(1)
                 .build());
     }

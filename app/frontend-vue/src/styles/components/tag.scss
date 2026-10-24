@@ -3,50 +3,66 @@
  *
  * @auther nichefish
  */
+@use "sass:map";
+@use "../abstracts/variables" as vars;
+
+/**
+ * 태그 빈도 스케일 색 토큰.
+ * 서버가 태그 사용 빈도로 ts-1(최저) ~ ts-9(최고) 를 확정해 내려주고, 화면은 그 클래스만 적용한다.
+ * 크기는 9단계지만 색은 다섯 갈래를 공유하므로 색 토큰도 다섯 개만 둔다.
+ * ts-4~6 은 팔레트의 dialog 색과 같은 값이라 $color-map 을 참조해 중복 리터럴을 두지 않는다.
+ */
+:root {
+    --tag-scale-color-1: #9ca5ad;
+    --tag-scale-color-2: #7c858d;
+    --tag-scale-color-3: #5c75ad;
+    --tag-scale-color-4: #{map.get(vars.$color-map, "dialog")};
+    --tag-scale-color-5: #0d6efd;
+}
 
 .ts-1 {
     font-size: 0.9em;
-    color: #9ca5ad;
+    color: var(--tag-scale-color-1);
 }
 
 .ts-2 {
     font-size: 1.15em;
-    color: #7c858d;
+    color: var(--tag-scale-color-2);
 }
 
 .ts-3 {
     font-size: 1.4em;
-    color: #5c75ad;
+    color: var(--tag-scale-color-3);
 }
 
 .ts-4 {
     font-size: 1.6em;
-    color: #5c8fb0;
+    color: var(--tag-scale-color-4);
 }
 
 .ts-5 {
     font-size: 1.8em;
-    color: #5c8fb0;
+    color: var(--tag-scale-color-4);
 }
 
 .ts-6 {
     font-size: 2.1em;
-    color: #5c8fb0;
+    color: var(--tag-scale-color-4);
 }
 
 .ts-7 {
     font-size: 2.3em;
-    color: #0d6efd;
+    color: var(--tag-scale-color-5);
 }
 
 .ts-8 {
     font-size: 2.5em;
-    color: #0d6efd;
+    color: var(--tag-scale-color-5);
 }
 
 .ts-9 {
     font-size: 2.7em;
-    color: #0d6efd;
+    color: var(--tag-scale-color-5);
     font-weight: bold !important;
 }
 

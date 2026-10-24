@@ -1,6 +1,7 @@
 /**
  * journalEntryPreview.ts
  * 작성 중 저널 엔트리·리플렉션 본문을 목록과 같은 markdownContent로 새 창에 띄운다.
+ * Prospective Keep 등록/수정 모달도 같은 렌더 경로(MarkdownUtils.markdown)와 팝업을 사용한다.
  * 클릭 시점에 팝업을 연 뒤 POST /api/journal/entries/preview 결과를 localStorage로 전달한다.
  */
 import { apiPost, unwrapObj } from "@/shared/api/client";
@@ -9,12 +10,41 @@ import { joinAppBasePath } from "@/shared/utils/appPath";
 /** localStorage 키 접두. 미리보기 ID를 붙여 창 간에 렌더 결과를 전달한다. */
 export const JOURNAL_ENTRY_PREVIEW_STORAGE_PREFIX = "dreamdiary.journal.entry.preview.";
 
-/** 미리보기 창에 적용할 콘텐츠 유형. 목록 item/content 클래스 분기와 같다. */
+/**
+ * 미리보기 창에 적용할 콘텐츠 유형. 목록 item/content 클래스 분기와 같다.
+ * PROSPECTIVE_KEEP 은 Keep 본문으로, 노트와 같은 item/content 클래스를 사용한다.
+ */
 export type JournalEntryPreviewContentType =
   | "JOURNAL_DIARY"
   | "JOURNAL_DREAM"
   | "JOURNAL_NOTE"
-  | "JOURNAL_REFLECTION";
+  | "JOURNAL_REFLECTION"
+  | "PROSPECTIVE_KEEP";
+
+/** Keep 미리보기 메타 태그 한 건. */
+export interface KeepPreviewTag {
+  name: string;
+  ctgr?: string | null;
+}
+
+/**
+ * PROSPECTIVE_KEEP 미리보기에만 싣는 Keep 메타 스냅샷.
+ * 값이 있는 항목만 미리보기 창 메타 블록에 표시한다.
+ */
+export interface KeepPreviewMeta {
+  /** 일시 원문 */
+  dateText?: string | null;
+  /** 유효 기한 (ISO yyyy-MM-dd) */
+  expireDt?: string | null;
+  /** 위치 */
+  location?: string | null;
+  /** 소속 Project 제목 */
+  projectTitle?: string | null;
+  /** 태그 목록 */
+  tags?: KeepPreviewTag[];
+  /** 중요(IMPRTC) 상태 보유 여부. 제목 앞 별 아이콘으로 표시한다. */
+  important?: boolean;
+}
 
 /** 등록 모달이 미리보기 창에 넘기는 작성 중 스냅샷. */
 export interface JournalEntryPreviewDraft {
@@ -23,7 +53,9 @@ export interface JournalEntryPreviewDraft {
   sortOrder?: number | null;
   content?: string | null;
   prefixName?: string | null;
-  prefixColor?: string | null;
+  prefixTextClass?: string | null;
+  /** PROSPECTIVE_KEEP 전용 메타. 저널 엔트리·리플렉션은 싣지 않는다. */
+  keepMeta?: KeepPreviewMeta | null;
 }
 
 /** 미리보기 창이 렌더하는 확정 페이로드. */

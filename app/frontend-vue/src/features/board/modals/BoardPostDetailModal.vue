@@ -1,5 +1,5 @@
 <template>
-  <!--begin::게시판 게시물 상세 모달-->
+  <!--begin::게시판 게시물 상세 모달 (목록의 빠른 보기 전용. 기본 상세는 독립 페이지 BoardPostDetailPage)-->
   <div ref="modalEl" class="modal fade" id="board_post_detail_modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xxl">
       <div class="modal-content">
@@ -7,7 +7,10 @@
         <!--begin::Modal Header-->
         <div class="modal-header">
           <h5 class="modal-title">{{ t('board.post.detail.title') }}</h5>
-          <button type="button" class="btn-close" @click="close"></button>
+          <div class="d-flex align-items-center gap-2">
+            <BoardPostDetailActions />
+            <button type="button" class="btn-close" @click="close"></button>
+          </div>
         </div>
         <!--end::Modal Header-->
 
@@ -19,48 +22,7 @@
           </div>
           <!--end::로딩-->
 
-          <div v-else-if="store.detailModel" class="board-post-dtl-vue-root">
-            <!--begin::헤더 (제목 + 작성자/일시)-->
-            <div class="mb-0">
-              <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
-                <span v-if="store.detailModel.prefix" class="ctgr-span ctgr-gray">{{ store.detailModel.prefix.name }}</span>
-                <span class="fs-3 fw-bolder text-gray-900">{{ store.detailModel.title }}</span>
-              </div>
-              <div class="d-flex align-items-center flex-wrap gap-3 text-muted fs-7">
-                <span v-if="store.detailModel.createdByNm"><i class="bi bi-person pe-1"></i>{{ store.detailModel.createdByNm }}</span>
-                <span v-if="store.detailModel.createdDt"><i class="bi bi-clock pe-1"></i>{{ store.detailModel.createdDt }}</span>
-              </div>
-            </div>
-            <!--end::헤더-->
-
-            <div class="separator separator-dashed border-gray-300 my-8"></div>
-
-            <!--begin::본문-->
-            <div
-              class="fs-4 fw-normal text-gray-800 px-5 py-1 pb-6 min-h-150px"
-              v-html="store.detailModel.markdownContent || store.detailModel.content || ''"
-            ></div>
-            <!--end::본문-->
-
-            <!--begin::태그-->
-            <div v-if="hasDetailTags" class="mt-4">
-              <i class="bi bi-tag me-1"></i>
-              <span
-                v-for="tag in store.detailModel.tag?.list"
-                :key="'board-dtl-tag-' + String(tag.tagId)"
-                class="text-muted pe-1"
-              >
-                <span v-if="tag.ctgr" class="fs-7 text-noti">[{{ tag.ctgr }}]</span>
-                #<span class="border-bottom text-primary fw-lighter opacity-hover">{{ tag.name }}</span>
-              </span>
-            </div>
-            <!--end::태그-->
-
-            <!--begin::댓글 영역 (TODO: 댓글 연동 예정)-->
-            <div class="separator separator-dashed border-gray-200 my-6"></div>
-            <div class="text-muted fs-7 text-center py-3">{{ t('board.post.detail.comment-todo') }}</div>
-            <!--end::댓글 영역-->
-          </div>
+          <BoardPostDetailContent v-else-if="isModalSurface" :post="store.detailModel" />
         </div>
         <!--end::Modal Body-->
 
@@ -83,6 +45,8 @@ import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { ref, computed, watch, onMounted } from "vue";
 import { Modal } from "bootstrap";
 import { useBoardPostStore } from "@/features/board/stores/boardPost";
+import BoardPostDetailContent from "@/features/board/components/BoardPostDetailContent.vue";
+import BoardPostDetailActions from "@/features/board/components/BoardPostDetailActions.vue";
 
 const { t } = useLocaleStore();
 const store = useBoardPostStore();
@@ -90,28 +54,37 @@ const store = useBoardPostStore();
 const modalEl = ref<HTMLElement | null>(null);
 let bsModal: InstanceType<typeof Modal> | null = null;
 
-const hasDetailTags = computed(() =>
-  Array.isArray(store.detailModel?.tag?.list) && store.detailModel!.tag!.list!.length > 0
-);
+/** 상세가 모달 표면으로 열려 있는지 여부 (독립 상세 페이지 표면은 제외) */
+const isModalSurface = computed(() => store.detailOpen && store.detailSurface === "modal");
 
 onMounted(() => {
-  if (modalEl.value) {
-    bsModal = new Modal(modalEl.value);
-    modalEl.value.addEventListener("hidden.bs.modal", () => {
-      store.closeDetail();
-    });
-  }
+  if (!modalEl.value) return;
+  bsModal = new Modal(modalEl.value);
+  modalEl.value.addEventListener("hidden.bs.modal", () => {
+    /* 사용자가 모달 자체를 숨긴 경우(ESC·backdrop 포함)에만 상세 상태를 정리한다. */
+    if (store.detailSurface === "modal") store.closeDetail();
+  });
+  modalEl.value.addEventListener("shown.bs.modal", () => {
+    /*
+     * Bootstrap Modal 은 show/hide 전환(fade) 도중의 hide() 호출을 무시한다.
+     * 열리는 도중 상세가 닫힌 경우(조회 실패·빠른 닫기) store 와 화면이 어긋나지 않도록 여기서 다시 맞춘다.
+     */
+    if (!isModalSurface.value) bsModal?.hide();
+  });
+  if (isModalSurface.value) bsModal.show();
 });
 
-watch(
-  () => store.detailOpen,
-  (isOpen) => {
-    if (isOpen) bsModal?.show();
-    else bsModal?.hide();
-  }
-);
+watch(isModalSurface, (isOpen) => {
+  if (isOpen) bsModal?.show();
+  else bsModal?.hide();
+});
 
-function close() {
-  store.closeDetail();
+/**
+ * 닫기 — store 상태와 Bootstrap 인스턴스를 함께 닫는다.
+ * store 가 이미 닫힌 상태(watch 미발화)여도 화면의 모달이 남지 않게 hide() 를 직접 호출한다.
+ */
+function close(): void {
+  if (store.detailSurface === "modal" || !store.detailOpen) store.closeDetail();
+  bsModal?.hide();
 }
 </script>

@@ -8,26 +8,19 @@
         <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
           <!--begin::태그 클라우드
             게시판 태그는 tag_content.ref_content_type 에 boardKey 로 저장되므로
-            /api/tags?contentType=<boardKey> 로 조회한다. 같은 태그를 다시 누르면 필터가 해제된다. -->
-          <div class="d-flex flex-wrap align-items-center gap-1 flex-grow-1 py-1" style="min-width:0;">
-            <i class="bi bi-tags text-muted me-1"></i>
-            <span v-if="store.tagCloudLoading" class="text-muted fs-7">{{ t('common.loading') }}...</span>
-            <span v-else-if="store.tagCloudError" class="text-danger fs-7">{{ store.tagCloudError }}</span>
-            <span v-else-if="!store.tagCloud.length" class="text-muted fs-7">{{ t('board.post.tag-cloud.empty') }}</span>
-            <template v-else>
-              <button
-                v-for="tag in store.tagCloud"
-                :key="tag.id"
-                type="button"
-                class="btn btn-sm py-1 px-2"
-                :class="store.filterTagId === tag.id ? 'btn-light-primary border border-primary' : 'btn-light text-gray-600'"
-                @click="store.toggleTagFilter(tag.id)"
-              >
-                <span v-if="tag.ctgr" class="fs-9 text-muted me-1">[{{ tag.ctgr }}]</span>
-                <span :class="[tag.tagClass, tag.textClass]">#{{ tag.name }}</span>
-                <span class="fs-9 text-muted ms-1">{{ tag.contentSize ?? 0 }}</span>
-              </button>
-            </template>
+            /api/tags?contentType=<boardKey> 로 조회한다. 같은 태그를 다시 누르면 필터가 해제된다.
+            표시는 저널·Keep 과 같은 공통 TagCloud 를 쓴다. -->
+          <div class="flex-grow-1" style="min-width:0;">
+            <TagCloud
+              :tags="store.tagCloud"
+              :label="t('common.tag')"
+              :loading="store.tagCloudLoading"
+              :error-message="store.tagCloudError || null"
+              :tag-title="t('journal.tag-cloud.menu.tooltip')"
+              :selected-tag-id="store.filterTagId"
+              key-prefix="board-tc-"
+              @tag-click="openTagContextMenu"
+            />
           </div>
           <!--end::태그 클라우드-->
 
@@ -127,7 +120,17 @@
                   트리거에 @click.stop 을 두면 body 위임 클릭이 막혀 메뉴가 열리지 않는다.
                   행 상세 이동은 isMetronicMenuEventTarget 가드로 막는다.
                   store.loading 종료 시 reinitMetronicAfterDom() 을 호출한다. -->
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center gap-1">
+                  <!--begin::빠른 보기 — 행 클릭은 독립 상세 페이지로 이동하고, 목록을 벗어나지 않고 보려면 모달로 연다.-->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
+                    :title="t('board.post.list.quick-view.tooltip')"
+                    @click.stop="openQuickView(post.id!)"
+                  >
+                    <i class="bi bi-window-stack fs-5"></i>
+                  </button>
+                  <!--end::빠른 보기-->
                   <button
                     type="button"
                     class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
@@ -183,22 +186,55 @@
     </div>
 
   </div>
+  <TagContextMenu />
+  <TagProfileModal @success="store.fetchTagCloud" />
   <!--end::게시판 게시물 목록-->
 </template>
 
 <script setup lang="ts">
 import { useLocaleStore } from "@/shared/i18n/stores/locale";
 import { watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useBoardPostStore } from "@/features/board/stores/boardPost";
 import { useAttachableModalStore } from "@/features/attachable/stores/attachableModal";
 import type { BoardPostDto } from "@/features/board/stores/boardPost";
 import { isMetronicMenuEventTarget, reinitMetronicAfterDom } from "@/shared/utils/metronicReinit";
+import TagCloud, { type TagCloudTag } from "@/shared/ui/tag/TagCloud.vue";
+import TagContextMenu from "@/shared/ui/tag/TagContextMenu.vue";
+import TagProfileModal from "@/features/attachable/TagProfileModal.vue";
+import { useTagContextMenuStore } from "@/shared/ui/tag/tagContextMenu";
+import { useTagProfileAction } from "@/features/attachable/composables/useTagProfileAction";
 
 const { t } = useLocaleStore();
 const route = useRoute();
+const router = useRouter();
 const store = useBoardPostStore();
 const attachableStore = useAttachableModalStore();
+const tagContextMenuStore = useTagContextMenuStore();
+const { tagProfileAction } = useTagProfileAction();
+
+/**
+ * 태그 컨텍스트 메뉴를 연다 (저널·Keep 과 같은 메뉴·버튼 모양).
+ * <pre>
+ *  게시판 태그는 tag_content.ref_content_type 에 boardKey 로 저장되므로 프로필도 같은 값을 쓴다.
+ *  게시판에는 저널 엔트리 검색 문맥이 없어 첫 항목 자리에 이 화면의 주 동작인 목록 필터
+ *  토글을 끼운다. 필터는 서버 조회 조건이라 토글이 첫 페이지부터 재조회한다.
+ * </pre>
+ */
+function openTagContextMenu(tag: TagCloudTag, event: MouseEvent): void {
+  const tagId = Number(tag.id);
+  const on = store.filterTagId === tagId;
+  const payload = { tagId, name: tag.name, ctgr: tag.ctgr ?? "", contentType: store.boardKey };
+  tagContextMenuStore.open(event, payload, [
+    {
+      label: on ? t("tag.filter.off") : t("tag.filter.on"),
+      icon: on ? "bi-funnel" : "bi-funnel-fill",
+      variant: "search",
+      run: () => { void store.toggleTagFilter(tagId); },
+    },
+    tagProfileAction(payload),
+  ]);
+}
 
 /** 게시판 화면 진입 및 boardKey 변경 시 게시글·말머리·태그 재조회 */
 watch(
@@ -220,10 +256,18 @@ watch(
   }
 );
 
-/** 게시물 행 클릭 시 컨텍스트 메뉴가 아니면 상세를 연다. */
+/**
+ * 게시물 행 클릭 시 컨텍스트 메뉴가 아니면 독립 상세 페이지로 이동한다 (저널 스레드와 동일).
+ * 목록 상태(페이지·검색 조건)는 store 에 보존되어 상세에서 돌아오면 그대로 복원된다.
+ */
 function onPostRowClick(event: MouseEvent, id: number): void {
   if (isMetronicMenuEventTarget(event.target)) return;
-  store.openDetail(id);
+  void router.push({ name: "board-post-detail", params: { boardKey: store.boardKey, id } });
+}
+
+/** 목록을 벗어나지 않고 상세를 모달로 연다 (빠른 보기). */
+function openQuickView(id: number): void {
+  void store.openDetail(id);
 }
 
 /** 검색 실행 — 조건이 바뀌었으므로 항상 첫 페이지부터 조회한다. */

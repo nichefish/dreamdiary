@@ -5,7 +5,7 @@ import io.nicheblog.dreamdiary.feature.attachable._shared.type.ContentType;
 import io.nicheblog.dreamdiary.feature.attachable.tag.entity.TagContentEntity;
 import io.nicheblog.dreamdiary.feature.attachable.tag.model.TagDto;
 import io.nicheblog.dreamdiary.feature.attachable.tag.repository.jpa.TagContentRepository;
-import io.nicheblog.dreamdiary.feature.journal._shared.security.JournalContentOwnershipGuard;
+import io.nicheblog.dreamdiary.feature.attachable._shared.security.AttachableContentOwnershipGuard;
 import io.nicheblog.dreamdiary.feature.journal.day.service.helper.JournalDayResolvedGuard;
 import io.nicheblog.dreamdiary.feature.journal.entry.entity.JournalEntryEntity;
 import io.nicheblog.dreamdiary.feature.journal.entry.model.JournalEntryBulkTagReqDto;
@@ -62,7 +62,7 @@ class JournalEntryBulkTagServiceTest {
     @Mock
     private TagContentRepository tagContentRepository;
     @Mock
-    private JournalContentOwnershipGuard ownershipGuard;
+    private AttachableContentOwnershipGuard ownershipGuard;
     @Mock
     private JournalDayResolvedGuard resolvedGuard;
     @Mock

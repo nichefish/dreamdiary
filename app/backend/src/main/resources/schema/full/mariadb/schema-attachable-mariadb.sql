@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS prefix (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'Prefix ID',
     scope_id INT NOT NULL COMMENT 'Prefix Scope ID',
     name VARCHAR(100) NOT NULL COMMENT '말머리명',
-    color CHAR(7) COMMENT '표시 색상(#RRGGBB)',
+    text_class_cd VARCHAR(20) COMMENT '표시 색 의미 코드 (TEXT_CLASS_CD). tag_profile.text_class 와 같은 어휘',
     sort_order INT NOT NULL DEFAULT 0 COMMENT '정렬 순서',
     active_yn CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '사용 여부',
     created_by VARCHAR(20) NOT NULL COMMENT '소유자 ID',
@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS prefix (
     updated_at DATETIME COMMENT '수정 일시',
     deleted_at DATETIME COMMENT '삭제 일시',
     CONSTRAINT ck_prefix_active_yn CHECK (active_yn IN ('Y', 'N')),
-    CONSTRAINT ck_prefix_color CHECK (color IS NULL OR color REGEXP '^#[0-9A-Fa-f]{6}$'),
     CONSTRAINT fk_prefix_scope FOREIGN KEY (scope_id) REFERENCES prefix_scope(id),
     UNIQUE KEY uk_prefix_scope_name (scope_id, name),
     INDEX idx_prefix_scope_sort (scope_id, sort_order, id)
@@ -244,8 +243,10 @@ CREATE TABLE IF NOT EXISTS lifecycle (
     ref_content_type VARCHAR(30) COMMENT 'reference content type',
     --
     lifecycle_key VARCHAR(32) NOT NULL COMMENT 'lifecycle key',
+    resolved_at DATETIME(6) NULL COMMENT 'Keep resolved transition at UTC',
+    changed_at DATETIME(6) NULL COMMENT 'lifecycle state changed at UTC',
     deleted_at DATETIME COMMENT 'deleted at',
-    CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED')),
+    CONSTRAINT ck_lifecycle_persisted_key CHECK (lifecycle_key IN ('PENDING', 'RESOLVED', 'FAILED', 'EXPIRED', 'DROPPED')),
     UNIQUE KEY uk_lifecycle (ref_content_type, ref_id),
     INDEX idx_lifecycle_key (lifecycle_key),
     INDEX idx_lifecycle_ref (ref_id, ref_content_type)

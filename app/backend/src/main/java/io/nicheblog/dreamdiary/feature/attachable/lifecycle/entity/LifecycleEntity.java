@@ -9,6 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 임의 컨텐츠에 붙는 라이프사이클 저장 엔티티.
@@ -50,6 +51,16 @@ public class LifecycleEntity
     @Column(name = "lifecycle_key")
     @Comment("라이프사이클 키")
     private String lifecycleKey;
+
+    /** Keep의 현재 RESOLVED 전이 시각. UTC이며 시각 미확인 완료와 다른 상태는 null이다. */
+    @Column(name = "resolved_at")
+    @Comment("Keep resolved transition at UTC")
+    private LocalDateTime resolvedAt;
+
+    /** 현재 상태로 바뀐 시각(UTC). 상태가 실제로 바뀔 때만 갱신하며, V0.30.16 이전 행은 null(미확인)이다. */
+    @Column(name = "changed_at")
+    @Comment("lifecycle state changed at UTC")
+    private LocalDateTime changedAt;
 
     /**
      * 라이프사이클 설정 요청으로 신규 엔티티를 생성한다.

@@ -67,12 +67,13 @@ class PrefixServiceTest {
 
         final PrefixDto result = service.create(FIXTURE_CONTENT_TYPE, PrefixDto.builder()
                 .name(FIXTURE_NAME)
-                .color("#a1b2c3")
+                .textClassCd("dialog")
                 .sortOrder(1)
                 .build());
 
         assertEquals(10, result.getId());
-        assertEquals("#A1B2C3", result.getColor());
+        assertEquals("DIALOG", result.getTextClassCd());
+        assertEquals("text-dialog", result.getTextClass());
     }
 
     @Test
